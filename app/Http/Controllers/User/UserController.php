@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\DB;
 use App\Models\FirstOrLast;
 use App\Models\JawabanLainnya;
 use App\Models\Pertanyaan;
+use App\Models\UserSesi;
 
 
 class UserController extends Controller
@@ -48,10 +49,16 @@ class UserController extends Controller
                 'name' => $iddata,
                 'email' => $iddata . "@mail.com",
                 'password' => $iddata,
+                'created_at' => \Carbon\Carbon::now(),
             ];
-        $checkUser = User::where('name', $iddata)->count();
-        if ($checkUser == 0) {
+        $checkUser = User::where('name', $iddata)->first();
+        if ($checkUser == null) {
             $user = DB::table('users')->insert($user);
+        } else {
+            if ($checkUser->created_at == null) {
+                $checkUser->created_at = \Carbon\Carbon::now();
+                $checkUser->save();
+            }
         }
         // else {
         // }
@@ -85,7 +92,7 @@ class UserController extends Controller
         $data['bagianData'] = Step::with(['pertanyaan' => function ($pertanyaan) {
             $pertanyaan->with(['jawabanJenis', 'textProperties'])->orderBy('pertanyaan_urutan', 'ASC');;
         }, 'bagianDirect'])->where('id', $bagianId)->first();
-        // return $data;
+
         $type = "text";
         foreach ($data['bagianData']->pertanyaan as $row) {
             $jawaban = "";
@@ -93,6 +100,7 @@ class UserController extends Controller
             if ($row->required == 1)
                 $required = "required";
             $dataJawaban = Jawaban::where(['user_id' => session()->get('userData')->id, 'pertanyaan_id' => $row->id])->get();
+            $gg[] = $dataJawaban;
             if (count($dataJawaban) > 0) {
                 $jawaban = $dataJawaban;
             }
@@ -143,18 +151,40 @@ class UserController extends Controller
                     <label class="form-check-label" for="input' . $index . '">' . $item->pilihan_jawaban . '</label>
                   </div>';
                 }
+                if ($row->lainnya == "1") {
+                    if (count($dataJawaban) > 0) {
+                        foreach ($dataJawaban as $jawab) {
+                            $checked = ($jawab->jawaban == "lainnya") ? "checked" : '';
+                        }
+                    }
+                    $content .= '<div class="form-check">
+                    <input onclick="showTextInput(event, ' . $row->id . ')" class="form-check-input" type="checkbox" name="input[' . $row->id . '][]" id="input' . $row->id . '" value="lainnya" ' . $checked . '/>
+                    <label class="form-check-label" for="input' . $row->id . '">Lainnya</label>
+                  </div>';
+                    $check = JawabanLainnya::where('pertanyaan_id', $row->id)->get();
+                    if (count($check) > 0)
+                        $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawaban . "'>";
+                }
                 $content .= '</div>';
                 $row->form = $content;
             } else if ($row->pertanyaan_jenis_jawaban == "Select") {
                 $content = '<div class="mb-3 position-relative form-group">';
                 $content .= '<label class="form-label">' . $row->pertanyaan_urutan . '. ' . $row->pertanyaan . '</label>';
-                $content .= '<select ' . $required . '  class="form-select" name="input[' . $row->id . ']" required>';
+                $content .= '<select onchange="showTextInput(event, ' . $row->id . ')"  ' . $required . '  class="form-select" name="input[' . $row->id . ']" required>';
                 $content .= '<option value="">Pilih</option>';
                 foreach ($row->jawabanJenis as $index => $item) {
                     $selected = "";
                     if (count($dataJawaban) > 0)
                         $selected = ($jawaban[0]->jawaban == $item->pilihan_jawaban) ? "selected" : '';
                     $content .= '<option value="' . $item->pilihan_jawaban . '" ' . $selected . '>' . $item->pilihan_jawaban . '</option>';
+                }
+                if ($row->lainnya == "1") {
+                    if (count($dataJawaban) > 0)
+                        $checked = ($jawaban[0]->jawaban == "lainnya") ? "selected" : '';
+                    $content .= '<option value="lainnya" ' . $checked . '>Lainnya</option>';
+                    $check = JawabanLainnya::where('pertanyaan_id', $row->id)->get();
+                    if (count($check) > 0)
+                        $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawaban . "'>";
                 }
                 $content .= '</select>';
                 $content .= '</div>';
@@ -180,13 +210,14 @@ class UserController extends Controller
                     </div>';
                     $check = JawabanLainnya::where('pertanyaan_id', $row->id)->get();
                     if (count($check) > 0)
-                        $content .= "<input name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawaban . "'>";
+                        $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawaban . "'>";
                 }
                 $content .= '</div>';
 
                 $row->form = $content;
             }
         }
+        // return $gg;
         $data['akhir'] = false;
         $data['awal'] = false;
         $awal = FirstOrLast::where('step_id_first', $bagianId)->count();
@@ -205,6 +236,24 @@ class UserController extends Controller
         // return $request->all();
         try {
             //code...
+            if ($request->awal == 1) {
+                $userSesi = UserSesi::where(['user_id' => session()->get('userData')->id, 'sesi_status' => "1"])->count();
+                if ($userSesi == 0) {
+                    UserSesi::updateOrCreate(
+                        [
+                            'user_id' => session()->get('userData')->id
+                        ],
+                        [
+                            'sesi_tanggal' => \Carbon\Carbon::now(),
+                            'sesi_status' => "0"
+                        ]
+                    );
+                }
+            } else if ($request->akhir == 1) {
+                $userSesi = UserSesi::where('user_id', session()->get('userData')->id)->first();
+                $userSesi->sesi_status = "1";
+                $userSesi->save();
+            }
             foreach ($request->input as $key => $value) {
                 if (gettype($value) == "array") {
                     Jawaban::where([

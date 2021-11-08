@@ -14,7 +14,7 @@
                     <!-- <a href="Dashboards.Default.html"> -->
                     <!-- Logo can be added directly -->
                     <!-- <img src="img/logo/logo-white.svg" alt="logo" /> -->
-                    <img src="{{asset('/')}}logo-silanni-2.png" alt="logo">
+                    <img src="{{asset('/')}}logo-silanni-22.png" alt="logo">
 
                     <!-- <img src="http://127.0.0.1:8000/logo-iain.png" alt="logo" style="width:40%">
                         <span style="font-size:14px;font-weight: 600;color:white">SI LANNI</span> -->
@@ -28,7 +28,9 @@
                 <!-- User Menu Start -->
                 <div class="user-container d-flex">
                     <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="profile" alt="profile" src="{{asset('/')}}img/profile/profile-11.jpg" />
+                        <!-- <img class="profile" alt="profile" src="{{asset('/')}}img/profile/profile-11.jpg" /> -->
+                        <img class="profile" alt="profile" src="{{asset('/')}}icon.jpeg" />
+
                         <!-- <div class="nama"></div> -->
                     </a>
                     <div class="dropdown-menu dropdown-menu-end user-menu wide">
@@ -125,6 +127,12 @@
                                 <span class="label">Dashboards</span>
                             </a>
                         </li>
+                        <li>
+                            <a href="https://lpm.iainkendari.ac.id/tracer-study/">
+                                <i data-cs-icon="chart-2" class="icon" data-cs-size="18"></i>
+                                <span class="label">Hasil Tracer</span>
+                            </a>
+                        </li>
 
 
                     </ul>
@@ -187,7 +195,9 @@
                                 <div class="d-flex align-items-center flex-column">
                                     <div class="mb-5 d-flex align-items-center flex-column">
                                         <div class="sw-13 position-relative mb-3">
-                                            <img src="{{asset('/')}}img/profile/profile-11.jpg" class="img-fluid rounded-xl" alt="thumb" />
+                                            <!-- <img src="{{asset('/')}}img/profile/profile-11.jpg" class="img-fluid rounded-xl" alt="thumb" /> -->
+                                            <img class="img-fluid rounded-xl" alt="profile" src="{{asset('/')}}icon.jpeg" />
+
                                         </div>
                                         <div class="h5 mb-0"><span id="nama"></span>
                                         </div>

@@ -28,8 +28,16 @@ Route::post('/bagian/pengaturan/direct/simpan', [FormController::class, 'bagianD
 
 
 Route::get('/pertanyaan/bagian/{bagianId}', [DashboardController::class, 'getPertanyaan'])->name('admin.get.pertanyaan');
-Route::get('/jawaban/pertanyaan/{pertanyaanId}', [DashboardController::class, 'getCountJawaban'])->name('admin.get.count.pertanyaan');
+Route::post('/jawaban/pertanyaan', [DashboardController::class, 'getCountJawaban'])->name('admin.get.count.pertanyaan');
+Route::post('/jawaban/pertanyaan/angka', [DashboardController::class, 'getAngkaResult'])->name('admin.get.angka.result');
 Route::post('/bagian/update/', [FormController::class, 'updateFirstOrLast'])->name('admin.bagian.update.first.Last');
+Route::post('/get-users', [DashboardController::class, 'getUsers'])->name('admin.get.users');
+Route::get('/filter', [DashboardController::class, 'filterData'])->name('admin.get.filter');
+
+Route::post('/get-tahun-mengisi', [DashboardController::class, 'getTahunMengisi'])->name('admin.get.tahun.mengisi');
+Route::post('/get-filtered-data', [DashboardController::class, 'getfilteredData'])->name('admin.get.filterd.data');
+Route::post('/get-alumni-data', [DashboardController::class, 'getAlumniData'])->name('admin.get.alumni.data');
+
 // Route::group(['middleware' => ['api']], function () {
 
 // Route::post('/sesi', [UserController::class, 'sesi'])->name('admin.sesi');

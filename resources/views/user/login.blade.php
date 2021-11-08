@@ -100,7 +100,7 @@
                             <div class="sh-11">
                                 <a href="index.html">
                                     <!-- <div class="logo-default"></div> -->
-                                    <img src="{{asset('/')}}logo-silanni.jpeg" alt="logo" width="150">
+                                    <img src="{{asset('/')}}logo-silanni-22.png" alt="logo" width="150">
 
                                 </a>
                             </div>
@@ -128,6 +128,10 @@
 
                                 <button onclick="login()" type="submit" class="btn btn-lg btn-primary">Login</button>
                             </div>
+                            <div class="mt-3">
+                                <a class="btn btn-warning btn-sm" target="_blank" href="https://drive.google.com/file/d/1Yf5yNQamMef3QsaxlLEB8Ny79IOt35hG/view?usp=sharing">Download Panduan</a>
+                            </div>
+
                         </div>
                     </div>
                 </div>

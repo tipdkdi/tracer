@@ -10,6 +10,8 @@
             <form action="{{route('user.store.jawaban',$bagianData->id)}}" method="post" enctype="multipart/form">
                 @csrf
                 <input type="hidden" name="step_id" value="{{$bagianData->id}}">
+                <input type="hidden" name="awal" value="{{$awal}}">
+                <input type="hidden" name="akhir" value="{{$akhir}}">
                 @foreach ($bagianData->pertanyaan as $tanya)
                 {!!$tanya->form!!}
                 @endforeach
@@ -50,12 +52,32 @@
     }
 
     function showTextInput(event, pertanyaanId) {
-        // console.log(event.target.parentNode.parentNode);
+        console.log(`${event.target.type} - ${event.target.checked}`);
+        if (event.target.type === "checkbox") {
+            if (event.target.checked == false)
+                return removeTextInput(event, pertanyaanId)
+        }
+        if (event.target.type === "select-one") {
+            if (event.target.value == "lainnya") {
+                if (!event.target.parentNode.parentNode.contains(document.querySelector("#lainnya_" + pertanyaanId))) {
+                    let input = document.createElement('input');
+                    input.className = 'form-control'
+                    input.name = `lainnya[${pertanyaanId}]`
+                    input.id = `lainnya_${pertanyaanId}`
+                    // event.target.removeAttribute('onclick')
+                    event.target.closest('div').after(input)
+                    return
+                }
+            } else {
+                return removeTextInput(event, pertanyaanId)
+            }
+        }
         if (!event.target.parentNode.parentNode.contains(document.querySelector("#lainnya_" + pertanyaanId))) {
             let input = document.createElement('input');
             input.className = 'form-control'
             input.name = `lainnya[${pertanyaanId}]`
             input.id = `lainnya_${pertanyaanId}`
+            input.setAttribute('required', 'required')
             // event.target.removeAttribute('onclick')
             event.target.closest('div').after(input);
         }

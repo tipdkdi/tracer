@@ -28,60 +28,48 @@
 
     </div>
 </div>
+<!-- <canvas id="example" width="300" height="300"></canvas> -->
+
 @endsection
 @section('js')
-<!-- <script>
-    class Charts {
-        constructor() {
-            // Initialization of the page plugins
-            if (typeof Chart === 'undefined') {
-                console.log('Chart is undefined!');
-                return;
-            }
-            this._pieChart = null;
-            this._initPieChart();
-            _initPieChart() {
-                if (document.getElementById('pieChart')) {
-                    const pieChart = document.getElementById('pieChart');
-                    this._pieChart = new Chart(pieChart, {
-                        type: 'pie',
-                        data: {
-                            labels: ['Breads', 'Pastry', 'Patty'],
-                            datasets: [{
-                                label: '',
-                                borderColor: [Globals.primary, Globals.secondary, Globals.tertiary],
-                                backgroundColor: ['rgba(' + Globals.primaryrgb + ',0.1)', 'rgba(' + Globals.secondaryrgb + ',0.1)', 'rgba(' + Globals.tertiaryrgb + ',0.1)'],
-                                borderWidth: 2,
-                                data: [15, 25, 20],
-                            }, ],
-                        },
-                        draw: function() {},
-                        options: {
-                            plugins: {
-                                datalabels: {
-                                    display: false
-                                },
-                            },
-                            responsive: true,
-                            maintainAspectRatio: false,
-                            title: {
-                                display: false,
-                            },
-                            layout: {
-                                padding: {
-                                    bottom: 20,
-                                },
-                            },
-                            legend: {
-                                position: 'bottom',
-                                labels: ChartsExtend.LegendLabels(),
-                            },
-                            tooltips: ChartsExtend.ChartTooltip(),
-                        },
-                    });
-                }
-            }
-        }
-    }
-</script> -->
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+</script>
+<script src="{{asset('/')}}radarGraph.min.js"></script>
+<script>
+    $(function() {
+        $('#example').radarGraph({
+            labels: [
+                'aaa',
+                'data point2',
+                'data point3',
+                'data point4',
+            ],
+            borderOffset: 1,
+
+            chartData: {
+                // color accepts hex value also : #666666
+                '0': {
+                    'name': 'thing1',
+                    'score': [20, 15, 15, 16.6],
+                    'color': 'red'
+                },
+                '1': {
+                    'name': 'thing2',
+                    'score': [17, 15, 15, 15.6],
+                    'color': 'blue'
+                },
+                '2': {
+                    'name': 'thing3',
+                    'score': [20, 25, 20, 21.6],
+                    'color': 'green'
+                },
+                '3': {
+                    'name': 'thing4',
+                    'score': [25, 15, 25, 21.6],
+                    'color': 'purple'
+                },
+            },
+        });
+    });
+</script>
 @endsection

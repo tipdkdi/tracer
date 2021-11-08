@@ -23,7 +23,8 @@ Route::get('/', function () {
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/statistik', [DashboardController::class, 'statistik'])->name('admin.report.index');
+    Route::get('/statistik/bagian', [DashboardController::class, 'statistik_bagian'])->name('admin.statistik.bagian');
+    Route::get('/statistik/data-alumni', [DashboardController::class, 'statistik_data_alumni'])->name('admin.statistik.data.alumni');
     //bagian 
     Route::get('/bagian', [FormController::class, 'index'])->name('admin.bagian.index');
     Route::get('/bagian/tambah', [FormController::class, 'create'])->name('admin.bagian.create');
@@ -47,6 +48,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/bagian/pengaturan/direct', [FormController::class, 'bagianDirect'])->name('admin.bagian.set.urutan');
     Route::get('/bagian/pengaturan/', [FormController::class, 'bagianPengaturan'])->name('admin.bagian.set');
     Route::get('/data-alumni', [DashboardController::class, 'dataAlumni'])->name('admin.data.alumni');
+    Route::get('/data-alumni/{userId}/data-jawaban', [DashboardController::class, 'detailJawaban'])->name('admin.get.detail.jawaban');
+    // Route::get('/data-alumni/{userId}/data-jawaban', [DashboardController::class, 'detailJawaban'])->name('admin.get.detail.jawaban');
 });
 
 

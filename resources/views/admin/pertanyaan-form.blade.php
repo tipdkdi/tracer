@@ -144,12 +144,12 @@
             const button = templateButton.content.cloneNode(true);
             pilihanJawabanButton.appendChild(button)
             // if (jawabanValue != "Select") {
-            if (jawabanValue != "Select" && jawabanValue != "Lebih Dari Satu Jawaban") {
+            // if (jawabanValue != "Select" && jawabanValue != "Lebih Dari Satu Jawaban") {
 
-                const lainnyaTemplate = document.querySelector("#lainnyaTemplate")
-                const lainnya = lainnyaTemplate.content.cloneNode(true);
-                lainnyaContainer.appendChild(lainnya)
-            }
+            const lainnyaTemplate = document.querySelector("#lainnyaTemplate")
+            const lainnya = lainnyaTemplate.content.cloneNode(true);
+            lainnyaContainer.appendChild(lainnya)
+            // }
             const add = document.querySelector("#addPilihan")
             add.addEventListener('click', function() {
                 addElement()

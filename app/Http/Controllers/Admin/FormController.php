@@ -12,6 +12,7 @@ use App\Models\Jawaban;
 use App\Models\BagianDirect;
 use App\Models\FirstOrLast;
 use App\Models\TextProperties;
+use App\Models\UserSesi;
 use Illuminate\Support\Facades\DB;
 
 class FormController extends Controller
@@ -105,6 +106,7 @@ class FormController extends Controller
             ];
             $pertanyaan = TextProperties::create($dataTextProperties);
         } else if ($jenisJawaban != "Text" && $jenisJawaban != "Text Panjang") {
+            $i = 1;
             foreach ($request->jawaban as $index => $jawaban) {
                 $data =
                     [
@@ -114,6 +116,17 @@ class FormController extends Controller
 
                     ];
                 $dataJawaban[] = $data;
+                $i++;
+            }
+            if (isset($request->addLainnya)) {
+                $lainnya =
+                    [
+                        'pertanyaan_id' => $pertanyaan->id,
+                        'pilihan_jawaban' => "lainnya",
+                        'urutan' => $i,
+
+                    ];
+                $dataJawaban[] = $lainnya;
             }
             // return $dataJawaban;
             JawabanJenis::insert($dataJawaban);
@@ -157,6 +170,7 @@ class FormController extends Controller
             ];
             $pertanyaan = TextProperties::create($dataTextProperties);
         } else if ($jenisJawaban != "Text" && $jenisJawaban != "Text Panjang") {
+            $i = 1;
             foreach ($request->jawaban as $index => $jawaban) {
                 $data =
                     [
@@ -166,6 +180,17 @@ class FormController extends Controller
 
                     ];
                 $dataJawaban[] = $data;
+                $i++;
+            }
+            if (isset($request->addLainnya)) {
+                $lainnya =
+                    [
+                        'pertanyaan_id' => $pertanyaan->id,
+                        'pilihan_jawaban' => "lainnya",
+                        'urutan' => $i,
+
+                    ];
+                $dataJawaban[] = $lainnya;
             }
             // return $dataJawaban;
             JawabanJenis::insert($dataJawaban);

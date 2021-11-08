@@ -110,15 +110,17 @@
 
                         @else
                         @foreach($stepData->pertanyaan[0]->jawabanJenis as $item)
+                        @if($item->pilihan_jawaban!="lainnya")
                         <div class="col-md-12 mb-3">
                             <label for="pertanyaan_urutan" class="form-label">Pilihan</label>
                             <input type="text" class="form-control" name="jawaban[]" value="{{$item->pilihan_jawaban}}" required />
                         </div>
+                        @endif
                         @endforeach
                         @endif
                     </div>
                     <div id="lainnya">
-                        @if($stepData->pertanyaan[0]->pertanyaan_jenis_jawaban=="Pilihan" || $stepData->pertanyaan[0]->pertanyaan_jenis_jawaban=="Lebih Dari Satu Jawaban")
+                        @if($stepData->pertanyaan[0]->pertanyaan_jenis_jawaban=="Pilihan" || $stepData->pertanyaan[0]->pertanyaan_jenis_jawaban=="Lebih Dari Satu Jawaban" || $stepData->pertanyaan[0]->pertanyaan_jenis_jawaban=="Select")
 
                         <div class="col-md-12">
                             <div class="form-check">

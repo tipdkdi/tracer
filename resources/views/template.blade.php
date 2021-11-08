@@ -13,7 +13,7 @@
                 <div class="logo position-relative">
                     <a href="index.html">
                         <!-- Logo can be added directly -->
-                        <img src="{{asset('/')}}logo-silanni-2.png" alt="logo">
+                        <img src="{{asset('/')}}logo-silanni-22.png" alt="logo">
                         <!-- <br><span style="font-size:20px;font-weight: 600;color:white">SI LANNI</span> -->
 
                         <!-- Or added via css to provide different ones for different color themes -->
@@ -27,7 +27,7 @@
                 <!-- User Menu Start -->
                 <div class="user-container d-flex">
                     <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="profile" alt="profile" src="{{asset('/')}}img/profile/profile-11.jpg" />
+                        <img class="profile" alt="profile" src="{{asset('/')}}icon.jpeg" />
                         <div class="name">Administrator</div>
                     </a>
                     <div class="dropdown-menu dropdown-menu-end user-menu wide">
@@ -166,10 +166,22 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('admin.report.index')}}">
+                            <a href="#statistik">
                                 <i data-cs-icon="chart-2" class="icon" data-cs-size="18"></i>
                                 <span class="label">Statistik</span>
                             </a>
+                            <ul id="statistik">
+                                <li>
+                                    <a href="{{route('admin.statistik.data.alumni')}}">
+                                        <span class="label">Data Alumni</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{route('admin.statistik.bagian')}}">
+                                        <span class="label">Bagian</span>
+                                    </a>
+                                </li>
+                            </ul>
                         </li>
                         <li>
                             <a href="{{ route('logout') }}" onclick="event.preventDefault();
