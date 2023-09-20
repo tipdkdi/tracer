@@ -126,7 +126,7 @@
                                     <input type="date" class="form-control" placeholder="Masukkan Tanggal Lahir" name="tgl_lahir" id="tgl_lahir" />
                                 </div>
 
-                                <button onclick="login()" type="submit" class="btn btn-lg btn-primary">Login</button>
+                                <button onclick="login()" class="btn btn-lg btn-primary">Login</button>
                             </div>
                             <div class="mt-3">
                                 <a class="btn btn-warning btn-sm" target="_blank" href="https://drive.google.com/file/d/1Yf5yNQamMef3QsaxlLEB8Ny79IOt35hG/view?usp=sharing">Download Panduan</a>
