@@ -168,6 +168,7 @@
 
     <script>
         async function login() {
+            return alert('sedang perbaikan')
             let dataSend = new FormData()
             let nim = document.querySelector("#nim")
             let tglLahir = document.querySelector("#tgl_lahir")
