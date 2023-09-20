@@ -14,7 +14,27 @@
         <p><b>Petunjuk</b> : <br>
 
             Berikan jawaban pada tiap-tiap pertanyaan yang telah disediakan berikut ini sesuai dengan keadaan Anda.</p>
-        <a href="{{route('user.show.pertanyaan',$first->step_id_first)}}" class="btn btn-primary">Isi Kuisioner</a>
+        <select id="periode" class="form-control mb-3">
+            <option value="">Pilih Periode Tahun Pengisian</option>
+            <option value="2020">2020</option>
+            <option value="2021">2021</option>
+            <option value="2022">2022</option>
+            <option value="2023">2023</option>
+        </select>
+        <button onclick="showsesi()" class="btn btn-primary">Isi Kuisioner</button>
     </div>
 </div>
+@endsection
+
+@section('js')
+<script>
+    function showsesi() {
+        let periode = document.querySelector('#periode')
+        if (periode.value == "")
+            return alert('Mohon Pilih Periode!')
+        let url = "{{route('user.show.pertanyaan',[':periode',$first->step_id_first])}}"
+        url = url.replace(':periode', periode.value)
+        window.location.href = url
+    }
+</script>
 @endsection

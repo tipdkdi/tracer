@@ -7,7 +7,20 @@
 <section class="scroll-section" id="textContent">
     <div class="card mb-5">
         <div class="card-body d-flex flex-column">
-            <h3 class="card-title mb-4">Pilih Filter</h3>
+            <h3 class="card-title mb-1">Periode</h3>
+            <div class="row">
+                <div class="col-md-12">
+
+                    <select class="form-select" id="periode">
+                        <option value="">Pilih Periode</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </div>
+            </div>
+            <h3 class="card-title my-2">Filter</h3>
             <div class="row">
 
                 <div class="col-md-12 mb-3">
@@ -106,11 +119,18 @@
     })
     document.querySelector("#filter").addEventListener('click', async function() {
 
+        if (periode.value == "")
+            return alert('pilih periode')
+        let url = "{{route('get.user.periode',':periode')}}"
+        url = url.replace(':periode', periode.value)
+        let send = await fetch(url)
+        let response = await send.json()
+
         let jenis = document.querySelector('#jenis')
         let dataId = []
-        let dataUser = @json($dataUser);
+        let dataUser = response;
         dataUser.forEach(function(data) {
-            dataId.push(data.name);
+            dataId.push(data.user.name);
         });
         let dataWhere = {};
         if (fakultas.options[fakultas.selectedIndex].value != "" && fakultas.options[fakultas.selectedIndex].value != "semua")
@@ -201,12 +221,14 @@
             // console.log(dataId);
             dataSend = new FormData()
             dataSend.append('iddata', JSON.stringify(dataId))
+            dataSend.append('periode', periode.value)
             response = await fetch('{{route("admin.get.users")}}', {
                 method: "POST",
                 body: dataSend
             })
             responseMessage = await response.json()
             let usersid = []
+            console.log(responseMessage);
             responseMessage.forEach(function(data) {
                 usersid.push(data.id)
             })

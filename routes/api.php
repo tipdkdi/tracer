@@ -35,8 +35,10 @@ Route::post('/get-users', [DashboardController::class, 'getUsers'])->name('admin
 Route::get('/filter', [DashboardController::class, 'filterData'])->name('admin.get.filter');
 
 Route::post('/get-tahun-mengisi', [DashboardController::class, 'getTahunMengisi'])->name('admin.get.tahun.mengisi');
-Route::post('/get-filtered-data', [DashboardController::class, 'getfilteredData'])->name('admin.get.filterd.data');
+Route::post('/get-filtered-data/periode/{periode}', [DashboardController::class, 'getfilteredData'])->name('admin.get.filterd.data');
 Route::post('/get-alumni-data', [DashboardController::class, 'getAlumniData'])->name('admin.get.alumni.data');
+
+Route::get('/user/periode/{periode}', [DashboardController::class, 'getUserPeriode'])->name('get.user.periode');
 
 // Route::group(['middleware' => ['api']], function () {
 

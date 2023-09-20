@@ -6,9 +6,20 @@
     <div class="card mb-5">
         <div class="card-body">
 
+            <h4>Periode</h4>
+            <div class="row">
+                <div class="col-md-12 mb-3">
+                    <select class="form-select" id="periode" onchange="showData()">
+                        <option value="">Pilih Periode</option>
+                        <option value="2020">2020</option>
+                        <option value="2021">2021</option>
+                        <option value="2022">2022</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </div>
+            </div>
             <h4>Filter</h4>
             <div class="row">
-
                 <div class="col-md-3">
                     <select class="form-select" id="fakultas">
                     </select>
@@ -23,6 +34,9 @@
                 </div>
                 <div class="col-md-3">
                     <button class="btn btn-primary" id="filter">Filter</button>
+                </div>
+                <div class="col-md-3 my-3">
+                    <button class="btn btn-info" id="cetak" onclick="goCetak()" disabled="disabled">cetak</button>
                 </div>
             </div>
         </div>
@@ -60,13 +74,38 @@
 @endsection
 @section('js')
 <script>
-    showData()
+    // showData()
+
+    function goCetak() {
+        let url = "{{route('admin.cetak',':periode')}}"
+        url = url.replace(':periode', document.querySelector('#periode').value)
+        window.location.href = url
+    }
     async function showData() {
+        const periode = document.querySelector('#periode');
+        const cetak = document.querySelector('#cetak');
+        if (periode.value == "") {
+            cetak.disabled = true
+            // cetak.disabled = false
+            return alert('pilih periode')
+        }
+        cetak.disabled = false
+        // cetak
+        let url = "{{route('get.user.periode',':periode')}}"
+        url = url.replace(':periode', periode.value)
+        let send = await fetch(url)
+        let response = await send.json()
+        // return console.log(response)
         let dataSend = new FormData()
         let dataId = []
-        let dataUser = @json($dataUser);
+        let dataUser = response;
+        let fragment = document.createDocumentFragment();
+        let showDataTable = document.querySelector("#show-data-table")
+        if (response.length == 0)
+            return showDataTable.innerHTML = "<tr class='text-center'><td colspan='8'>Data tidak ada</td></tr>"
+        showDataTable.innerHTML = ""
         dataUser.forEach(function(data) {
-            dataId.push(data.name);
+            dataId.push(data.user.name);
         });
         // console.log(dataId);
         dataSend.append('iddata', JSON.stringify(dataId))
@@ -75,18 +114,17 @@
             body: dataSend
         })
         responseMessage = await response.json()
+        console.log(responseMessage);
         dataSend = new FormData()
 
         dataSend.append('data', JSON.stringify(responseMessage.data))
+        dataSend.append('periode', periode.value)
         response = await fetch('{{route("admin.get.alumni.data")}}', {
             method: "POST",
             body: dataSend
         })
         responseMessage = await response.json()
         console.log(responseMessage);
-        let fragment = document.createDocumentFragment();
-        let showDataTable = document.querySelector("#show-data-table")
-
         responseMessage.forEach(function(data, i) {
             let tr = document.createElement('tr');
             let nomor = document.createElement('td');
@@ -106,8 +144,10 @@
             let link = document.createElement('td');
             let linkDetail = document.createElement('a');
             linkDetail.innerText = "Detail"
-            let url = "{{route('admin.get.detail.jawaban',':userId')}}"
-            url = url.replace(':userId', data.iddata)
+            if (data.sesi_id == '-')
+                linkDetail.innerText = "-"
+            let url = "{{route('admin.get.detail.jawaban',':sesiId')}}"
+            url = url.replace(':sesiId', data.sesi_id)
             linkDetail.href = url
             link.appendChild(linkDetail)
             // kelamin.innerText = data.kelamin
@@ -123,7 +163,7 @@
         })
         showDataTable.appendChild(fragment)
 
-        console.log(responseMessage);
+        // console.log(responseMessage);
     }
     init()
     async function init() {
@@ -187,6 +227,9 @@
 
     document.querySelector("#filter").addEventListener('click', async function() {
         // alert("mantap")
+        const periode = document.querySelector('#periode');
+        if (periode.value == "")
+            return alert('pilih periode')
         let dataWhere = {};
         if (fakultas.options[fakultas.selectedIndex].value != "" && fakultas.options[fakultas.selectedIndex].value != "semua")
             dataWhere["tb_mstprodi.idfakultas"] = fakultas.options[fakultas.selectedIndex].value;
@@ -200,7 +243,8 @@
         else
             dataSend.append('filter', tahunLulus.options[tahunLulus.selectedIndex].value)
 
-        url = "{{route('admin.get.filterd.data')}}"
+        url = "{{route('admin.get.filterd.data',':periode')}}"
+        url = url.replace(':periode', document.querySelector('#periode').value)
         response = await fetch(url, {
             method: "POST",
             body: dataSend
@@ -219,6 +263,7 @@
         dataSend = new FormData()
 
         dataSend.append('data', JSON.stringify(responseMessage.data))
+        dataSend.append('periode', periode.value)
         response = await fetch('{{route("admin.get.alumni.data")}}', {
             method: "POST",
             body: dataSend
@@ -247,9 +292,9 @@
             kelamin.innerText = data.kelamin
             let link = document.createElement('td');
             let linkDetail = document.createElement('a');
-            linkDetail.innerText = "Detail"
             let url = "{{route('admin.get.detail.jawaban',':userId')}}"
-            url = url.replace(':userId', data.iddata)
+            linkDetail.innerText = "Detail"
+            url = url.replace(':userId', data.sesi_id)
             linkDetail.href = url
             link.appendChild(linkDetail)
             // kelamin.innerText = data.kelamin

@@ -186,7 +186,7 @@
             responseMessage = await response.json()
             if (responseMessage.status == "sukses") {
                 // return console.log(responseMessage.data[0].iddata)
-                window.location = `http://127.0.0.1:8000/user/sesi/${responseMessage.data[0].iddata}`;
+                window.location = `https://tracerstudy.iainkendari.ac.id/user/sesi/${responseMessage.data[0].iddata}`;
 
             } else {
                 alert('Nim atau Tanggal Lahir tidak sesuai, atau tidak terdaftar sebagai Alumni')

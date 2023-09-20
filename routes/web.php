@@ -22,6 +22,7 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
+    Route::get('/cetak/periode/{periode}', [DashboardController::class, 'cetak'])->name('admin.cetak');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/statistik/bagian', [DashboardController::class, 'statistik_bagian'])->name('admin.statistik.bagian');
     Route::get('/statistik/data-alumni', [DashboardController::class, 'statistik_data_alumni'])->name('admin.statistik.data.alumni');
@@ -64,7 +65,7 @@ Route::group(['prefix' => 'user'], function () {
     Route::group(['middleware' => 'usersesi'], function () {
         Route::get('/logout', [UserController::class, 'logout'])->name('user.logout');
         Route::get('/dashboard', [UserController::class, 'index'])->name('user.index');
-        Route::get('/bagian/{bagianId}', [UserController::class, 'showPertanyaan'])->name('user.show.pertanyaan');
+        Route::get('/periode/{periode}/bagian/{bagianId}', [UserController::class, 'showPertanyaan'])->name('user.show.pertanyaan');
         Route::post('/bagian/simpan-jawaban/{bagianId}', [UserController::class, 'storeJawaban'])->name('user.store.jawaban');
     });
 });

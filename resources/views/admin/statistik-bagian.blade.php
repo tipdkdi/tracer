@@ -1,13 +1,26 @@
 @extends('template')
 
+@section('css')
+<link rel="stylesheet" href="{{asset('/')}}css/vendor/select2.min.css" />
+<link rel="stylesheet" href="{{asset('/')}}css/vendor/select2-bootstrap4.min.css" />
+@endsection
 @section('content')
+
 
 <!-- Form Row Start -->
 <!-- Text Content Start -->
 <section class="scroll-section" id="textContent">
     <div class="card mb-5">
         <div class="card-body d-flex flex-column">
-            <h3 class="card-title mb-4">Statistik Kuisioner</h3>
+            <h3 class="card-title mb-2">Periode</h3>
+            <select class="form-select" id="periode">
+                <option value="">Pilih Periode</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+            </select>
+            <h3 class="card-title my-2">Statistik Kuisioner</h3>
             <select class="form-select" id="bagian">
                 <option value="">Pilih Bagian</option>
                 @foreach ($bagian as $item)
@@ -36,12 +49,13 @@
                     </select>
                 </div>
                 <div class="col-md-3">
-                    <select class="form-select" id="tahun-lulus">
+                    <select multiple="multiple" class="form-select" id="tahun-lulus">
                     </select>
                 </div>
                 <div class="col-md-3">
                     <button class="btn btn-warning" id="filter">Filter</button>
                 </div>
+
             </div>
             <!-- <h2>Rekap</h2> -->
 
@@ -104,7 +118,8 @@
 @endsection
 @section('js')
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-
+<script src="{{asset('/')}}js/vendor/select2.full.min.js"></script>
+<script src="{{asset('/')}}js/forms/controls.select2.js"></script>
 <script>
     let bagian = document.querySelector("#bagian")
 
@@ -166,7 +181,7 @@
                     body: dataForm
                 })
                 responseMessage = await response.json()
-                console.log(pertanyaan.options[pertanyaan.selectedIndex].value);
+                // console.log(pertanyaan.options[pertanyaan.selectedIndex].value);
                 const resultTemplate = document.querySelector("#resultTemplate")
                 const result = resultTemplate.content.cloneNode(true);
                 resultShow.appendChild(result)
@@ -274,7 +289,7 @@
             response = await fetch('{{route("admin.get.filter")}}')
             responseMessage = await response.json()
             let fragment = document.createDocumentFragment();
-
+            console.log(responseMessage);
             responseMessage.forEach(function(data, i) {
                 let option = document.createElement('option');
                 option.innerText = data.pilihan_jawaban
@@ -320,19 +335,28 @@
         });
     });
     document.querySelector("#filter").addEventListener('click', async function() {
+
         const pertanyaanId = pertanyaan.options[pertanyaan.selectedIndex].value
         let dataWhere = {};
         if (fakultas.options[fakultas.selectedIndex].value != "" && fakultas.options[fakultas.selectedIndex].value != "semua")
             dataWhere["tb_mstprodi.idfakultas"] = fakultas.options[fakultas.selectedIndex].value;
-        if (prodi.options[prodi.selectedIndex].value != "" && fakultas.options[fakultas.selectedIndex].value != "semua")
+        if (prodi.options[prodi.selectedIndex].value != "" && prodi.options[prodi.selectedIndex].value != "semua")
             dataWhere["tb_data.idprodi"] = prodi.options[prodi.selectedIndex].value;
 
-        let dataId = []
-        let dataUser = @json($dataUser);
-        dataUser.forEach(function(data) {
-            dataId.push(data.name);
-        });
+        const periode = document.querySelector('#periode');
+        if (periode.value == "")
+            return alert('pilih periode')
+        let url = "{{route('get.user.periode',':periode')}}"
+        url = url.replace(':periode', periode.value)
+        let send = await fetch(url)
+        let response = await send.json()
 
+        let dataId = []
+        let dataUser = response;
+        dataUser.forEach(function(data) {
+            dataId.push(data.user.name);
+        });
+        console.log(dataId);
         dataSend = new FormData()
         dataSend.append('iddata', JSON.stringify(dataId))
         dataSend.append('where', JSON.stringify(dataWhere))
@@ -341,12 +365,15 @@
             body: dataSend
         })
         responseMessage = await response.json()
+        console.log(responseMessage);
         dataId = []
         responseMessage.data.forEach(function(data) {
             dataId.push(data.iddata);
         });
+        console.log(dataId);
         dataSend = new FormData()
         dataSend.append('iddata', JSON.stringify(dataId))
+        dataSend.append('periode', periode.value)
         response = await fetch('{{route("admin.get.users")}}', {
             method: "POST",
             body: dataSend
@@ -354,18 +381,28 @@
         responseMessage = await response.json()
         let usersid = []
         responseMessage.forEach(function(data) {
-            usersid.push(data.id)
+            usersid.push(data.id) //disini push sesi id untuk di cek di jawaban
         })
         console.log(usersid);
         let tahunLulus = document.querySelector("#tahun-lulus")
 
         dataSend = new FormData()
         dataSend.append('pertanyaanId', pertanyaanId)
-        dataSend.append('usersId', JSON.stringify(usersid))
-        if (tahunLulus.options[tahunLulus.selectedIndex].value == "" || tahunLulus.options[tahunLulus.selectedIndex].value == "semua")
+        dataSend.append('sesiId', JSON.stringify(usersid)) //disini kirim sesi id nya
+        if (tahunLulus.options[tahunLulus.selectedIndex].value == "" || tahunLulus.options[tahunLulus.selectedIndex].value == "semua") {
+
             dataSend.append('filter', '-')
-        else
-            dataSend.append('filter', tahunLulus.options[tahunLulus.selectedIndex].value)
+        } else {
+            var selected = [];
+            for (var option of document.getElementById('tahun-lulus').options) {
+                if (option.selected) {
+                    selected.push(option.value);
+                }
+            }
+            console.log(selected);
+            // return;
+            dataSend.append('filter', JSON.stringify(selected))
+        }
 
 
         //mulai dari sini bedami untuk yang angka
@@ -478,6 +515,7 @@
         let optionPilih = document.createElement('option');
         optionPilih.innerText = `Pilih ${text}`
         optionPilih.value = ""
+        optionPilih.selected = true
         pilihan.appendChild(optionPilih)
         let optionSemua = document.createElement('option');
         optionSemua.innerText = `Semua ${text}`
