@@ -111,7 +111,7 @@
                             <div class="mb-5">
                                 <p class="h6">Masukkan NIM dan Tanggal Lahir untuk masuk.</p>
                                 <p class="h6">
-                                    Halaman ini khusus untuk alumni saja ya!!!.
+                                    Halaman ini khusus untuk alumni saja ya.
                                 </p>
                             </div>
                             <div>
