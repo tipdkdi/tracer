@@ -168,6 +168,7 @@
 
     <script>
         async function login() {
+            return alert('sementara pengembangan')
             let base_url = 'http://127.0.0.1:8000'
             // return alert('sedang perbaikan')
             let dataSend = new FormData()
