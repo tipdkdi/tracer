@@ -77,6 +77,8 @@ class FormController extends Controller
     {
         $data['title'] = "Tambah Pertanyaan";
         $data['stepData'] = Step::find($bagianId);
+        $data['bagian'] = Step::with('stepChild')->whereNull('step_parent')->orderBy('step_urutan', 'ASC')->get();
+
         // return $data;
         return view('admin.pertanyaan-form', $data);
     }
@@ -118,16 +120,16 @@ class FormController extends Controller
                 $dataJawaban[] = $data;
                 $i++;
             }
-            if (isset($request->addLainnya)) {
-                $lainnya =
-                    [
-                        'pertanyaan_id' => $pertanyaan->id,
-                        'pilihan_jawaban' => "lainnya",
-                        'urutan' => $i,
+            // if (isset($request->addLainnya)) {
+            //     $lainnya =
+            //         [
+            //             'pertanyaan_id' => $pertanyaan->id,
+            //             'pilihan_jawaban' => "lainnya",
+            //             'urutan' => $i,
 
-                    ];
-                $dataJawaban[] = $lainnya;
-            }
+            //         ];
+            //     $dataJawaban[] = $lainnya;
+            // }
             // return $dataJawaban;
             JawabanJenis::insert($dataJawaban);
         }
@@ -182,16 +184,16 @@ class FormController extends Controller
                 $dataJawaban[] = $data;
                 $i++;
             }
-            if (isset($request->addLainnya)) {
-                $lainnya =
-                    [
-                        'pertanyaan_id' => $pertanyaan->id,
-                        'pilihan_jawaban' => "lainnya",
-                        'urutan' => $i,
+            // if (isset($request->addLainnya)) {
+            //     $lainnya =
+            //         [
+            //             'pertanyaan_id' => $pertanyaan->id,
+            //             'pilihan_jawaban' => "lainnya",
+            //             'urutan' => $i,
 
-                    ];
-                $dataJawaban[] = $lainnya;
-            }
+            //         ];
+            //     $dataJawaban[] = $lainnya;
+            // }
             //return $dataJawaban;
             JawabanJenis::insert($dataJawaban);
         }
@@ -239,9 +241,18 @@ class FormController extends Controller
     public function bagianPengaturan()
     {
         $data['title'] = "Pengaturan Bagian";
+        $bagian = Step::all();
+        $firstAndLast = FirstOrLast::with(['stepFirst', 'stepLast'])->count();
+        // return $bagian[1]->id;
+        if ($firstAndLast == 0) {
+            FirstOrLast::insert([
+                'step_id_first' => $bagian[0]->id,
+                'step_id_last' => $bagian[0]->id,
+            ]);
+        }
         $data['firstOrLast'] = FirstOrLast::with(['stepFirst', 'stepLast'])->get();
-        $data['bagianList'] = Step::all();
-
+        $data['bagianList'] = $bagian;
+        // step_urutan
         return view('admin.bagian-pengaturan', $data);
         return $data;
     }
@@ -316,5 +327,17 @@ class FormController extends Controller
         } catch (\Throwable $e) {
             return array("status" => "gagal");
         }
+    }
+
+    public function getPertanyaanBagian($bagianId)
+    {
+        $data = Step::with(['pertanyaan'])->find($bagianId);
+        return $data;
+    }
+
+    public function getPilihanPertanyaan($pertanyaanId)
+    {
+        $data = Pertanyaan::with(['jawabanJenis'])->find($pertanyaanId);
+        return $data;
     }
 }

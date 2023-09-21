@@ -23,6 +23,7 @@
             <i data-cs-icon="plus"></i>
             <span>Tambah Pertanyaan</span>
         </a>
+
     </div>
     <div class="card mb-5">
         <div class="card-body">
@@ -66,4 +67,9 @@
 </section>
 <!-- Form Row End -->
 
+@endsection
+@section('js')
+<script>
+
+</script>
 @endsection

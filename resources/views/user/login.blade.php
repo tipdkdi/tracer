@@ -168,7 +168,8 @@
 
     <script>
         async function login() {
-            return alert('sedang perbaikan')
+            let base_url = 'http://127.0.0.1:8000'
+            // return alert('sedang perbaikan')
             let dataSend = new FormData()
             let nim = document.querySelector("#nim")
             let tglLahir = document.querySelector("#tgl_lahir")
@@ -187,7 +188,7 @@
             responseMessage = await response.json()
             if (responseMessage.status == "sukses") {
                 // return console.log(responseMessage.data[0].iddata)
-                window.location = `https://tracerstudy.iainkendari.ac.id/user/sesi/${responseMessage.data[0].iddata}`;
+                window.location = `${base_url}/user/sesi/${responseMessage.data[0].iddata}`;
 
             } else {
                 alert('Nim atau Tanggal Lahir tidak sesuai, atau tidak terdaftar sebagai Alumni')

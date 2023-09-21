@@ -17,11 +17,13 @@ class CreateJawabansTable extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('pertanyaan_id');
+            $table->unsignedBigInteger('sesi_id');
             $table->string('jawaban');
 
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pertanyaan_id')->references('id')->on('pertanyaans');
+            $table->foreign('sesi_id')->references('id')->on('user_sesi_id');
         });
     }
 

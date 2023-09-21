@@ -21,10 +21,15 @@
                         <td scope="row">1</td>
                         <td scope="row">Pertanyaan Awal</td>
                         <td>
+                            @if(count($firstOrLast)!=0)
                             @if($firstOrLast[0]->stepFirst==null)
                             <a type="button" onclick="choose(event)" href="#" data-jenis="first" data-id="{{$firstOrLast[0]->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Tentukan</a>
                             @else
                             <a type="button" onclick="choose(event)" href="#" data-jenis="first" data-id="{{$firstOrLast[0]->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">{{$firstOrLast[0]->stepFirst->step_kode."-".$firstOrLast[0]->stepFirst->step_nama}}</a>
+                            @endif
+                            @else
+                            <a type="button" onclick="choose(event)" href="#" data-jenis="first" data-id="{{$firstOrLast[0]->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Tentukan</a>
+
                             @endif
                         </td>
                     </tr>
@@ -32,10 +37,15 @@
                         <td scope="row">2</td>
                         <td scope="row">Pertanyaan Akhir</td>
                         <td>
+                            @if(count($firstOrLast)!=0)
+
                             @if($firstOrLast[0]->stepLast==null)
                             <a type="button" onclick="choose(event)" href="#" data-jenis="last" data-id="{{$firstOrLast[0]->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Tentukan</a>
                             @else
                             <a type="button" onclick="choose(event)" href="#" data-jenis="last" data-id="{{$firstOrLast[0]->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">{{$firstOrLast[0]->stepLast->step_kode."-".$firstOrLast[0]->stepLast->step_nama}}</a>
+                            @endif
+                            @else
+                            <a type="button" onclick="choose(event)" href="#" data-jenis="last" data-id="{{$firstOrLast[0]->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Tentukan</a>
                             @endif
                         </td>
                     </tr>
@@ -54,7 +64,7 @@
                 <h2 class="small-title"><span id="modal-title"></span></h2>
                 <select class="form-select mb-3" id="bagian" required>
                     <option value="">Pilih Bagian</option>
-                    @foreach ($bagianList as $bagian)
+                    @foreach($bagianList as $bagian)
                     <option value="{{$bagian->id}}">{{$bagian->step_kode}} - {{$bagian->step_nama}}</option>
                     @endforeach
                 </select>

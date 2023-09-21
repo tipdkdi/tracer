@@ -47,6 +47,8 @@
                         <option value="Lebih Dari Satu Jawaban">Lebih Dari Satu Jawaban</option>
                         <option value="Select">Select</option>
                     </select>
+
+
                 </div>
                 <div id="jawabanButton"></div>
                 <div id="jawabanContainer">
@@ -66,7 +68,41 @@
     </div>
 </section>
 <!-- Form Row End -->
+<!-- Modal  Launch Large-->
+<div class="modal fade" id="lExample" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Copy Pertanyaan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <select onchange="show()" class="form-select mb-3" id="bagian">
+                        <option>Pilih Bagian</option>
+                        @foreach($bagian as $item)
+                        <option value="{{$item->id}}">{{$item->step_kode}}. {{$item->step_nama}}</option>
+                        @foreach ($item->stepChild as $child)
+                        <option value="{{$child->id}}">&nbsp;&nbsp;&nbsp;- {{$child->step_kode}}. {{$child->step_nama}}</option>
+                        @endforeach
+                        @endforeach
+                    </select>
 
+                    <select onchange="showPilihanPertanyaan()" id="pertanyaanSelect" class="form-select">
+
+                    </select>
+                    <!-- <button></button> -->
+                </div>
+                <div class="col-12 mt-2" id="showPilihan">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 <template id="lainnyaTemplate">
     <div class="col-md-12">
         <div class="form-check">
@@ -107,13 +143,75 @@
 <template id="buttonTemplate">
     <div class="d-flex mt-3">
         <h5 style="margin-right:10px">Tentukan Pilihan Jawaban</h5>
-        <button type="button" id="addPilihan" class="ml-3 btn btn-sm btn-dark">+</button>
+        <button class="btn btn-danger btn-icon btn-icon-start ms-1 mx-2" data-bs-toggle="modal" data-bs-target="#lExample">
+            <i data-cs-icon="plus"></i>
+            <span>Copy Pilihan Jawaban</span>
+        </button>
+        <span>atau</span>
+        <button type="button" id="addPilihan" class="ml-3 btn btn-sm btn-dark mx-2">+ tambah manual</button>
     </div>
 </template>
 @endsection
 
 @section('js')
 <script>
+    async function showPilihanPertanyaan() {
+        let pertanyaan = document.getElementById('pertanyaanSelect')
+        // let pertanyaanId = pertanyaan.value
+        let url = "{{route('get.pilihan.pertanyaan',':id')}}"
+        url = url.replace(':id', pertanyaan.value)
+        let sendRequest = await fetch(url)
+        let response = await sendRequest.json()
+        console.log(response);
+        let contents = '<p>Tidak ada Pilihan Jawaban</p>'
+        if (response.jawaban_jenis.length != 0) {
+            contents = '<ul>'
+            response.jawaban_jenis.map((data) => {
+                contents += `<li>${data.pilihan_jawaban}</li>`
+            })
+            contents += '</ul>'
+            contents += `<div class="mt 2">
+        <button class="btn btn-danger" id="copy"> Copy Pilihan Jawaban</button>
+        </div>`;
+        }
+        document.querySelector('#showPilihan').innerHTML = ''
+        document.querySelector('#showPilihan').innerHTML = contents
+
+        document.querySelector('#copy').addEventListener('click', function() {
+            alert('tercopy, silahkan close')
+            let contentsPaste = ''
+            response.jawaban_jenis.map((data, index) => {
+                contentsPaste += `<div class="col-md-12 mb-3" id="pil_${index+1}">
+            <label for="pertanyaan_urutan" class="form-label">Pilihan Jawaban ${index+1}</label>
+            <input type="text" class="form-control" name="jawaban[]" value="${data.pilihan_jawaban}" required />
+        </div>`
+            })
+            document.querySelector('#jawaban').innerHTML = ''
+            document.querySelector('#jawaban').innerHTML = contentsPaste
+        })
+
+
+    }
+    async function copy() {
+        // alert('tercopy')
+
+    }
+    async function show() {
+        let bagian = document.getElementById('bagian')
+        // return alert(bagian.value);
+        let url = "{{route('get.pertanyaan.bagian',':id')}}"
+        url = url.replace(':id', bagian.value)
+        let sendRequest = await fetch(url)
+        let response = await sendRequest.json()
+        console.log(response);
+        let contents = '<option>Pilih Pertanyaan</option>'
+        response.pertanyaan.map((data) => {
+            contents += `<option value="${data.id}">- ${data.pertanyaan}</option>`
+        })
+        document.querySelector('#pertanyaanSelect').innerHTML = ''
+        document.querySelector('#pertanyaanSelect').innerHTML = contents
+    }
+
     function addElement() {
         const template = document.querySelector("#selectTemplate")
         const element = template.content.cloneNode(true);

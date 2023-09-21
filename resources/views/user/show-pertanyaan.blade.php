@@ -80,6 +80,7 @@
             input.className = 'form-control'
             input.name = `lainnya[${pertanyaanId}]`
             input.id = `lainnya_${pertanyaanId}`
+            input.placeholder = `isikan jawaban lainnya`
             input.setAttribute('required', 'required')
             // event.target.removeAttribute('onclick')
             event.target.closest('div').after(input);

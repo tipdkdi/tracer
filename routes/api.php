@@ -40,6 +40,11 @@ Route::post('/get-alumni-data', [DashboardController::class, 'getAlumniData'])->
 
 Route::get('/user/periode/{periode}', [DashboardController::class, 'getUserPeriode'])->name('get.user.periode');
 
+Route::get('/bagian/{periode}/pertanyaan', [FormController::class, 'getPertanyaanBagian'])->name('get.pertanyaan.bagian');
+
+Route::get('/pertanyaan/{id}/pilihan', [FormController::class, 'getPilihanPertanyaan'])->name('get.pilihan.pertanyaan');
+
+
 // Route::group(['middleware' => ['api']], function () {
 
 // Route::post('/sesi', [UserController::class, 'sesi'])->name('admin.sesi');
