@@ -22,7 +22,9 @@ class FormController extends Controller
     {
 
         $data['title'] = "Data Bagian";
-        $data['stepData'] = Step::with('stepChild')->whereNull('step_parent')->orderBy('step_urutan', 'ASC')->get();
+        $data['stepData'] = Step::with(['stepChild' => function ($child) {
+            $child->orderBy('step_urutan', 'ASC');
+        }])->whereNull('step_parent')->orderBy('step_urutan', 'ASC')->get();
         // return $data;
         return view('admin.bagian-index', $data);
     }
