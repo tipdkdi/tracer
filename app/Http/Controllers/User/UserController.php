@@ -233,30 +233,30 @@ class UserController extends Controller
                 $content .= '<label class="form-label">' . $row->pertanyaan_urutan . '. ' . $row->pertanyaan . '</label>';
                 foreach ($row->jawabanJenis as $index => $item) {
                     $checked = '';
-                    if (count($dataJawaban) > 0)
-                        $checked = ($jawaban[0]->jawaban == $item->pilihan_jawaban) ? "checked" : '';
-                    // if ($row->lainnya != 0) {
-                    $content .= '<div class="form-check">
+                    if ($item->pilihan_jawaban != 'lainnya') {
+                        if (count($dataJawaban) > 0)
+                            $checked = ($jawaban[0]->jawaban == $item->pilihan_jawaban) ? "checked" : '';
+                        // if ($row->lainnya != 0) {
+                        $content .= '<div class="form-check">
                         <input onclick="removeTextInput(event, ' . $row->id . ')" ' . $required . ' class="form-check-input" type="radio" name="input[' . $row->id . ']" id="input' . $row->id . '' . $index . '" value="' . $item->pilihan_jawaban . '" ' . $checked . '/>
                         <label class="form-check-label" for="input' . $row->id . '' . $index . '">' . $item->pilihan_jawaban . '</label>
                       </div>';
-                    // }
-                }
-                if ($row->lainnya == "1") {
-                    if (count($dataJawaban) > 0)
-                        $checked = ($jawaban[0]->jawaban == "lainnya") ? "checked" : '';
-                    $content .= '<div class="form-check">
-                        <input onclick="showTextInput(event, ' . $row->id . ')" class="form-check-input" type="radio" name="input[' . $row->id . ']" id="inputlainnya' . $row->id . '" value="lainnya" ' . $checked . '/>
-                        <label class="form-check-label" for="inputlainnya' . $row->id . '">Lainnya</label>
-                    </div>';
-                    // $check = JawabanLainnya::where('pertanyaan_id', $row->id)->get();
-                    $check = Jawaban::with(['jawabanLainnya'])->where([
-                        'sesi_id' => $sesi->id,
-                        'pertanyaan_id' => $row->id,
-                        'jawaban' => 'lainnya',
-                    ])->get();
-                    if (!empty($check[0]->jawabanLainnya))
-                        $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawabanLainnya[0]->jawaban . "'>";
+                    } else {
+                        if (count($dataJawaban) > 0)
+                            $checked = ($jawaban[0]->jawaban == "lainnya") ? "checked" : '';
+                        $content .= '<div class="form-check">
+                            <input onclick="showTextInput(event, ' . $row->id . ')" class="form-check-input" type="radio" name="input[' . $row->id . ']" id="inputlainnya' . $row->id . '" value="lainnya" ' . $checked . '/>
+                            <label class="form-check-label" for="inputlainnya' . $row->id . '">Lainnya</label>
+                        </div>';
+                        // $check = JawabanLainnya::where('pertanyaan_id', $row->id)->get();
+                        $check = Jawaban::with(['jawabanLainnya'])->where([
+                            'sesi_id' => $sesi->id,
+                            'pertanyaan_id' => $row->id,
+                            'jawaban' => 'lainnya',
+                        ])->get();
+                        if (!empty($check[0]->jawabanLainnya))
+                            $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawabanLainnya[0]->jawaban . "'>";
+                    }
                 }
                 $content .= '</div>';
 

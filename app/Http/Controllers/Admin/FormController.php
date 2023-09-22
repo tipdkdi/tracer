@@ -122,16 +122,16 @@ class FormController extends Controller
                 $dataJawaban[] = $data;
                 $i++;
             }
-            // if (isset($request->addLainnya)) {
-            //     $lainnya =
-            //         [
-            //             'pertanyaan_id' => $pertanyaan->id,
-            //             'pilihan_jawaban' => "lainnya",
-            //             'urutan' => $i,
+            if (isset($request->addLainnya)) {
+                $lainnya =
+                    [
+                        'pertanyaan_id' => $pertanyaan->id,
+                        'pilihan_jawaban' => "lainnya",
+                        'urutan' => $i,
 
-            //         ];
-            //     $dataJawaban[] = $lainnya;
-            // }
+                    ];
+                $dataJawaban[] = $lainnya;
+            }
             // return $dataJawaban;
             JawabanJenis::insert($dataJawaban);
         }
@@ -186,16 +186,16 @@ class FormController extends Controller
                 $dataJawaban[] = $data;
                 $i++;
             }
-            // if (isset($request->addLainnya)) {
-            //     $lainnya =
-            //         [
-            //             'pertanyaan_id' => $pertanyaan->id,
-            //             'pilihan_jawaban' => "lainnya",
-            //             'urutan' => $i,
+            if (isset($request->addLainnya)) {
+                $lainnya =
+                    [
+                        'pertanyaan_id' => $pertanyaan->id,
+                        'pilihan_jawaban' => "lainnya",
+                        'urutan' => $i,
 
-            //         ];
-            //     $dataJawaban[] = $lainnya;
-            // }
+                    ];
+                $dataJawaban[] = $lainnya;
+            }
             //return $dataJawaban;
             JawabanJenis::insert($dataJawaban);
         }
