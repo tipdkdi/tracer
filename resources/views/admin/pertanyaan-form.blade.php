@@ -43,9 +43,9 @@
                         <option value="">Pilih Jenis Jawaban</option>
                         <option value="Text">Text</option>
                         <option value="Text Panjang">Text Panjang</option>
-                        <option value="Pilihan">Pilihan</option>
-                        <option value="Lebih Dari Satu Jawaban">Lebih Dari Satu Jawaban</option>
-                        <option value="Select">Select</option>
+                        <option value="Pilihan">Pilihan (Radio Button)</option>
+                        <option value="Lebih Dari Satu Jawaban">Lebih Dari Satu Jawaban (check)</option>
+                        <option value="Select">Select (Dropdown)</option>
                     </select>
 
 
