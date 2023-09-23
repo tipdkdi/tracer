@@ -232,9 +232,19 @@ class FormController extends Controller
     public function bagianDirect()
     {
         $data['title'] = "Pengaturan Direct Bagian";
+        // $data['bagianData'] = Step::with(['bagianDirect' => function ($bagianDirect) {
+        //     $bagianDirect->with(['stepDirect', 'stepDirectBack']);
+        // }])->get();
+
         $data['bagianData'] = Step::with(['bagianDirect' => function ($bagianDirect) {
             $bagianDirect->with(['stepDirect', 'stepDirectBack']);
-        }])->get();
+        }, 'stepChild' => function ($child) {
+            $child->orderBy('step_urutan', 'ASC')
+                ->with(['bagianDirect' => function ($bagianDirect) {
+                    $bagianDirect->with(['stepDirect', 'stepDirectBack']);
+                }]);
+        }])->whereNull('step_parent')->orderBy('step_urutan', 'ASC')->get();
+
         $data['bagianList'] = Step::all();
 
         return view('admin.pengaturan-bagian-urutan', $data);

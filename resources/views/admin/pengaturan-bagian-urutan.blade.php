@@ -50,6 +50,38 @@
                         </td>
 
                     </tr>
+                    @foreach ($item->stepChild as $child)
+                    <tr>
+                        <th scope="row"></th>
+                        <td>{{$child->step_kode}}</td>
+                        <td>{{$child->step_nama}}</td>
+
+
+                        <td>
+                            @if($child->bagianDirect==null)
+                            <a type="button" onclick="choose(event)" href="#" data-direct="kembali" data-id="{{$child->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Tentukan</a>
+                            @else
+                            @if($child->bagianDirect->stepDirectBack!=null)
+                            <a type="button" onclick="choose(event)" href="#" data-direct="kembali" data-id="{{$child->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">{{$child->bagianDirect->stepDirectBack->step_kode}} - {{$child->bagianDirect->stepDirectBack->step_nama}}</a>
+                            @else
+                            <a type="button" onclick="choose(event)" href="#" data-direct="kembali" data-id="{{$child->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">-</a>
+                            @endif
+                            @endif
+                        </td>
+                        <td>
+                            @if($child->bagianDirect==null)
+                            <a type="button" onclick="choose(event)" href="#" data-direct="selanjutnya" data-id="{{$child->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">Tentukan</a>
+                            @else
+                            @if($child->bagianDirect->stepDirect!=null)
+                            <a type="button" onclick="choose(event)" href="#" data-direct="selanjutnya" data-id="{{$child->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">{{$child->bagianDirect->stepDirect->step_kode}} - {{$child->bagianDirect->stepDirect->step_nama}}</a>
+                            @else
+                            <a type="button" onclick="choose(event)" href="#" data-direct="selanjutnya" data-id="{{$child->id}}" data-bs-toggle="modal" data-bs-target="#exampleModal">-</a>
+                            @endif
+                            @endif
+                        </td>
+
+                    </tr>
+                    @endforeach
                     @endforeach
                 </tbody>
             </table>
