@@ -23,7 +23,10 @@
             <i data-cs-icon="plus"></i>
             <span>Tambah Pertanyaan</span>
         </a>
-
+        <button class="btn btn-danger btn-icon btn-icon-start ms-1 mx-2" data-bs-toggle="modal" data-bs-target="#lExample">
+            <i data-cs-icon="plus"></i>
+            <span>Copy Pertanyaan</span>
+        </button>
     </div>
     <div class="card mb-5">
         <div class="card-body">
@@ -66,10 +69,74 @@
     </div>
 </section>
 <!-- Form Row End -->
+<div class="modal fade" id="lExample" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Copy Pertanyaan</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="col-12">
+                    <select onchange="show()" class="form-select mb-3" id="bagian">
+                        <option>Pilih Bagian</option>
+                        @foreach($bagian as $item)
+                        <option value="{{$item->id}}">{{$item->step_kode}}. {{$item->step_nama}}</option>
+                        @foreach ($item->stepChild as $child)
+                        <option value="{{$child->id}}">&nbsp;&nbsp;&nbsp;- {{$child->step_kode}}. {{$child->step_nama}}</option>
+                        @endforeach
+                        @endforeach
+                    </select>
 
+                </div>
+                <div class="col-12 mt-2" id="showPertanyaan">
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 @endsection
 @section('js')
 <script>
+    async function show() {
+        let bagian = document.getElementById('bagian')
+        // return alert(bagian.value);
+        let url = "{{route('get.pertanyaan.bagian',':id')}}"
+        url = url.replace(':id', bagian.value)
+        let sendRequest = await fetch(url)
+        let response = await sendRequest.json()
+        console.log(response);
+        let contents = '<h4>Daftar Pertanyaan</h4>'
+        contents += '<ul>'
+        response.pertanyaan.map((data) => {
+            contents += `<li>${data.pertanyaan}</li>`
+        })
+        contents += '</ul>'
+        contents += `<div class="mt 2">
+        <button class="btn btn-danger" id="copy"> Copy Pertanyaan</button>
+        </div>`;
 
+        document.querySelector('#showPertanyaan').innerHTML = ''
+        document.querySelector('#showPertanyaan').innerHTML = contents
+
+        document.querySelector('#copy').addEventListener('click', async function() {
+
+            let url = "{{route('copy.pertanyaan',[':id',':idCopy'])}}"
+            url = url.replace(':id', bagian.value)
+            url = url.replace(':idCopy', "{{$stepData->id}}")
+            let sendRequest = await fetch(url)
+            let response = await sendRequest.json()
+            console.log(response);
+            if (response.status == true) {
+                alert('pertanyaan tercopy')
+                window.location.reload();
+            }
+
+        })
+    }
 </script>
 @endsection

@@ -71,6 +71,8 @@ class FormController extends Controller
         $data['stepData'] = Step::with(['pertanyaan' => function ($pertanyaan) {
             $pertanyaan->orderBy('pertanyaan_urutan', 'ASC');
         }])->find($bagianId);
+        $data['bagian'] = Step::with('stepChild')->whereNull('step_parent')->orderBy('step_urutan', 'ASC')->get();
+
         // return $data;
         return view('admin.pertanyaan', $data);
     }
@@ -351,5 +353,52 @@ class FormController extends Controller
     {
         $data = Pertanyaan::with(['jawabanJenis'])->find($pertanyaanId);
         return $data;
+    }
+
+    public function copyPertanyaan($bagianId, $bagianIdCopy)
+    {
+        DB::beginTransaction();
+
+        try {
+            //code...
+            $data = Step::with(['pertanyaan.jawabanJenis'])->find($bagianId);
+            // return $data;
+            foreach ($data->pertanyaan as $pertanyaan) {
+                $pertanyaanCopy = Pertanyaan::create([
+                    'step_id' => $bagianIdCopy,
+                    'pertanyaan' => $pertanyaan->pertanyaan,
+                    'pertanyaan_urutan' => $pertanyaan->pertanyaan_urutan,
+                    'pertanyaan_jenis_jawaban' => $pertanyaan->pertanyaan_jenis_jawaban,
+                    'required' => $pertanyaan->required,
+                    'lainnya' => $pertanyaan->lainnya
+                ]);
+                $pilihanJawaban = [];
+                if ($pertanyaan->pertanyaan_jenis_jawaban != "Text" || $pertanyaan->pertanyaan_jenis_jawaban != "Text Panjang") {
+                    foreach ($pertanyaan->jawabanJenis as $pilihan) {
+                        $pilihanJawaban[] = [
+                            'pertanyaan_id' => $pertanyaanCopy->id,
+                            'pilihan_jawaban' => $pilihan->pilihan_jawaban,
+                            'urutan' => $pilihan->urutan
+                        ];
+                    }
+                    JawabanJenis::insert($pilihanJawaban);
+                }
+            }
+            DB::commit();
+            return response()->json([
+                'status' => true,
+                'message' => 'Data dicopy',
+                'details' => $pilihanJawaban,
+            ], 200);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+            return;
+            return response()->json([
+                'status' => true,
+                'message' => 'Data gagal dicopy',
+                'details' => $th,
+            ], 500);
+        }
     }
 }

@@ -43,6 +43,7 @@ Route::get('/user/periode/{periode}', [DashboardController::class, 'getUserPerio
 Route::get('/bagian/{periode}/pertanyaan', [FormController::class, 'getPertanyaanBagian'])->name('get.pertanyaan.bagian');
 
 Route::get('/pertanyaan/{id}/pilihan', [FormController::class, 'getPilihanPertanyaan'])->name('get.pilihan.pertanyaan');
+Route::get('/bagian/{id}/copy-pertanyaan/{idCopy}', [FormController::class, 'copyPertanyaan'])->name('copy.pertanyaan');
 
 
 // Route::group(['middleware' => ['api']], function () {
