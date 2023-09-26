@@ -169,7 +169,12 @@
     <script>
         async function login() {
             // return alert('sementara pengembangan')
+            @if(env('APP_ENV') == 'production')
+
+            let base_url = 'https://tracerstudy.iainkendari.ac.id'
+            @else
             let base_url = 'http://127.0.0.1:8000'
+            @endif
             // return alert('sedang perbaikan')
             let dataSend = new FormData()
             let nim = document.querySelector("#nim")
