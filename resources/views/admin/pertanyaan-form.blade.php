@@ -46,6 +46,7 @@
                         <option value="Pilihan">Pilihan (Radio Button)</option>
                         <option value="Lebih Dari Satu Jawaban">Lebih Dari Satu Jawaban (check)</option>
                         <option value="Select">Select (Dropdown)</option>
+                        <option value="Lokasi">Lokasi</option>
                     </select>
 
 
@@ -236,7 +237,7 @@
             const text = textTemplate.content.cloneNode(true);
             pilihanJawaban.appendChild(text)
 
-        } else if (jawabanValue != "Text" && jawabanValue != "Text Panjang") {
+        } else if (jawabanValue != "Text" && jawabanValue != "Text Panjang" && jawabanValue != "Lokasi") {
             addElement()
             const templateButton = document.querySelector("#buttonTemplate")
             const button = templateButton.content.cloneNode(true);

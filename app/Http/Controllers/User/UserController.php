@@ -261,6 +261,20 @@ class UserController extends Controller
                 $content .= '</div>';
 
                 $row->form = $content;
+            } else if ($row->pertanyaan_jenis_jawaban == "Lokasi") {
+                $content = '<div class="mb-3 position-relative form-group">';
+                $content .= '<label class="form-label">' . $row->pertanyaan_urutan . '. ' . $row->pertanyaan . '</label>';
+                $content .= '<div style="padding-left:10px;">';
+                $content .= '<select onchange="getKabupaten()" id="provinsi" class="form-select" required>';
+
+                $content .= '</select>';
+                $content .= '<select class="form-select mt-2" id="kabupaten" name="input[' . $row->id . ']" required>';
+
+                $content .= '</select>';
+                $content .= '</div>';
+                $content .= '</div>';
+
+                $row->form = $content;
             }
         }
         // return $gg;

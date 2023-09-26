@@ -111,7 +111,7 @@ class FormController extends Controller
                 "jenis" => $request->text_jenis
             ];
             $pertanyaan = TextProperties::create($dataTextProperties);
-        } else if ($jenisJawaban != "Text" && $jenisJawaban != "Text Panjang") {
+        } else if ($jenisJawaban != "Text" && $jenisJawaban != "Text Panjang" && $jenisJawaban != "Lokasi") {
             $i = 1;
             foreach ($request->jawaban as $index => $jawaban) {
                 $data =
@@ -175,7 +175,7 @@ class FormController extends Controller
                 "jenis" => $request->text_jenis
             ];
             $pertanyaan = TextProperties::create($dataTextProperties);
-        } else if ($jenisJawaban != "Text" && $jenisJawaban != "Text Panjang") {
+        } else if ($jenisJawaban != "Text" && $jenisJawaban != "Text Panjang" && $jenisJawaban != "Lokasi") {
             $i = 1;
             foreach ($request->jawaban as $index => $jawaban) {
                 $data =

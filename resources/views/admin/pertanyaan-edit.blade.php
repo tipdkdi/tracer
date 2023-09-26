@@ -47,6 +47,7 @@
                         <option value="Pilihan" @if($stepData->pertanyaan[0]->pertanyaan_jenis_jawaban=="Pilihan") selected @endif>Pilihan</option>
                         <option value="Lebih Dari Satu Jawaban" @if($stepData->pertanyaan[0]->pertanyaan_jenis_jawaban=="Lebih Dari Satu Jawaban") selected @endif>Lebih Dari Satu Jawaban</option>
                         <option value="Select" @if($stepData->pertanyaan[0]->pertanyaan_jenis_jawaban=="Select") selected @endif>Select</option>
+                        <option value="Lokasi" @if($stepData->pertanyaan[0]->pertanyaan_jenis_jawaban=="Lokasi") selected @endif>Lokasi</option>
                     </select>
                 </div>
                 <div id="jawabanButton">

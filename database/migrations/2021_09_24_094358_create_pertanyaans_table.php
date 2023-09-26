@@ -21,6 +21,7 @@ class CreatePertanyaansTable extends Migration
             $table->enum('pertanyaan_jenis_jawaban', ["Text", "Text Panjang", "Pilihan", "Lebih Dari Satu Jawaban", "Select"]);
             $table->enum('required', ["0", "1"])->default('1');
             $table->enum('lainnya', ["0", "1"])->default('0');
+            // $table->boolean('is_lokasi_kerja')->default(false);
             $table->timestamps();
 
             $table->foreign('step_id')->references('id')->on('steps');

@@ -14,7 +14,8 @@ class Pertanyaan extends Model
         'pertanyaan_urutan',
         'pertanyaan_jenis_jawaban',
         'required',
-        'lainnya'
+        'lainnya',
+        'is_lokasi_kerja'
     ];
 
     public function step()

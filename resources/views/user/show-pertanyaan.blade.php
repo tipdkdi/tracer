@@ -29,6 +29,12 @@
                 @endif
                 <button type="submit" class="btn btn-primary">Simpan dan Lanjut</button>
                 @endif
+                <!-- <div class="mb-3 position-relative form-group">
+                    <label class="form-label">Lokasi Kerja</label>
+                    <select class="form-select" id="provinsi" onchange="getKabupaten()">
+
+                    </select>
+                </div> -->
             </form>
         </div>
     </div>
@@ -39,6 +45,37 @@
 
 @section('js')
 <script>
+    getProvinsi();
+    async function getProvinsi() {
+        let url = 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
+
+        let sendRequest = await fetch(url)
+        let response = await sendRequest.json()
+        console.log(response);
+        let contents = '<option>Pilih Provinsi</option>'
+        response.map((data) => {
+            contents += `<option value="${data.id}">- ${data.name}</option>`
+        })
+        document.querySelector('#provinsi').innerHTML = ''
+        document.querySelector('#provinsi').innerHTML = contents
+    }
+
+    async function getKabupaten() {
+        let provinsiId = document.querySelector('#provinsi').value
+        let url = `https://emsifa.github.io/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
+
+        let sendRequest = await fetch(url)
+        let response = await sendRequest.json()
+        console.log(response);
+        let contents = ''
+        contents += '<div class="mb-3 position-relative form-group">';
+        contents += '<label class="form-label">Pilih Kabupaten</label>';
+        response.map((data) => {
+            contents += `<option value="${data.id},${data.province_id}">- ${data.name}</option>`
+        })
+        document.querySelector('#kabupaten').innerHTML = ''
+        document.querySelector('#kabupaten').innerHTML = contents
+    }
     async function kembali(periode, bagianId) {
         let urlBack = "{{route('user.show.pertanyaan',[':periode',':bagianId'])}}"
         urlBack = urlBack.replace(':bagianId', bagianId)
