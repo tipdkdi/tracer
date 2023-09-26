@@ -23,6 +23,8 @@
 <meta name="msapplication-square150x150logo" content="img/favicon/mstile-150x150.png" />
 <meta name="msapplication-wide310x150logo" content="img/favicon/mstile-310x150.png" />
 <meta name="msapplication-square310x310logo" content="img/favicon/mstile-310x310.png" />
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
 <!-- Favicon Tags End -->
 <!-- Font Tags Start -->
 <link rel="preconnect" href="https://fonts.gstatic.com" />
