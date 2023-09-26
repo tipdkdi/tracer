@@ -62,9 +62,9 @@
 
     async function getKabupaten() {
         let provinsiId = document.querySelector('#provinsi').value
-        let url = `https://emsifa.github.io/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
+        // let url = `https://emsifa.github.io/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
 
-        let sendRequest = await fetch(url)
+        let sendRequest = await fetch('https://emsifa.github.io/api-wilayah-indonesia/api/regencies/' + provinsiId + '.json')
         let response = await sendRequest.json()
         console.log(response);
         let contents = ''
