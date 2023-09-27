@@ -221,7 +221,7 @@
             const text = textTemplate.content.cloneNode(true);
             pilihanJawaban.appendChild(text)
 
-        } else if (jawabanValue != "Text" && jawabanValue != "Text Panjang") {
+        } else if (jawabanValue != "Text" && jawabanValue != "Text Panjang" && jawabanValue != "Lokasi") {
             addElement()
             const templateButton = document.querySelector("#buttonTemplate")
             const button = templateButton.content.cloneNode(true);
