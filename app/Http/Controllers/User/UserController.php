@@ -207,25 +207,28 @@ class UserController extends Controller
                 $content .= '<select onchange="showTextInput(event, ' . $row->id . ')"  ' . $required . '  class="form-select" name="input[' . $row->id . ']" required>';
                 $content .= '<option value="">Pilih</option>';
                 foreach ($row->jawabanJenis as $index => $item) {
-                    $selected = "";
-                    if (count($dataJawaban) > 0)
-                        $selected = ($jawaban[0]->jawaban == $item->pilihan_jawaban) ? "selected" : '';
-                    $content .= '<option value="' . $item->pilihan_jawaban . '" ' . $selected . '>' . $item->pilihan_jawaban . '</option>';
+                    $checked = '';
+                    if ($item->pilihan_jawaban != 'lainnya') {
+                        $selected = "";
+                        if (count($dataJawaban) > 0)
+                            $selected = ($jawaban[0]->jawaban == $item->pilihan_jawaban) ? "selected" : '';
+                        $content .= '<option value="' . $item->pilihan_jawaban . '" ' . $selected . '>' . $item->pilihan_jawaban . '</option>';
+                        $content .= '</select>';
+                    } else {
+                        if (count($dataJawaban) > 0)
+                            $checked = ($jawaban[0]->jawaban == "lainnya") ? "selected" : '';
+                        $content .= '<option value="lainnya" ' . $checked . '>Lainnya</option>';
+                        $content .= '</select>';
+                        // $check = JawabanLainnya::where('pertanyaan_id', $row->id)->get();
+                        $check = Jawaban::with(['jawabanLainnya'])->where([
+                            'sesi_id' => $sesi->id,
+                            'pertanyaan_id' => $row->id,
+                            'jawaban' => 'lainnya',
+                        ])->get();
+                        if (!empty($check[0]->jawabanLainnya))
+                            $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawabanLainnya[0]->jawaban . "'>";
+                    }
                 }
-                if ($row->lainnya == "1") {
-                    if (count($dataJawaban) > 0)
-                        $checked = ($jawaban[0]->jawaban == "lainnya") ? "selected" : '';
-                    $content .= '<option value="lainnya" ' . $checked . '>Lainnya</option>';
-                    // $check = JawabanLainnya::where('pertanyaan_id', $row->id)->get();
-                    $check = Jawaban::with(['jawabanLainnya'])->where([
-                        'sesi_id' => $sesi->id,
-                        'pertanyaan_id' => $row->id,
-                        'jawaban' => 'lainnya',
-                    ])->get();
-                    if (!empty($check[0]->jawabanLainnya))
-                        $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawabanLainnya[0]->jawaban . "'>";
-                }
-                $content .= '</select>';
                 $content .= '</div>';
                 $row->form = $content;
             } else if ($row->pertanyaan_jenis_jawaban == "Pilihan") {
