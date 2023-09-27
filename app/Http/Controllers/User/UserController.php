@@ -213,7 +213,6 @@ class UserController extends Controller
                         if (count($dataJawaban) > 0)
                             $selected = ($jawaban[0]->jawaban == $item->pilihan_jawaban) ? "selected" : '';
                         $content .= '<option value="' . $item->pilihan_jawaban . '" ' . $selected . '>' . $item->pilihan_jawaban . '</option>';
-                        $content .= '</select>';
                     } else {
                         if (count($dataJawaban) > 0)
                             $checked = ($jawaban[0]->jawaban == "lainnya") ? "selected" : '';
@@ -229,6 +228,8 @@ class UserController extends Controller
                             $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawabanLainnya[0]->jawaban . "'>";
                     }
                 }
+                $content .= '</select>';
+
                 $content .= '</div>';
                 $row->form = $content;
             } else if ($row->pertanyaan_jenis_jawaban == "Pilihan") {
