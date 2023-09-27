@@ -387,13 +387,17 @@ class UserController extends Controller
             if ($direct->is_direct_by_jawaban == 0) { //jika tidak direct berdasarkan jawaban 
                 return redirect()->route('user.show.pertanyaan', [$request->periode, $direct->step_id_direct]);
             } else { // jika direct
+                $loop = 1;
                 foreach ($request->input as $key => $value) {
-                    $jawabanJenis = JawabanJenis::with('jawabanRedirect')->where([
-                        'pertanyaan_id' => $key,
-                        'pilihan_jawaban' => $value
-                    ])->first();
+                    if ($loop == 1)
+                        $jawabanJenis = JawabanJenis::with('jawabanRedirect')->where([
+                            'pertanyaan_id' => $key,
+                            'pilihan_jawaban' => $value
+                        ])->first();
+
+                    $loop++;
                 }
-                // return $jawabanJenis;
+                // return $request->input;
                 return redirect()->route('user.show.pertanyaan', [$request->periode, $jawabanJenis->jawabanRedirect->step_id_redirect]);
             }
         } catch (\Throwable $th) {
