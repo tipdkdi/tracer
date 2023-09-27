@@ -166,39 +166,43 @@ class UserController extends Controller
                 $content = '<div class="mb-3 position-relative form-group">';
                 $content .= '<label class="form-label">' . $row->pertanyaan_urutan . '. ' . $row->pertanyaan . '</label>';
                 foreach ($row->jawabanJenis as $index => $item) {
-                    $checked = "";
-                    if (count($dataJawaban) > 0) {
-                        foreach ($jawaban as $jawab) {
-                            if ($jawab->jawaban == $item->pilihan_jawaban) {
-                                $checked = "checked";
-                                break;
+                    // $checked = "";
+                    $checked = '';
+                    if ($item->pilihan_jawaban != 'lainnya') {
+                        if (count($dataJawaban) > 0) {
+                            foreach ($jawaban as $jawab) {
+                                if ($jawab->jawaban == $item->pilihan_jawaban) {
+                                    $checked = "checked";
+                                    break;
+                                }
                             }
                         }
-                    }
-                    $content .= '<div class="form-check">
+                        $content .= '<div class="form-check">
                     <input class="form-check-input" type="checkbox" name="input[' . $row->id . '][]" id="input' . $index . '" value="' . $item->pilihan_jawaban . '" ' . $checked . '/>
                     <label class="form-check-label" for="input' . $index . '">' . $item->pilihan_jawaban . '</label>
                   </div>';
-                }
-                if ($row->lainnya == "1") {
-                    if (count($dataJawaban) > 0) {
-                        foreach ($dataJawaban as $jawab) {
-                            $checked = ($jawab->jawaban == "lainnya") ? "checked" : '';
+                    } else {
+                        if (count($dataJawaban) > 0) {
+                            foreach ($dataJawaban as $jawab) {
+                                $checked = ($jawab->jawaban == "lainnya") ? "checked" : '';
+                            }
                         }
-                    }
-                    $content .= '<div class="form-check">
+                        $content .= '<div class="form-check">
                     <input onclick="showTextInput(event, ' . $row->id . ')" class="form-check-input" type="checkbox" name="input[' . $row->id . '][]" id="input' . $row->id . '" value="lainnya" ' . $checked . '/>
                     <label class="form-check-label" for="input' . $row->id . '">Lainnya</label>
                   </div>';
-                    // $check = JawabanLainnya::where('pertanyaan_id', $row->id)->get();
-                    $check = Jawaban::with(['jawabanLainnya'])->where([
-                        'sesi_id' => $sesi->id,
-                        'pertanyaan_id' => $row->id,
-                        'jawaban' => 'lainnya',
-                    ])->get();
-                    if (!empty($check[0]->jawabanLainnya))
-                        $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawabanLainnya[0]->jawaban . "'>";
+                        // $check = JawabanLainnya::where('pertanyaan_id', $row->id)->get();
+                        $check = Jawaban::with(['jawabanLainnya'])->where([
+                            'sesi_id' => $sesi->id,
+                            'pertanyaan_id' => $row->id,
+                            'jawaban' => 'lainnya',
+                        ])->get();
+                        if (!empty($check[0]->jawabanLainnya))
+                            $content .= "<input required name='lainnya[" . $row->id . "]' id='lainnya_" . $row->id . "' type='text' class='form-control' value='" . $check[0]->jawabanLainnya[0]->jawaban . "'>";
+                    }
                 }
+                // if ($row->lainnya == "1") {
+                // }
                 $content .= '</div>';
                 $row->form = $content;
             } else if ($row->pertanyaan_jenis_jawaban == "Select") {
@@ -402,6 +406,7 @@ class UserController extends Controller
                     }
                     // $loop++;
                 }
+                // return $request->input;
                 // return $directJawaban;
                 return redirect()->route('user.show.pertanyaan', [$request->periode, $directJawaban->jawabanRedirect->step_id_redirect]);
             }
