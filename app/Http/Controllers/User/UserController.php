@@ -269,7 +269,7 @@ class UserController extends Controller
                 $content = '<div class="mb-3 position-relative form-group">';
                 $content .= '<label class="form-label">' . $row->pertanyaan_urutan . '. ' . $row->pertanyaan . '</label>';
                 $content .= '<div style="padding-left:10px;">';
-                $content .= '<select onchange="getKabupaten()" id="provinsi" class="form-select" required>';
+                $content .= '<select onchange="getKabupaten()" data-value="" id="provinsi" class="form-select" required>';
 
                 $content .= '</select>';
                 $content .= '<select class="form-select mt-2" id="kabupaten" name="input[' . $row->id . ']" required>';
@@ -389,16 +389,21 @@ class UserController extends Controller
             } else { // jika direct
                 $loop = 1;
                 foreach ($request->input as $key => $value) {
-                    if ($loop == 1)
-                        $jawabanJenis = JawabanJenis::with('jawabanRedirect')->where([
+                    // if ($loop == 1)
+                    $jawabanJenis = JawabanJenis::with(['jawabanRedirect'])
+                        ->whereHas('jawabanRedirect')
+                        ->where([
                             'pertanyaan_id' => $key,
                             'pilihan_jawaban' => $value
                         ])->first();
 
-                    $loop++;
+                    if ($jawabanJenis != null) {
+                        $directJawaban = $jawabanJenis;
+                    }
+                    // $loop++;
                 }
-                // return $request->input;
-                return redirect()->route('user.show.pertanyaan', [$request->periode, $jawabanJenis->jawabanRedirect->step_id_redirect]);
+                // return $directJawaban;
+                return redirect()->route('user.show.pertanyaan', [$request->periode, $directJawaban->jawabanRedirect->step_id_redirect]);
             }
         } catch (\Throwable $th) {
             throw $th;
