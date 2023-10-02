@@ -64,16 +64,16 @@ class DashboardController extends Controller
 
     public function filterData()
     {
-        return JawabanJenis::where('pertanyaan_id', 2)->get();
+        return JawabanJenis::where('pertanyaan_id', 155)->get();
     }
 
     public function getfilteredData(Request $request, $periode)
     {
         $users = [];
         if ($request->filter == "-")
-            $userTahunAjar = Jawaban::where(['pertanyaan_id' => 2])->get();
+            $userTahunAjar = Jawaban::where(['pertanyaan_id' => 155])->get();
         else
-            $userTahunAjar = Jawaban::where(['pertanyaan_id' => 2, 'jawaban' => $request->filter])->get();
+            $userTahunAjar = Jawaban::where(['pertanyaan_id' => 155, 'jawaban' => $request->filter])->get();
         foreach ($userTahunAjar as $item) {
             $users[] = $item->sesi_id;
         }
@@ -130,7 +130,7 @@ class DashboardController extends Controller
         if ($request->filter == "-") {
             $users = $sesiId;
         } else {
-            $userTahunAjar = Jawaban::where(['pertanyaan_id' => 2])->whereIn('jawaban', $tahunId)->whereIn('sesi_id', $sesiId)->get();
+            $userTahunAjar = Jawaban::where(['pertanyaan_id' => 155])->whereIn('jawaban', $tahunId)->whereIn('sesi_id', $sesiId)->get();
 
             // $userTahunAjar = Jawaban::where(['pertanyaan_id' => 2, 'jawaban' => $request->filter])->whereIn('user_id', $usersId)->get();
             foreach ($userTahunAjar as $item) {
