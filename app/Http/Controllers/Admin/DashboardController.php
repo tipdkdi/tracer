@@ -160,6 +160,17 @@ class DashboardController extends Controller
         return $data;
     }
 
+
+    public function getCountLokasi(Request $request)
+    {
+        $data = Pertanyaan::with(['jawaban' => function ($jawaban) {
+            $jawaban->selectRaw("SUBSTRING_INDEX(jawaban, ',', -1) as provinsi, COUNT(*) as jumlah,pertanyaan_id")
+                ->groupBy('provinsi', 'pertanyaan_id')->get();
+            // $jawaban->select(['pertanyaan_id', 'jawaban']);
+            // $jawaban->select(DB::raw("SUBSTRING(jawaban, ',',1) provinsi"));
+        }])->find($request->pertanyaanId);
+        return $data;
+    }
     public function getTahunMengisi(Request $request)
     {
         $usersId = json_decode($request->usersId);

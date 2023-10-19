@@ -169,6 +169,87 @@
             if (pertanyaan.options[pertanyaan.selectedIndex].dataset.jenis == "text-biasa") {
                 resultShow.innerHTML = ""
 
+            } else if (pertanyaan.options[pertanyaan.selectedIndex].dataset.jenis == "lokasi") {
+                resultShow.innerHTML = ""
+                // alert('ini lokasi')
+                dataForm = new FormData()
+                dataForm.append('pertanyaanId', pertanyaan.options[pertanyaan.selectedIndex].value)
+                // dataForm.append('usersId', "awal")
+                // dataForm.append('filter', "-")
+                url = "{{route('admin.get.count.lokasi')}}"
+                response = await fetch(url, {
+                    method: "POST",
+                    body: dataForm
+                })
+                responseMessage = await response.json()
+                console.log(responseMessage);
+
+                // return;
+                const resultTemplate = document.querySelector("#resultTemplate")
+                const result = resultTemplate.content.cloneNode(true);
+                resultShow.appendChild(result)
+                let showDataTable = document.querySelector("#show-data-table")
+                showDataTable.innerHTML = ""
+
+                let fragment = document.createDocumentFragment();
+                console.log(responseMessage);
+                responseMessage.jawaban.forEach(async function(data, i) {
+                    let url = `https://emsifa.github.io/api-wilayah-indonesia/api/province/${data.provinsi}.json`
+                    let response = await fetch(url)
+                    let responseMessage = await response.json()
+                    console.log(responseMessage);
+
+                    let tr = document.createElement('tr');
+                    let nomor = document.createElement('td');
+                    nomor.innerText = i + 1
+                    let pilihanJawaban = document.createElement('td');
+                    pilihanJawaban.innerText = responseMessage.name
+                    let total = document.createElement('td');
+                    total.innerText = data.jumlah
+                    tr.appendChild(nomor)
+                    tr.appendChild(pilihanJawaban)
+                    tr.appendChild(total)
+                    fragment.appendChild(tr);
+                });
+                showDataTable.appendChild(fragment)
+                let daftarJawaban = responseMessage.jawaban
+                google.charts.load('current', {
+                    'packages': ['corechart', 'bar']
+                });
+                google.charts.setOnLoadCallback(drawChart);
+
+                function drawChart() {
+                    let jawaban = [
+                        ['Task', pertanyaan.options[pertanyaan.selectedIndex].innerText]
+                    ]
+                    daftarJawaban.map(function(data) {
+                        jawaban.push([data.pilihan_jawaban, data.total])
+                    });
+                    console.log(jawaban);
+                    var data = google.visualization.arrayToDataTable(
+                        jawaban
+                    );
+                    var options = {
+                        title: pertanyaan.options[pertanyaan.selectedIndex].innerText,
+                        sliceVisibilityThreshold: 0,
+                        pieHole: 0.4,
+                    };
+
+                    document.querySelector("#formRow").style.display = 'block'
+                    document.getElementById('showDiagram').innerHTML = ""
+                    document.querySelector("#terapkan").addEventListener("click", function() {
+                        let diagram = document.querySelector('input[name="diagram"]:checked').value;
+                        var chart
+                        if (diagram == "pie")
+                            chart = new google.visualization.PieChart(document.getElementById('showDiagram'));
+                        if (diagram == "bar")
+                            chart = new google.visualization.BarChart(document.getElementById('showDiagram'));
+                        chart.innerHTML = ""
+                        chart.draw(data, options);
+                    });
+                }
+                // return
+
             } else if (pertanyaan.options[pertanyaan.selectedIndex].dataset.jenis != "text-angka" && pertanyaan.options[pertanyaan.selectedIndex].dataset.jenis != "text-desimal") {
                 resultShow.innerHTML = ""
                 dataForm = new FormData()
@@ -279,6 +360,12 @@
                 }
 
             }
+
+
+
+
+
+
             let fakultas = document.querySelector("#fakultas")
             let prodi = document.querySelector("#prodi")
             let tahunLulus = document.querySelector("#tahun-lulus")
@@ -334,6 +421,7 @@
             })
         });
     });
+
     document.querySelector("#filter").addEventListener('click', async function() {
 
         const pertanyaanId = pertanyaan.options[pertanyaan.selectedIndex].value

@@ -29,6 +29,7 @@ Route::post('/bagian/pengaturan/direct/simpan', [FormController::class, 'bagianD
 
 Route::get('/pertanyaan/bagian/{bagianId}', [DashboardController::class, 'getPertanyaan'])->name('admin.get.pertanyaan');
 Route::post('/jawaban/pertanyaan', [DashboardController::class, 'getCountJawaban'])->name('admin.get.count.pertanyaan');
+Route::post('/jawaban/pertanyaan/lokasi', [DashboardController::class, 'getCountLokasi'])->name('admin.get.count.lokasi');
 Route::post('/jawaban/pertanyaan/angka', [DashboardController::class, 'getAngkaResult'])->name('admin.get.angka.result');
 Route::post('/bagian/update/', [FormController::class, 'updateFirstOrLast'])->name('admin.bagian.update.first.Last');
 Route::post('/get-users', [DashboardController::class, 'getUsers'])->name('admin.get.users');
