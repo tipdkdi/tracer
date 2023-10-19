@@ -163,9 +163,16 @@ class DashboardController extends Controller
 
     public function getCountLokasi(Request $request)
     {
+        // return $request->all();
+        // $sesiId = json_decode($request->sesiId);
+
+        // $data = Pertanyaan::with(['jawaban' => function ($jawaban) use ($sesiId) {
         $data = Pertanyaan::with(['jawaban' => function ($jawaban) {
             $jawaban->selectRaw("SUBSTRING_INDEX(jawaban, ',', -1) as provinsi, COUNT(*) as jumlah,pertanyaan_id")
-                ->groupBy('provinsi', 'pertanyaan_id')->get();
+                ->groupBy('provinsi', 'pertanyaan_id')
+                ->orderBy('jumlah', 'DESC')
+                // ->whereIn('sesi_id', $sesiId)
+                ->get();
             // $jawaban->select(['pertanyaan_id', 'jawaban']);
             // $jawaban->select(DB::raw("SUBSTRING(jawaban, ',',1) provinsi"));
         }])->find($request->pertanyaanId);

@@ -193,25 +193,28 @@
 
                 let fragment = document.createDocumentFragment();
                 console.log(responseMessage);
-                let url2 = `https://emsifa.github.io/api-wilayah-indonesia/api/province/74.json`
-                let response2 = await fetch(url2)
-                let responseMessage2 = await response2.json()
-                console.log(responseMessage2);
                 responseMessage.jawaban.forEach(async function(data, i) {
+
+                    url = `https://www.emsifa.com/api-wilayah-indonesia/api/province/${data.provinsi}.json`
+                    response = await fetch(url)
+                    responseMessage2 = await response.json()
+                    console.log(responseMessage2);
+                    // if(responseMessage2){}
 
                     let tr = document.createElement('tr');
                     let nomor = document.createElement('td');
                     nomor.innerText = i + 1
                     let pilihanJawaban = document.createElement('td');
-                    pilihanJawaban.innerText = data.provinsi
+                    // pilihanJawaban.innerText = 'sss'
+                    pilihanJawaban.innerText = responseMessage2.name
                     let total = document.createElement('td');
                     total.innerText = data.jumlah
                     tr.appendChild(nomor)
                     tr.appendChild(pilihanJawaban)
                     tr.appendChild(total)
                     fragment.appendChild(tr);
+                    showDataTable.appendChild(fragment)
                 });
-                showDataTable.appendChild(fragment)
                 let daftarJawaban = responseMessage.jawaban
                 google.charts.load('current', {
                     'packages': ['corechart', 'bar']
@@ -223,7 +226,7 @@
                         ['Task', pertanyaan.options[pertanyaan.selectedIndex].innerText]
                     ]
                     daftarJawaban.map(function(data) {
-                        jawaban.push([data.provinsi, data.jumlah])
+                        jawaban.push([data.pilihan_jawaban, data.total])
                     });
                     console.log(jawaban);
                     var data = google.visualization.arrayToDataTable(
@@ -522,6 +525,85 @@
             });
             showDataTable.appendChild(fragment)
             let daftarJawaban = responseMessage.dataPertanyaan[0].jawaban_jenis
+            google.charts.load('current', {
+                'packages': ['corechart', 'bar']
+            });
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                let jawaban = [
+                    ['Task', pertanyaan.options[pertanyaan.selectedIndex].innerText]
+                ]
+                daftarJawaban.map(function(data) {
+                    jawaban.push([data.pilihan_jawaban, data.total])
+                });
+                console.log(jawaban);
+                var data = google.visualization.arrayToDataTable(
+                    jawaban
+                );
+                var options = {
+                    title: pertanyaan.options[pertanyaan.selectedIndex].innerText,
+                    sliceVisibilityThreshold: 0,
+                    pieHole: 0.4,
+                };
+
+                document.querySelector("#formRow").style.display = 'block'
+                document.getElementById('showDiagram').innerHTML = ""
+                document.querySelector("#terapkan").addEventListener("click", function() {
+                    let diagram = document.querySelector('input[name="diagram"]:checked').value;
+                    var chart
+                    if (diagram == "pie")
+                        chart = new google.visualization.PieChart(document.getElementById('showDiagram'));
+                    if (diagram == "bar")
+                        chart = new google.visualization.BarChart(document.getElementById('showDiagram'));
+                    chart.innerHTML = ""
+                    chart.draw(data, options);
+                });
+            }
+        } else if (pertanyaan.options[pertanyaan.selectedIndex].dataset.jenis == "lokasi") {
+            // alert('lokasi')
+            // console.log(dataSend);
+            url = "{{route('admin.get.count.lokasi')}}"
+            response = await fetch(url, {
+                method: "POST",
+                body: dataSend
+            })
+            responseMessage = await response.json()
+            console.log(responseMessage);
+
+            showDataTable = document.querySelector("#show-data-table")
+            showDataTable.innerHTML = ""
+            fragment = document.createDocumentFragment();
+
+
+
+
+
+
+
+            responseMessage.jawaban.forEach(async function(data, i) {
+                url = `https://www.emsifa.com/api-wilayah-indonesia/api/province/${data.provinsi}.json`
+                response = await fetch(url)
+                responseMessage2 = await response.json()
+                console.log(responseMessage2);
+                // if(responseMessage2){}
+
+                let tr = document.createElement('tr');
+                let nomor = document.createElement('td');
+                nomor.innerText = i + 1
+                let pilihanJawaban = document.createElement('td');
+                // pilihanJawaban.innerText = 'sss'
+                pilihanJawaban.innerText = responseMessage2.name
+                let total = document.createElement('td');
+                total.innerText = data.jumlah
+                tr.appendChild(nomor)
+                tr.appendChild(pilihanJawaban)
+                tr.appendChild(total)
+                fragment.appendChild(tr);
+                showDataTable.appendChild(fragment)
+            });
+            showDataTable.appendChild(fragment)
+            let daftarJawaban = responseMessage.jawaban
             google.charts.load('current', {
                 'packages': ['corechart', 'bar']
             });
