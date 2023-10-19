@@ -193,17 +193,17 @@
 
                 let fragment = document.createDocumentFragment();
                 console.log(responseMessage);
+                let url2 = `https://emsifa.github.io/api-wilayah-indonesia/api/province/74.json`
+                let response2 = await fetch(url2)
+                let responseMessage2 = await response2.json()
+                console.log(responseMessage2);
                 responseMessage.jawaban.forEach(async function(data, i) {
-                    let url = `https://emsifa.github.io/api-wilayah-indonesia/api/province/${data.provinsi}.json`
-                    let response = await fetch(url)
-                    let responseMessage = await response.json()
-                    console.log(responseMessage);
 
                     let tr = document.createElement('tr');
                     let nomor = document.createElement('td');
                     nomor.innerText = i + 1
                     let pilihanJawaban = document.createElement('td');
-                    pilihanJawaban.innerText = responseMessage.name
+                    pilihanJawaban.innerText = data.provinsi
                     let total = document.createElement('td');
                     total.innerText = data.jumlah
                     tr.appendChild(nomor)
@@ -223,7 +223,7 @@
                         ['Task', pertanyaan.options[pertanyaan.selectedIndex].innerText]
                     ]
                     daftarJawaban.map(function(data) {
-                        jawaban.push([data.pilihan_jawaban, data.total])
+                        jawaban.push([data.provinsi, data.jumlah])
                     });
                     console.log(jawaban);
                     var data = google.visualization.arrayToDataTable(
