@@ -14,7 +14,7 @@
             <h3 class="card-title mb-4">Data Tracer Periode Tahun 2024</h3>
             <h4>Total data saat ini : {{$total}}</h4>
         </div>
-        <div class="col-3 d-flex mb-2">
+        <div class="col-3 d-flex mb-2 mt-4">
             <select class="form-select mb-3" id="kabupaten">
                 <option>Pilih Kabupaten</option>
                 <option value="KAB. BUTON">KAB. BUTON</option>
