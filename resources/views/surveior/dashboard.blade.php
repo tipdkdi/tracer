@@ -12,6 +12,7 @@
     <div class="container mt-5">
         <div class="card-body">
             <h3 class="card-title mb-4">Data Tracer Periode Tahun 2024</h3>
+            <h4>Total data saat ini : {{$total}}</h4>
         </div>
         <div class="col-3 d-flex mb-2">
             <select class="form-select mb-3" id="kabupaten">
@@ -92,17 +93,22 @@
             let response = await sendRequest.json()
             console.log(response);
             let contents = ''
-            response.map((data, index) => {
-                contents += '<tr>'
-                contents += `<td>${index + 1}</td>`
-                contents += `<td>${data.user.mahasiswa.data_diri.kabupaten}</td>`
-                contents += `<td>${data.user.mahasiswa.nim}</td>`
-                contents += `<td>${data.user.mahasiswa.data_diri.nama_lengkap}</td>`
-                contents += `<td>${data.user.mahasiswa.prodi.organisasi_singkatan}</td>`
-                contents += `<td>${data.user.mahasiswa.data_diri.no_hp}</td>`
-                contents += `<td>${(data.sesi_status==0)?"<span class='badge text-bg-success'>Selesai</span>":"<span class='badge text-bg-warning'>Proses</span>"}</td>`
-                contents += '</tr>'
-            })
+            if (response.length > 0) {
+
+                response.map((data, index) => {
+                    contents += '<tr>'
+                    contents += `<td>${index + 1}</td>`
+                    contents += `<td>${data.user.mahasiswa.data_diri.kabupaten}</td>`
+                    contents += `<td>${data.user.mahasiswa.nim}</td>`
+                    contents += `<td>${data.user.mahasiswa.data_diri.nama_lengkap}</td>`
+                    contents += `<td>${data.user.mahasiswa.prodi.organisasi_singkatan}</td>`
+                    contents += `<td>${data.user.mahasiswa.data_diri.no_hp}</td>`
+                    contents += `<td>${(data.sesi_status==0)?"<span class='badge text-bg-success'>Selesai</span>":"<span class='badge text-bg-warning'>Proses</span>"}</td>`
+                    contents += '</tr>'
+                })
+            } else {
+                contents += '<tr><td colspan="7">Data Tidak Ada</td></tr>'
+            }
 
             document.querySelector('#hasil-show').innerHTML = ''
             document.querySelector('#hasil-show').innerHTML = contents
