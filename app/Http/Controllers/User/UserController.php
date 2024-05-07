@@ -388,6 +388,7 @@ class UserController extends Controller
             if ($akhir > 0) {
                 $data['title'] = "Selesai";
                 $data['iddata'] = session('iddata');
+                $data['data'] = Mahasiswa::with(['dataDiri', 'prodi'])->where('user_id', session('userData')->id)->first();
 
                 return view('user.selesai', $data);
             }
