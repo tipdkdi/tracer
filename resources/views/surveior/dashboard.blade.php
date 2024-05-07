@@ -40,7 +40,7 @@
         <div class="card mb-5">
             <div class="card-body">
                 <table class="table table-striped table-hover">
-                    <thead>
+                    <thead class="text-center">
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">KABUPATEN</th>
@@ -87,7 +87,7 @@
         async function show() {
             let kabupaten = document.querySelector('#kabupaten')
             // return alert(kabupaten);
-            let url = "{{route('surveior.show',':kabupaten')}}"
+            let url = "{{secure_url('surveior.show',':kabupaten')}}"
             url = url.replace(':kabupaten', kabupaten.value)
             let sendRequest = await fetch(url)
             let response = await sendRequest.json()
