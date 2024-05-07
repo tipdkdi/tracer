@@ -12,7 +12,7 @@
     <div class="container mt-5">
         <div class="card-body">
             <h3 class="card-title mb-4">Data Tracer Periode Tahun 2024</h3>
-            <h4>Total data saat ini : {{$total}}</h4>
+            <h4>Total data keseluruhan saat ini : {{$total}}</h4>
         </div>
         <div class="col-3 d-flex mb-2 mt-4">
             <select class="form-select mb-3" id="kabupaten">
@@ -37,7 +37,7 @@
 
         </div>
         <button onclick="show()" class="btn btn-primary btn-sm mb-3">Lihat Progres</button>
-        <p>Total data <span id="nama-kabupaten"></span> : <span id="total-data-kabupaten"></span></p>
+        <p>Total data <b><span id="nama-kabupaten"></span> : <span id="total-data-kabupaten"></span></b></p>
         <div class="card mb-5 mt-3">
             <div class="card-body">
                 <table class="table table-striped table-hover">
@@ -99,13 +99,13 @@
 
                 response.map((data, index) => {
                     contents += '<tr>'
-                    contents += `<td>${index + 1}</td>`
-                    contents += `<td>${data.user.mahasiswa.data_diri.kabupaten}</td>`
-                    contents += `<td>${data.user.mahasiswa.nim}</td>`
+                    contents += `<td class="text-center">${index + 1}</td>`
+                    contents += `<td class="text-center">${data.user.mahasiswa.data_diri.kabupaten}</td>`
+                    contents += `<td class="text-center">${data.user.mahasiswa.nim}</td>`
                     contents += `<td>${data.user.mahasiswa.data_diri.nama_lengkap}</td>`
-                    contents += `<td>${data.user.mahasiswa.prodi.organisasi_singkatan}</td>`
-                    contents += `<td>${data.user.mahasiswa.data_diri.no_hp}</td>`
-                    contents += `<td>${(data.sesi_status==0)?"<span class='badge text-bg-success'>Selesai</span>":"<span class='badge text-bg-warning'>Proses</span>"}</td>`
+                    contents += `<td class="text-center">${data.user.mahasiswa.prodi.organisasi_singkatan}</td>`
+                    contents += `<td class="text-center">${data.user.mahasiswa.data_diri.no_hp}</td>`
+                    contents += `<td class="text-center">${(data.sesi_status==0)?"<span class='badge text-bg-success'>Selesai</span>":"<span class='badge text-bg-warning'>Proses</span>"}</td>`
                     contents += '</tr>'
                 })
             } else {
