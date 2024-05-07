@@ -100,7 +100,7 @@
                 contents += `<td>${data.user.mahasiswa.data_diri.nama_lengkap}</td>`
                 contents += `<td>${data.user.mahasiswa.prodi.organisasi_singkatan}</td>`
                 contents += `<td>${data.user.mahasiswa.data_diri.no_hp}</td>`
-                contents += `<td>${(data.sesi_status==0)?"Selesai":"Proses"}</td>`
+                contents += `<td>${(data.sesi_status==0)?"<span class='badge text-bg-success'>Selesai</span>":"<span class='badge text-bg-warning'>Proses</span>"}</td>`
                 contents += '</tr>'
             })
 
