@@ -87,8 +87,9 @@
         async function show() {
             let kabupaten = document.querySelector('#kabupaten')
             // return alert(kabupaten);
-            let url = "{{secure_url(route('surveior.show',':kabupaten'))}}"
+            let url = "{{route('surveior.show',':kabupaten')}}"
             url = url.replace(':kabupaten', kabupaten.value)
+            url = url.replace('http', 'https')
             let sendRequest = await fetch(url)
             let response = await sendRequest.json()
             console.log(response);
