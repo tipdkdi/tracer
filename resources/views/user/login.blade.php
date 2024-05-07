@@ -196,7 +196,7 @@
             // return console.log(responseMessage.data[0])
             if (responseMessage.status == "sukses") {
                 let dataSend = new FormData()
-                let ur = "{{route('import.store')}}"
+                let url = "{{route('import.store')}}"
                 url = url.replace('http', 'https')
 
                 dataSend.append('data', JSON.stringify(responseMessage.data[0]))
