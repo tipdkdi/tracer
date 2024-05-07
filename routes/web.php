@@ -21,11 +21,11 @@ use App\Http\Controllers\SurveiorController;
 Route::get('/', function () {
     return redirect()->route('user.login');
 });
+//TIM SURVEI
+Route::get('/tim-survei/dashboard', [SurveiorController::class, 'index'])->name('surveior.dashboard');
+Route::get('/import', [SurveiorController::class, 'importDataView']);
 
 Route::group(['middleware' => 'auth'], function () {
-    //TIM SURVEI
-    Route::get('/tim-survei/dashboard', [SurveiorController::class, 'index'])->name('surveior.dashboard');
-    Route::get('/import', [SurveiorController::class, 'importDataView']);
 
 
     //ADMIN
