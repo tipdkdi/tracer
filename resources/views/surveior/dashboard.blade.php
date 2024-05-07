@@ -37,7 +37,8 @@
 
         </div>
         <button onclick="show()" class="btn btn-primary btn-sm mb-3">Lihat Progres</button>
-        <div class="card mb-5">
+        <p>Total data <span id="nama-kabupaten"></span> : <span id="total-data-kabupaten"></span></p>
+        <div class="card mb-5 mt-3">
             <div class="card-body">
                 <table class="table table-striped table-hover">
                     <thead class="text-center">
@@ -111,6 +112,8 @@
                 contents += '<tr class="text-center"><td colspan="7">Data Tidak Ada</td></tr>'
             }
 
+            document.querySelector('#nama-kabupaten').innerText = kabupaten.value
+            document.querySelector('#total-data-kabupaten').innerText = response.length
             document.querySelector('#hasil-show').innerHTML = ''
             document.querySelector('#hasil-show').innerHTML = contents
 
