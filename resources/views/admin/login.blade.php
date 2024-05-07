@@ -139,7 +139,7 @@
                                     </div>
 
                                     <button type="submit" class="btn btn-primary">
-                                        {{ __('Login') }}
+                                        Login
                                     </button>
                                 </form>
                             </div>

@@ -5,6 +5,7 @@ use App\Http\Controllers\PertanyaanController;
 use App\Http\Controllers\Admin\FormController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\SurveiorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,12 @@ Route::get('/', function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
+    //TIM SURVEI
+    Route::get('/tim-survei/dashboard', [SurveiorController::class, 'index'])->name('surveior.dashboard');
+    Route::get('/import', [SurveiorController::class, 'importDataView']);
+
+
+    //ADMIN
     Route::get('/cetak/periode/{periode}', [DashboardController::class, 'cetak'])->name('admin.cetak');
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/statistik/bagian', [DashboardController::class, 'statistik_bagian'])->name('admin.statistik.bagian');

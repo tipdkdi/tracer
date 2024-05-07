@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\FormController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\SurveiorController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -20,6 +22,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+
+
+Route::get('tim-survei/hasil/{kabupaten}', [SurveiorController::class, 'show'])->name('surveior.show');
 
 
 Route::post('simpan-jawaban-redirect', [FormController::class, 'storeJawabanRedirect'])->name('admin.store.jawaban.redirect');
@@ -46,6 +51,10 @@ Route::get('/bagian/{periode}/pertanyaan', [FormController::class, 'getPertanyaa
 Route::get('/pertanyaan/{id}/pilihan', [FormController::class, 'getPilihanPertanyaan'])->name('get.pilihan.pertanyaan');
 Route::get('/bagian/{id}/copy-pertanyaan/{idCopy}', [FormController::class, 'copyPertanyaan'])->name('copy.pertanyaan');
 
+Route::get('/import', [SurveiorController::class, 'importData'])->name('get.user.mahasiswa');
+Route::post('/import', [SurveiorController::class, 'storeImport'])->name('import.store');
+
+// Route::get('/user/periode/{periode}', [DashboardController::class, 'getUserPeriode'])->name('get.user.periode');
 
 // Route::group(['middleware' => ['api']], function () {
 

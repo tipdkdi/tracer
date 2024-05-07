@@ -1,7 +1,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
 <title>SI LANNI</title>
-<meta name="description" content="Portfolio Home Page" />
+<meta name="description" content="Aplikasi Tracer Study IAIN Kendari" />
 <!-- Favicon Tags Start -->
 <link rel="apple-touch-icon-precomposed" sizes="57x57" href="img/favicon/apple-touch-icon-57x57.png" />
 <link rel="apple-touch-icon-precomposed" sizes="114x114" href="img/favicon/apple-touch-icon-114x114.png" />

@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\DB;
 use App\Models\FirstOrLast;
 use App\Models\JawabanLainnya;
+use App\Models\Mahasiswa;
 use App\Models\Pertanyaan;
 use App\Models\UserSesi;
 
@@ -25,6 +26,7 @@ class UserController extends Controller
         // return session()->get('userData')->id;
         $data['iddata'] = session('iddata');
         $data['first'] = FirstOrLast::first();
+        $data['data'] = Mahasiswa::with(['dataDiri', 'prodi'])->where('user_id', session('userData')->id)->first();
         // return $data;
         return view('user.dashboard', $data);
     }
@@ -43,23 +45,23 @@ class UserController extends Controller
         //     'nama' => $data['nama'],
         //     'idprodi' => $data['idprodi']
         // ];
-        $user =
-            [
-                'user_role_id' => 2,
-                'name' => $iddata,
-                'email' => $iddata . "@mail.com",
-                'password' => $iddata,
-                'created_at' => \Carbon\Carbon::now(),
-            ];
-        $checkUser = User::where('name', $iddata)->first();
-        if ($checkUser == null) {
-            $user = DB::table('users')->insert($user);
-        } else {
-            if ($checkUser->created_at == null) {
-                $checkUser->created_at = \Carbon\Carbon::now();
-                $checkUser->save();
-            }
-        }
+        // $user =
+        //     [
+        //         'user_role_id' => 2,
+        //         'name' => $iddata,
+        //         'email' => $iddata . "@mail.com",
+        //         'password' => $iddata,
+        //         'created_at' => \Carbon\Carbon::now(),
+        //     ];
+        // $checkUser = User::where('name', $iddata)->first();
+        // if ($checkUser == null) {
+        //     $user = DB::table('users')->insert($user);
+        // } else {
+        //     if ($checkUser->created_at == null) {
+        //         $checkUser->created_at = \Carbon\Carbon::now();
+        //         $checkUser->save();
+        //     }
+        // }
         // else {
         // }
 

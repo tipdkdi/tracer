@@ -33,90 +33,10 @@
 
                         <!-- <div class="nama"></div> -->
                     </a>
-                    <div class="dropdown-menu dropdown-menu-end user-menu wide">
 
-                        <div class="row mb-1 ms-0 me-0">
-
-                            <div class="col-6 pe-1 ps-1">
-                                <ul class="list-unstyled">
-                                    <!-- <li>
-                                        <a href="#">
-                                            <i data-cs-icon="gear" class="me-2" data-cs-size="17"></i>
-                                            <span class="align-middle">Settings</span>
-                                        </a>
-                                    </li> -->
-                                    <li>
-                                        <a href="#">
-                                            <i data-cs-icon="logout" class="me-2" data-cs-size="17"></i>
-                                            <span class="align-middle">Logout</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <!-- User Menu End -->
 
-                <!-- Icons Menu Start -->
-                <ul class="list-unstyled list-inline text-center menu-icons">
-                    <li class="list-inline-item">
-                        <a href="#" data-bs-toggle="modal" data-bs-target="#searchPagesModal">
-                            <i data-cs-icon="search" data-cs-size="18"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" id="pinButton" class="pin-button">
-                            <i data-cs-icon="lock-on" class="unpin" data-cs-size="18"></i>
-                            <i data-cs-icon="lock-off" class="pin" data-cs-size="18"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" id="colorButton">
-                            <i data-cs-icon="light-on" class="light" data-cs-size="18"></i>
-                            <i data-cs-icon="light-off" class="dark" data-cs-size="18"></i>
-                        </a>
-                    </li>
-                    <li class="list-inline-item">
-                        <a href="#" data-bs-toggle="dropdown" data-bs-target="#notifications" aria-haspopup="true" aria-expanded="false" class="notification-button">
-                            <div class="position-relative d-inline-flex">
-                                <i data-cs-icon="bell" data-cs-size="18"></i>
-                                <span class="position-absolute notification-dot rounded-xl"></span>
-                            </div>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-end wide notification-dropdown scroll-out" id="notifications">
-                            <div class="scroll">
-                                <ul class="list-unstyled border-last-none">
-                                    <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                                        <img src="img/profile/profile-1.jpg" class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
-                                        <div class="align-self-center">
-                                            <a href="#">Joisse Kaycee just sent a new comment!</a>
-                                        </div>
-                                    </li>
-                                    <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                                        <img src="img/profile/profile-2.jpg" class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
-                                        <div class="align-self-center">
-                                            <a href="#">New order received! It is total $147,20.</a>
-                                        </div>
-                                    </li>
-                                    <li class="mb-3 pb-3 border-bottom border-separator-light d-flex">
-                                        <img src="img/profile/profile-3.jpg" class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
-                                        <div class="align-self-center">
-                                            <a href="#">3 items just added to wish list by a user!</a>
-                                        </div>
-                                    </li>
-                                    <li class="pb-3 pb-3 border-bottom border-separator-light d-flex">
-                                        <img src="img/profile/profile-6.jpg" class="me-3 sw-4 sh-4 rounded-xl align-self-center" alt="..." />
-                                        <div class="align-self-center">
-                                            <a href="#">Kirby Peters just sent a new message!</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </li>
-                </ul>
-                <!-- Icons Menu End -->
 
                 <!-- Menu Start -->
                 <div class="menu-container flex-grow-1">
@@ -199,12 +119,12 @@
                                             <img class="img-fluid rounded-xl" alt="profile" src="{{asset('/')}}icon.jpeg" />
 
                                         </div>
-                                        <div class="h5 mb-0"><span id="nama"></span>
+                                        <div class="h5 mb-0">{{$data->dataDiri->nama_lengkap}}
                                         </div>
-                                        <div class="text-muted"><span id="nim"></span></div>
+                                        <div class="text-muted">{{$data->nim}}</div>
                                         <div class="text-muted">
                                             <!-- <i data-cs-icon="pin" class="me-1"></i> -->
-                                            <span class="align-middle"><span id="prodi"></span></span>
+                                            <span class="align-middle">{{$data->prodi->organisasi_nama}} ({{$data->prodi->organisasi_singkatan}})</span>
                                         </div>
                                     </div>
                                 </div>

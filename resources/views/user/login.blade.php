@@ -192,8 +192,17 @@
                 body: dataSend
             })
             responseMessage = await response.json()
+            // return console.log(responseMessage.data[0])
             if (responseMessage.status == "sukses") {
-                // return console.log(responseMessage.data[0].iddata)
+                let dataSend = new FormData()
+                dataSend.append('data', JSON.stringify(responseMessage.data[0]))
+                let sendUser = await fetch("{{route('import.store')}}", {
+                    method: "POST",
+                    body: dataSend
+                });
+                let responseUser = await sendUser.json()
+                console.log(responseUser);
+                // if (responseUser.status == true)
                 window.location = `${base_url}/user/sesi/${responseMessage.data[0].iddata}`;
 
             } else {
