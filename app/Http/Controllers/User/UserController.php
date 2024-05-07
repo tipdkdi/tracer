@@ -291,6 +291,8 @@ class UserController extends Controller
         $data['akhir'] = false;
         $data['awal'] = false;
         $data['periode'] = $periode;
+        $data['data'] = Mahasiswa::with(['dataDiri', 'prodi'])->where('user_id', session('userData')->id)->first();
+
         $awal = FirstOrLast::where('step_id_first', $bagianId)->count();
         if ($awal > 0)
             $data['awal'] = true;
