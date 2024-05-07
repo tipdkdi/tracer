@@ -107,7 +107,7 @@
                     contents += '</tr>'
                 })
             } else {
-                contents += '<tr><td colspan="7">Data Tidak Ada</td></tr>'
+                contents += '<tr class="text-center"><td colspan="7">Data Tidak Ada</td></tr>'
             }
 
             document.querySelector('#hasil-show').innerHTML = ''
