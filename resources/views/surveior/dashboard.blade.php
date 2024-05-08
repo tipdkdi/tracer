@@ -32,6 +32,7 @@
                 <option value="KAB. MUNA BARAT">KAB. MUNA BARAT</option>
                 <option value="KAB. WAKATOBI">KAB. WAKATOBI</option>
                 <option value="KOTA BAU-BAU">KOTA BAU-BAU</option>
+                <option value="KOTA BAU-BAU">KOTA BOMBANA</option>
                 <option value="KOTA KENDARI">KOTA KENDARI</option>
             </select>
 
