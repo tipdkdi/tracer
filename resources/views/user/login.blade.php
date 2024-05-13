@@ -152,7 +152,7 @@
     <!-- Vendor Scripts End -->
 
     <!-- Template Base Scripts Start -->
-    <script src="{{asset('/')}}font/CS-Line/csicons.min.js"></script>
+    <!-- <script src="{{asset('/')}}font/CS-Line/csicons.min.js"></script> -->
     <script src="{{asset('/')}}js/base/helpers.js"></script>
     <script src="{{asset('/')}}js/base/globals.js"></script>
     <script src="{{asset('/')}}js/base/nav.js"></script>
