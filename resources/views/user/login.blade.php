@@ -173,7 +173,7 @@
 
             let base_url = 'https://tracerstudy.iainkendari.ac.id'
             @else
-            let base_url = 'https://tracerstudy.iainkendari.ac.id'
+            let base_url = 'http://tracerstudy.iainkendari.ac.id'
             // let base_url = 'http://127.0.0.1:8000'
             @endif
             // return alert('sedang perbaikan')
