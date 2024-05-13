@@ -170,7 +170,7 @@
         async function login() {
             // return alert('sementara pengembangan')
 
-            let base_url = '{{url("/")}}'
+            let base_url = "{{url('/')}}"
             // return alert('sedang perbaikan')
             let dataSend = new FormData()
             let nim = document.querySelector("#nim")
