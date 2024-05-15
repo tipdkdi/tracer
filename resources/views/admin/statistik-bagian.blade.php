@@ -264,6 +264,7 @@
                 dataForm.append('pertanyaanId', pertanyaan.options[pertanyaan.selectedIndex].value)
                 dataForm.append('usersId', "awal")
                 dataForm.append('filter', "-")
+                dataForm.append('filter_bulan_lulus', "-")
                 url = "{{route('admin.get.count.pertanyaan')}}"
                 response = await fetch(url, {
                     method: "POST",
