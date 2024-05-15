@@ -39,6 +39,7 @@ Route::post('/jawaban/pertanyaan/angka', [DashboardController::class, 'getAngkaR
 Route::post('/bagian/update/', [FormController::class, 'updateFirstOrLast'])->name('admin.bagian.update.first.Last');
 Route::post('/get-users', [DashboardController::class, 'getUsers'])->name('admin.get.users');
 Route::get('/filter', [DashboardController::class, 'filterData'])->name('admin.get.filter');
+Route::get('/filter/bulan-lulus', [DashboardController::class, 'filterBulanLulus'])->name('admin.get.filter.bulan.lulus');
 
 Route::post('/get-tahun-mengisi', [DashboardController::class, 'getTahunMengisi'])->name('admin.get.tahun.mengisi');
 Route::post('/get-filtered-data/periode/{periode}', [DashboardController::class, 'getfilteredData'])->name('admin.get.filterd.data');

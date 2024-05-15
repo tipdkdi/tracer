@@ -23,7 +23,7 @@ class CreateJawabansTable extends Migration
             $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('pertanyaan_id')->references('id')->on('pertanyaans');
-            $table->foreign('sesi_id')->references('id')->on('user_sesi_id');
+            $table->foreign('sesi_id')->references('id')->on('user_sesis');
         });
     }
 

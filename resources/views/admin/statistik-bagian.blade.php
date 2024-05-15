@@ -54,6 +54,10 @@
                     </select>
                 </div>
                 <div class="col-md-3">
+                    <select multiple="multiple" class="form-select" id="bulan-lulus">
+                    </select>
+                </div>
+                <div class="col-md-3">
                     <button class="btn btn-warning" id="filter">Filter</button>
                 </div>
 
@@ -373,10 +377,12 @@
             let fakultas = document.querySelector("#fakultas")
             let prodi = document.querySelector("#prodi")
             let tahunLulus = document.querySelector("#tahun-lulus")
+            let bulanLulus = document.querySelector("#bulan-lulus")
             // let prodi 
             setDefaultPilihan(fakultas, 'Fakultas')
             setDefaultPilihan(prodi, 'Prodi')
             setDefaultPilihan(tahunLulus, 'Tahun Lulus')
+            setDefaultPilihan(bulanLulus, 'Bulan Lulus')
             response = await fetch('{{route("admin.get.filter")}}')
             responseMessage = await response.json()
             let fragment = document.createDocumentFragment();
@@ -388,6 +394,17 @@
                 fragment.appendChild(option);
             })
             tahunLulus.appendChild(fragment)
+            response = await fetch('{{route("admin.get.filter.bulan.lulus")}}')
+            responseMessage = await response.json()
+            let fragmentBulanLulus = document.createDocumentFragment();
+            console.log(responseMessage);
+            responseMessage.forEach(function(data, i) {
+                let option = document.createElement('option');
+                option.innerText = data.pilihan_jawaban
+                option.value = data.pilihan_jawaban
+                fragmentBulanLulus.appendChild(option);
+            })
+            bulanLulus.appendChild(fragmentBulanLulus)
 
             prodi.disabled = true
             getFakultas();
@@ -477,6 +494,7 @@
         })
         console.log(usersid);
         let tahunLulus = document.querySelector("#tahun-lulus")
+        let bulanLulus = document.querySelector("#bulan-lulus")
 
         dataSend = new FormData()
         dataSend.append('pertanyaanId', pertanyaanId)
@@ -495,6 +513,20 @@
             // return;
             dataSend.append('filter', JSON.stringify(selected))
         }
+        if (bulanLulus.options[bulanLulus.selectedIndex].value == "" || bulanLulus.options[bulanLulus.selectedIndex].value == "semua") {
+
+            dataSend.append('filter_bulan_lulus', '-')
+        } else {
+            var selected = [];
+            for (var option of document.getElementById('bulan-lulus').options) {
+                if (option.selected) {
+                    selected.push(option.value);
+                }
+            }
+            console.log(selected);
+            // return;
+            dataSend.append('filter_bulan_lulus', JSON.stringify(selected))
+        }
 
 
         //mulai dari sini bedami untuk yang angka
@@ -506,6 +538,7 @@
                 body: dataSend
             })
             responseMessage = await response.json()
+            // console.log('ss');
             console.log(responseMessage);
 
             showDataTable = document.querySelector("#show-data-table")

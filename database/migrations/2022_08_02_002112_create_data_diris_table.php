@@ -23,7 +23,7 @@ class CreateDataDirisTable extends Migration
             $table->string('no_hp', 20)->nullable();
             $table->text('alamat_ktp')->nullable();
             $table->text('alamat_domisili')->nullable();
-            $table->string('kecamatan')();
+            $table->string('kecamatan');
             $table->string('kabupaten');
             $table->string('provinsi');
             $table->timestamps();

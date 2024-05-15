@@ -66,6 +66,10 @@ class DashboardController extends Controller
     {
         return JawabanJenis::where('pertanyaan_id', 155)->get();
     }
+    public function filterBulanLulus()
+    {
+        return JawabanJenis::where('pertanyaan_id', 269)->get();
+    }
 
     public function getfilteredData(Request $request, $periode)
     {
@@ -126,15 +130,31 @@ class DashboardController extends Controller
         $pertanyaanId = $request->pertanyaanId;
         $sesiId = json_decode($request->sesiId);
         $tahunId = json_decode($request->filter);
+        $bulanId = json_decode($request->filter_bulan_lulus);
         $users = [];
+        $users2 = [];
         if ($request->filter == "-") {
             $users = $sesiId;
         } else {
             $userTahunAjar = Jawaban::where(['pertanyaan_id' => 155])->whereIn('jawaban', $tahunId)->whereIn('sesi_id', $sesiId)->get();
+            // $userTahunAjar = Jawaban::whereIn('pertanyaan_id', [155, 269])
+            //     ->whereIn('jawaban', [$tahunId, $bulanId])
+            //     ->whereIn('sesi_id', $sesiId)->get();
 
             // $userTahunAjar = Jawaban::where(['pertanyaan_id' => 2, 'jawaban' => $request->filter])->whereIn('user_id', $usersId)->get();
             foreach ($userTahunAjar as $item) {
                 $users[] = $item->sesi_id;
+            }
+        }
+        if ($request->filter_bulan_lulus == "-") {
+            $users2 = $users;
+        } else {
+            $userTahunAjar = Jawaban::where(['pertanyaan_id' => 269])
+                ->whereIn('jawaban', $bulanId)
+                ->whereIn('sesi_id', $users)
+                ->get();
+            foreach ($userTahunAjar as $item) {
+                $users2[] = $item->sesi_id;
             }
         }
         // $userTahunAjar->map(function ($user) use ($users) {
@@ -146,17 +166,19 @@ class DashboardController extends Controller
         $data['dataPertanyaan'] = Pertanyaan::with([
             'jawabanJenis'
         ])->where('id', $pertanyaanId)->get();
-        $data['dataPertanyaan'][0]->jawabanJenis->map(function ($data) use ($pertanyaanId, $users) {
-            if ($users == null)
+        $data['dataPertanyaan'][0]->jawabanJenis->map(function ($data) use ($pertanyaanId, $users2) {
+            if ($users2 == null)
                 $total = 0;
             // $total = Jawaban::where(['pertanyaan_id' => $pertanyaanId, 'jawaban' => $data->pilihan_jawaban])->count();
             else
                 $total = Jawaban::where(['pertanyaan_id' => $pertanyaanId, 'jawaban' => $data->pilihan_jawaban])
-                    ->whereIn('sesi_id', $users)->count();
+                    ->whereIn('sesi_id', $users2)->count();
             $data->total = $total;
         });
         $data['asdfa'] = $request->all();
         $data['user'] = $users;
+        $data['user2'] = $users2;
+        $data['gg'] = $bulanId;
         return $data;
     }
 
