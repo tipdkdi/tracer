@@ -99,6 +99,7 @@
             if (response.length > 0) {
 
                 response.map((data, index) => {
+                    console.log(`${data.user.mahasiswa.data_diri.nama_lengkap} - ${data.user.mahasiswa.data_diri}`);
                     contents += '<tr>'
                     contents += `<td class="text-center">${index + 1}</td>`
                     contents += `<td class="text-center">${data.user.mahasiswa.data_diri.kabupaten}</td>`
