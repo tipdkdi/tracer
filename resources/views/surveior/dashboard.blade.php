@@ -99,16 +99,16 @@
             if (response.length > 0) {
 
                 response.map((data, index) => {
-                    console.log(`${data.user.mahasiswa.data_diri.nama_lengkap} - ${data.user.mahasiswa.data_diri}`);
-                    contents += '<tr>'
-                    contents += `<td class="text-center">${index + 1}</td>`
-                    contents += `<td class="text-center">${data.user.mahasiswa.data_diri.kabupaten}</td>`
-                    contents += `<td class="text-center">${data.user.mahasiswa.nim}</td>`
-                    contents += `<td>${data.user.mahasiswa.data_diri.nama_lengkap}</td>`
-                    contents += `<td class="text-center">${data.user.mahasiswa.prodi.organisasi_singkatan}</td>`
-                    contents += `<td class="text-center">${data.user.mahasiswa.data_diri.no_hp}</td>`
-                    contents += `<td class="text-center">${(data.sesi_status==1)?"<span class='badge text-bg-success'>Selesai</span>":"<span class='badge text-bg-warning'>Proses</span>"}</td>`
-                    contents += '</tr>'
+                    console.log(`${data.user.mahasiswa}`);
+                    // contents += '<tr>'
+                    // contents += `<td class="text-center">${index + 1}</td>`
+                    // contents += `<td class="text-center">${data.user.mahasiswa.data_diri.kabupaten}</td>`
+                    // contents += `<td class="text-center">${data.user.mahasiswa.nim}</td>`
+                    // contents += `<td>${data.user.mahasiswa.data_diri.nama_lengkap}</td>`
+                    // contents += `<td class="text-center">${data.user.mahasiswa.prodi.organisasi_singkatan}</td>`
+                    // contents += `<td class="text-center">${data.user.mahasiswa.data_diri.no_hp}</td>`
+                    // contents += `<td class="text-center">${(data.sesi_status==1)?"<span class='badge text-bg-success'>Selesai</span>":"<span class='badge text-bg-warning'>Proses</span>"}</td>`
+                    // contents += '</tr>'
                 })
             } else {
                 contents += '<tr class="text-center"><td colspan="7">Data Tidak Ada</td></tr>'
