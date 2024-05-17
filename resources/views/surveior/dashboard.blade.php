@@ -99,7 +99,7 @@
             if (response.length > 0) {
 
                 response.map((data, index) => {
-                    console.log(`${data.user}`);
+                    console.log(`${data.user.name}`);
                     console.log(`${data.user.mahasiswa.data_diri}`);
                     // contents += '<tr>'
                     // contents += `<td class="text-center">${index + 1}</td>`
