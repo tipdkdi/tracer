@@ -29,6 +29,7 @@
                     <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img class="profile" alt="profile" src="{{asset('/')}}icon.jpeg" />
                         @if(!empty(Auth::user()))
+
                         <div class="name">Administrator</div>
                         @else
                         <div class="name">Admin Fakultas</div>

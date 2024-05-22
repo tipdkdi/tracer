@@ -12,7 +12,7 @@ class TrustProxies extends Middleware
      *
      * @var array|string|null
      */
-    protected $proxies = '*'; // Anda juga bisa menggunakan IP spesifik dari Cloudflare
+    protected $proxies;
 
     /**
      * The headers that should be used to detect proxies.
