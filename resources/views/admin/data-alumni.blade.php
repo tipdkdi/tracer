@@ -78,7 +78,7 @@
     // showData()
 
     function goCetak() {
-        let url = "{{route('admin.cetak',':periode')}}"
+        let url = "{{route('data.cetak',':periode')}}"
         url = url.replace(':periode', document.querySelector('#periode').value)
         window.location.href = url
     }
