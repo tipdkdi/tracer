@@ -28,9 +28,6 @@ class RedirectIfAuthenticated
                     case 1:
                         return redirect()->route('admin.dashboard');
                         break;
-                    case 3:
-                        return redirect()->route('surveior.dashboard');
-                        break;
                     default:
                         return redirect('user/login');
                         break;

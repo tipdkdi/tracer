@@ -25,6 +25,13 @@ Route::get('/', function () {
 Route::get('/tim-survei/dashboard', [SurveiorController::class, 'index'])->name('surveior.dashboard');
 Route::get('/import', [SurveiorController::class, 'importDataView']);
 
+Route::get('data/dashboard', [DashboardController::class, 'index'])->name('data.dashboard');
+Route::get('data/statistik/bagian', [DashboardController::class, 'statistik_bagian'])->name('data.statistik.bagian');
+Route::get('data/statistik/data-alumni', [DashboardController::class, 'statistik_data_alumni'])->name('data.statistik.data.alumni');
+Route::get('data/data-alumni', [DashboardController::class, 'dataAlumni'])->name('data.alumni');
+Route::get('data/data-alumni/{userId}/data-jawaban', [DashboardController::class, 'detailJawaban'])->name('data.get.detail.jawaban');
+
+
 Route::group(['middleware' => 'auth'], function () {
 
 
