@@ -50,7 +50,7 @@
 
     <style>
         .fixed-background {
-            background: url("{{asset('/')}}bg.jpeg") no-repeat center center;
+            background: url("https://tracerstudy.iainkendari.ac.id/bg.jpeg") no-repeat center center;
             /* background-size: cover; */
             /* Full height */
             height: 100%;
