@@ -294,12 +294,14 @@ class DashboardController extends Controller
             if (!$jawab->isEmpty()) {
                 $kerjaLokasi = $jawab[0]->jawaban;
                 $lokasi = explode(',', $kerjaLokasi);
-                $urlProvinsi = "https://emsifa.github.io/api-wilayah-indonesia/api/province/" . $lokasi[1] . ".json";
-                $urlKabupaten = "https://emsifa.github.io/api-wilayah-indonesia/api/regency/" . $lokasi[0] . ".json";
-                $provinsi = json_decode(file_get_contents($urlProvinsi));
-                $kabupaten = json_decode(file_get_contents($urlKabupaten));
-                $data[] = $provinsi->name . " - " . $kabupaten->name;
-                Jawaban::where(['pertanyaan_id' => 261, 'sesi_id' => $sesinya->id])->update(['jawaban' => $provinsi->name . " - " . $kabupaten->name]);
+                if (count($lokasi) == 2) {
+                    $urlProvinsi = "https://emsifa.github.io/api-wilayah-indonesia/api/province/" . $lokasi[1] . ".json";
+                    $urlKabupaten = "https://emsifa.github.io/api-wilayah-indonesia/api/regency/" . $lokasi[0] . ".json";
+                    $provinsi = json_decode(file_get_contents($urlProvinsi));
+                    $kabupaten = json_decode(file_get_contents($urlKabupaten));
+                    $data[] = $provinsi->name . " - " . $kabupaten->name;
+                    Jawaban::where(['pertanyaan_id' => 261, 'sesi_id' => $sesinya->id])->update(['jawaban' => $provinsi->name . " - " . $kabupaten->name]);
+                }
             }
         }
         return $data;
