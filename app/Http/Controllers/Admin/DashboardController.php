@@ -287,8 +287,26 @@ class DashboardController extends Controller
 
     public function cetak($periode)
     {
+        $jawaban = UserSesi::with(['user.mahasiswa.dataDiri', 'user.mahasiswa.prodi'])->where('sesi_periode', $periode)->get();
+        $data = [];
+        foreach ($jawaban as $sesinya) {
+            $jawab = Jawaban::where(['pertanyaan_id' => 261, 'sesi_id' => $sesinya->id])->select('jawaban')->get();
+            if (!$jawab->isEmpty()) {
+                $kerjaLokasi = $jawab[0]->jawaban;
+                $lokasi = explode(',', $kerjaLokasi);
+                $urlProvinsi = "https://emsifa.github.io/api-wilayah-indonesia/api/province/" . $lokasi[1] . ".json";
+                $urlKabupaten = "https://emsifa.github.io/api-wilayah-indonesia/api/regency/" . $lokasi[0] . ".json";
+                $provinsi = json_decode(file_get_contents($urlProvinsi));
+                $kabupaten = json_decode(file_get_contents($urlKabupaten));
+                $data[] = $provinsi->name . " - " . $kabupaten->name;
+                Jawaban::where(['pertanyaan_id' => 261, 'sesi_id' => $sesinya->id])->update(['jawaban' => $provinsi->name . " - " . $kabupaten->name]);
+            }
+        }
+        return $data;
+
+
         $bagian = Step::with(['pertanyaan'])->get();
-        $jawaban = UserSesi::with('user')->where('sesi_periode', $periode)->paginate(50);
+        $jawaban = UserSesi::with(['user.mahasiswa.dataDiri', 'user.mahasiswa.prodi'])->where('sesi_periode', $periode)->paginate(50);
         $data = [];
         foreach ($jawaban as $sesinya) {
             foreach ($bagian as $part) {
@@ -299,7 +317,17 @@ class DashboardController extends Controller
                     } else {
                         $word = "";
                         if (count($jawab) == 1) {
-                            $data[] = $jawab[0]->jawaban;
+                            if ($tanya->id == 261) {
+                                $kerjaLokasi = $jawab[0]->jawaban;
+                                $lokasi = explode(',', $kerjaLokasi);
+                                $urlProvinsi = "https://emsifa.github.io/api-wilayah-indonesia/api/province/" . $lokasi[1] . ".json";
+                                $urlKabupaten = "https://emsifa.github.io/api-wilayah-indonesia/api/regency/" . $lokasi[0] . ".json";
+                                $provinsi = json_decode(file_get_contents($urlProvinsi));
+                                $kabupaten = json_decode(file_get_contents($urlKabupaten));
+                                $data[] = $provinsi->name . " - " . $kabupaten->name;
+                            } else {
+                                $data[] = $jawab[0]->jawaban;
+                            }
                         } else {
                             foreach ($jawab as $index => $item) {
                                 $word .= $item->jawaban;
@@ -311,6 +339,7 @@ class DashboardController extends Controller
                     }
                 }
             }
+            // if ($sesinya->user->mahasiswa != null)
             $sesinya->jawaban = $data;
             $data = [];
         }

@@ -61,9 +61,15 @@
             <tr>
                 <td>{{$index + 1}}</td>
                 <td>{{\Carbon\Carbon::parse($jawab->sesi_tanggal)->format('d-m-Y');}}</td>
-                <td><span id="nim{{$jawab->user->name}}"></span></td>
-                <td><span id="nama{{$jawab->user->name}}"></span></td>
-                <td><span id="prodi{{$jawab->user->name}}"></span></td>
+                @if($jawab->user->mahasiswa!=null)
+                <td>{{$jawab->user->mahasiswa->nim}}</td>
+                <td>{{$jawab->user->mahasiswa->dataDiri->nama_lengkap}}</td>
+                <td>{{$jawab->user->mahasiswa->prodi->organisasi_singkatan}}</td>
+                @else
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+                @endif
                 @foreach ($jawab->jawaban as $row)
                 <td>{{$row}}</td>
                 @endforeach
@@ -72,33 +78,6 @@
         </tbody>
     </table>
     {{ $jawaban->links() }}
-
-    <script>
-        getdata()
-        async function getdata() {
-            let dataUser = @json($jawaban);
-            let dataId = []
-            // return console.log(dataUser);
-            dataUser.data.forEach(function(data) {
-                dataId.push(data.user.name);
-            });
-            // console.log(dataId);
-            let dataSend = new FormData()
-            dataSend.append('iddata', JSON.stringify(dataId))
-            let response = await fetch('https://sia.iainkendari.ac.id/alumni/tracer/data-alumni', {
-                method: "POST",
-                body: dataSend
-            })
-            let responseMessage = await response.json()
-            console.log(responseMessage);
-            responseMessage.data.forEach(function(data) {
-                document.querySelector("#nim" + data.iddata).innerText = data.nim;
-                document.querySelector("#nama" + data.iddata).innerText = data.nama;
-                document.querySelector("#prodi" + data.iddata).innerText = data.prodi;
-            })
-        }
-    </script>
-
 </body>
 
 </html>

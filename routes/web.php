@@ -19,7 +19,8 @@ use App\Http\Controllers\SurveiorController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('user.login');
+    // return redirect()->route('user.login');
+    return "SEDANG MAINTENANCE";
 });
 //TIM SURVEI
 Route::get('/tim-survei/dashboard', [SurveiorController::class, 'index'])->name('surveior.dashboard');
