@@ -76,7 +76,11 @@ Route::group(['middleware' => 'auth'], function () {
 // Route::group(['middleware' => ['web']], function () {
 
 Route::group(['prefix' => 'user'], function () {
-    Route::get('/login', [UserController::class, 'login'])->name('user.login');
+    // Route::get('/login', [UserController::class, 'login'])->name('user.login');
+    Route::get('/login', function () {
+        // return redirect()->route('user.login');
+        return "SEDANG MAINTENANCE";
+    });
     Route::get('/sesi/{iddata}', [UserController::class, 'sesi'])->name('admin.sesi');
     Route::group(['middleware' => 'usersesi'], function () {
         Route::get('/logout', [UserController::class, 'logout'])->name('user.logout');
