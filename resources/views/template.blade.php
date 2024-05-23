@@ -70,15 +70,15 @@
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('admin.data.alumni')}}">
-                                <i data-cs-icon="graduation" class="icon" data-cs-size="18"></i>
-                                <span class="label">Data Alumni</span>
+                            <a href="{{route('admin.bagian.index')}}">
+                                <i data-cs-icon="quiz" class="icon" data-cs-size="18"></i>
+                                <span class="label">Atur Pertanyaan</span>
                             </a>
                         </li>
                         <li>
-                            <a href="{{route('admin.bagian.index')}}">
-                                <i data-cs-icon="quiz" class="icon" data-cs-size="18"></i>
-                                <span class="label">Bagian</span>
+                            <a href="{{route('admin.data.alumni')}}">
+                                <i data-cs-icon="graduation" class="icon" data-cs-size="18"></i>
+                                <span class="label">Isian Tracer</span>
                             </a>
                         </li>
                         <li>
@@ -123,7 +123,7 @@
                         <li>
                             <a href="{{route('data.alumni')}}">
                                 <i data-cs-icon="graduation" class="icon" data-cs-size="18"></i>
-                                <span class="label">Data Alumni</span>
+                                <span class="label">Isian Tracer</span>
                             </a>
                         </li>
                         <li>
