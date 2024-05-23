@@ -134,12 +134,12 @@
                             <ul id="statistik">
                                 <li>
                                     <a href="{{route('data.statistik.data.alumni')}}">
-                                        <span class="label">Data Alumni</span>
+                                        <span class="label">Statistik Alumni</span>
                                     </a>
                                 </li>
                                 <li>
                                     <a href="{{route('data.statistik.bagian')}}">
-                                        <span class="label">Bagian</span>
+                                        <span class="label">Statistik Pertanyaan</span>
                                     </a>
                                 </li>
                             </ul>
