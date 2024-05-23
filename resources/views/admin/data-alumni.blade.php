@@ -9,7 +9,8 @@
             <h4>Periode</h4>
             <div class="row">
                 <div class="col-md-12 mb-3">
-                    <select class="form-select" id="periode" onchange="showData()">
+                    <!-- <select class="form-select" id="periode" onchange="showData()"> -->
+                    <select class="form-select" id="periode">
                         <option value="">Pilih Periode</option>
                         <option value="2020">2020</option>
                         <option value="2021">2021</option>
@@ -36,9 +37,7 @@
                 <div class="col-md-3">
                     <button class="btn btn-primary" id="filter">Filter</button>
                 </div>
-                <div class="col-md-3 my-3">
-                    <button class="btn btn-info" id="cetak" onclick="goCetak()" disabled="disabled">cetak</button>
-                </div>
+
             </div>
         </div>
     </div>
@@ -49,6 +48,9 @@
     <div class="card mb-5">
         <div class="card-body">
             <h2>Daftar Alumni yang telah masuk Sistem</h2>
+            <div class="col-md-3 my-3">
+                <button class="btn btn-info" id="cetak" onclick="goCetak()" disabled="disabled"><i data-cs-icon="print" class="icon" data-cs-size="18"></i> Lihat Data Isian Tracer Perfakultas</button>
+            </div>
             <table class="table table-striped table-hover mt-4">
                 <thead>
                     <tr>
@@ -78,8 +80,15 @@
     // showData()
 
     function goCetak() {
-        let url = "{{route('data.cetak',':periode')}}"
+        // return alert(document.querySelector('#periode').value)
+        if (document.querySelector('#periode').value == "")
+            return alert('pilih periode')
+        if (document.querySelector('#fakultas').value == "")
+            return alert('pilih fakultas')
+        let url = "{{route('data.cetak',[':periode',':fakultas'])}}"
         url = url.replace(':periode', document.querySelector('#periode').value)
+        url = url.replace(':fakultas', document.querySelector('#fakultas').value)
+        // console.log(url);
         window.location.href = url
     }
     async function showData() {
@@ -226,9 +235,32 @@
 
     }
 
+    document.querySelector("#periode").addEventListener('change', async function() {
+
+        let showDataTable = document.querySelector("#show-data-table").innerHTML = ""
+        const cetak = document.querySelector('#cetak');
+        cetak.disabled = true
+
+    });
+    document.querySelector("#fakultas").addEventListener('change', async function() {
+
+        let showDataTable = document.querySelector("#show-data-table").innerHTML = ""
+        const cetak = document.querySelector('#cetak');
+        cetak.disabled = true
+
+    });
+
     document.querySelector("#filter").addEventListener('click', async function() {
         // alert("mantap")
         const periode = document.querySelector('#periode');
+        const cetak = document.querySelector('#cetak');
+        const fakultas = document.querySelector('#fakultas');
+        if (periode.value == "") {
+            return alert('pilih periode')
+        }
+        if (fakultas.value == "")
+            return alert('pilih fakultas')
+        cetak.disabled = false
         if (periode.value == "")
             return alert('pilih periode')
         let dataWhere = {};
@@ -310,6 +342,8 @@
             fragment.appendChild(tr);
         })
         showDataTable.appendChild(fragment)
+        // return showDataTable.innerHTML = "<tr class='text-center'><td colspan='8'>Langsung cetak saja ya</td></tr>"
+
     });
 
 
@@ -322,10 +356,10 @@
         optionPilih.innerText = `Pilih ${text}`
         optionPilih.value = ""
         pilihan.appendChild(optionPilih)
-        let optionSemua = document.createElement('option');
-        optionSemua.innerText = `Semua ${text}`
-        optionSemua.value = "semua"
-        pilihan.appendChild(optionSemua)
+        // let optionSemua = document.createElement('option');
+        // optionSemua.innerText = `Semua ${text}`
+        // optionSemua.value = "semua"
+        // pilihan.appendChild(optionSemua)
     }
 </script>
 @endsection
