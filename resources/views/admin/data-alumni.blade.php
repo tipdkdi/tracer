@@ -6,12 +6,12 @@
     <div class="card mb-5">
         <div class="card-body">
 
-            <h4>Periode</h4>
+            <h4>Periode Pengisian Tracer</h4>
             <div class="row">
                 <div class="col-md-12 mb-3">
                     <!-- <select class="form-select" id="periode" onchange="showData()"> -->
                     <select class="form-select" id="periode">
-                        <option value="">Pilih Periode</option>
+                        <option value="">Pilih Periode Pengisian Tracer</option>
                         <option value="2020">2020</option>
                         <option value="2021">2021</option>
                         <option value="2022">2022</option>

@@ -12,9 +12,9 @@
 <section class="scroll-section" id="textContent">
     <div class="card mb-5">
         <div class="card-body d-flex flex-column">
-            <h3 class="card-title mb-2">Periode</h3>
+            <h3 class="card-title mb-2">Periode Pengisian Tracer</h3>
             <select class="form-select" id="periode">
-                <option value="">Pilih Periode</option>
+                <option value="">Pilih Periode Pengisian Tracer</option>
                 <option value="2020">2020</option>
                 <option value="2021">2021</option>
                 <option value="2022">2022</option>
