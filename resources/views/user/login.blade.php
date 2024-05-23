@@ -192,7 +192,7 @@
             if (responseMessage.status == "sukses") {
                 let dataSend = new FormData()
                 let url = "{{route('import.store')}}"
-                url = url.replace('http', 'https')
+                // url = url.replace('http', 'https')
 
                 dataSend.append('data', JSON.stringify(responseMessage.data[0]))
                 let sendUser = await fetch(url, {

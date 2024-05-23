@@ -48,23 +48,35 @@
     getProvinsi();
     async function getProvinsi() {
         let url = 'https://www.emsifa.com/api-wilayah-indonesia/api/provinces.json'
-
+        const provinsiSelect = document.querySelector('#provinsi')
+        let provinsi = provinsiSelect.dataset.provinsi
         let sendRequest = await fetch(url)
         let response = await sendRequest.json()
         console.log(response);
         let contents = '<option>Pilih Provinsi</option>'
         response.map((data) => {
-            contents += `<option value="${data.id}">- ${data.name}</option>`
+            if (provinsi == data.name) {
+                getKabupaten(data.id)
+            }
+            contents += `<option data-value="${data.name}" value="${data.id}" ${(provinsi==data.name)?"selected":""}>- ${data.name}</option>`
         })
-        document.querySelector('#provinsi').innerHTML = ''
-        document.querySelector('#provinsi').innerHTML = contents
+        provinsiSelect.innerHTML = ''
+        provinsiSelect.innerHTML = contents
     }
 
-    async function getKabupaten() {
-        let provinsiId = document.querySelector('#provinsi').value
+    async function getKabupaten(provinsiId = null) {
+        // let provinsiId
+        const provinsiSelect = document.querySelector('#provinsi')
+
+        if (provinsiId == null)
+            provinsiId = document.querySelector('#provinsi').value
+        // else
+        //     provinsiId = select
+        console.log(provinsiId);
         // let url = `https://emsifa.github.io/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
         let url = `https://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsiId}.json`
-
+        const kabupatenSelect = document.querySelector('#kabupaten')
+        let kabupaten = kabupatenSelect.dataset.kabupaten
         let sendRequest = await fetch(url)
         let response = await sendRequest.json()
         console.log(response);
@@ -72,7 +84,7 @@
         contents += '<div class="mb-3 position-relative form-group">';
         contents += '<label class="form-label">Pilih Kabupaten</label>';
         response.map((data) => {
-            contents += `<option value="${data.id},${data.province_id}">- ${data.name}</option>`
+            contents += `<option value="${provinsiSelect.options[provinsiSelect.selectedIndex].dataset.value} - ${data.name}" ${(kabupaten==data.name)?"selected":""}>- ${data.name}</option>`
         })
         document.querySelector('#kabupaten').innerHTML = ''
         document.querySelector('#kabupaten').innerHTML = contents

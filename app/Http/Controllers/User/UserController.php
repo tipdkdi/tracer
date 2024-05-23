@@ -272,13 +272,22 @@ class UserController extends Controller
 
                 $row->form = $content;
             } else if ($row->pertanyaan_jenis_jawaban == "Lokasi") {
+                $provinsi = "";
+                $kabupaten = "";
+                if (count($dataJawaban) > 0) {
+                    $kerjaLokasi = $jawaban[0]->jawaban;
+                    $lokasi = explode('-', $kerjaLokasi);
+                    $provinsi = trim($lokasi[0]);
+                    $kabupaten = trim($lokasi[1]);
+                }
+
                 $content = '<div class="mb-3 position-relative form-group">';
                 $content .= '<label class="form-label">' . $row->pertanyaan_urutan . '. ' . $row->pertanyaan . '</label>';
                 $content .= '<div style="padding-left:10px;">';
-                $content .= '<select onchange="getKabupaten()" data-value="" id="provinsi" class="form-select" required>';
+                $content .= '<select onchange="getKabupaten()" data-provinsi="' . $provinsi . '" id="provinsi" class="form-select" required>';
 
                 $content .= '</select>';
-                $content .= '<select class="form-select mt-2" id="kabupaten" name="input[' . $row->id . ']" required>';
+                $content .= '<select class="form-select mt-2" data-kabupaten="' . $kabupaten . '" id="kabupaten" name="input[' . $row->id . ']" required>';
 
                 $content .= '</select>';
                 $content .= '</div>';
