@@ -147,7 +147,7 @@
             linkDetail.innerText = "Detail"
             if (data.sesi_id == '-')
                 linkDetail.innerText = "-"
-            let url = "{{route('admin.get.detail.jawaban',':sesiId')}}"
+            let url = "{{route('data.get.detail.jawaban',':sesiId')}}"
             url = url.replace(':sesiId', data.sesi_id)
             linkDetail.href = url
             link.appendChild(linkDetail)
