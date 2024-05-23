@@ -54,7 +54,7 @@ class DashboardController extends Controller
         // }
         $data['bagian'] = Step::all();
         // return $data;
-        $data['title'] = "Statistik Bagian";
+        $data['title'] = "Statistik Pertanyaan";
         $data['dataUser'] = User::where('user_role_id', 2)->get();
 
         // $data['stepData'] = Step::with('stepChild')->whereNull('step_parent')->orderBy('step_urutan', 'ASC')->get();
@@ -212,7 +212,7 @@ class DashboardController extends Controller
 
     public function dataAlumni()
     {
-        $data['title'] = "Data Alumni";
+        $data['title'] = "Data Isian Tracer";
         $data['dataUser'] = User::where('user_role_id', 2)->get();
         // $data['bagian'] = Step::all();
 

@@ -47,9 +47,9 @@
 
     <div class="card mb-5">
         <div class="card-body">
-            <h2>Daftar Alumni yang telah masuk Sistem</h2>
+            <h2>Daftar Isian Tracer</h2>
             <div class="col-md-3 my-3">
-                <button class="btn btn-info" id="cetak" onclick="goCetak()" disabled="disabled"><i data-cs-icon="print" class="icon" data-cs-size="18"></i> Lihat Data Isian Tracer Perfakultas</button>
+                <button class="btn btn-info" id="cetak" onclick="goCetak()" disabled="disabled"><i data-cs-icon="print" class="icon" data-cs-size="18"></i> Lihat Data Isian Tracer (Perfakultas)</button>
             </div>
             <table class="table table-striped table-hover mt-4">
                 <thead>
