@@ -293,7 +293,7 @@
             kelamin.innerText = data.kelamin
             let link = document.createElement('td');
             let linkDetail = document.createElement('a');
-            let url = "{{route('admin.get.detail.jawaban',':userId')}}"
+            let url = "{{route('data.get.detail.jawaban',':userId')}}"
             linkDetail.innerText = "Detail"
             url = url.replace(':userId', data.sesi_id)
             linkDetail.href = url
