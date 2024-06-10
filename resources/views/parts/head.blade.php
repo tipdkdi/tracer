@@ -38,7 +38,7 @@
 <link rel="stylesheet" href="{{asset('/')}}css/vendor/baguetteBox.min.css" />
 <!-- Vendor Styles End -->
 <!-- Template Base Styles Start -->
-<link rel="stylesheet" href="{{asset('/')}}css/styles.css" />
+<!-- <link rel="stylesheet" href="{{asset('/')}}css/styles.css" /> -->
 <!-- Template Base Styles End -->
 
 <link rel="stylesheet" href="{{asset('/')}}css/main.css" />
