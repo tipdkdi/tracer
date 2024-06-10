@@ -57,7 +57,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($jawaban as $index => $jawab)
+            @foreach ($sesi as $index => $jawab)
             <tr>
                 <td>{{$index + 1}}</td>
                 <td>{{\Carbon\Carbon::parse($jawab->sesi_tanggal)->format('d-m-Y');}}</td>
@@ -77,7 +77,7 @@
             @endforeach
         </tbody>
     </table>
-    {{ $jawaban->links() }}
+    {{ $sesi->links() }}
 </body>
 
 </html>

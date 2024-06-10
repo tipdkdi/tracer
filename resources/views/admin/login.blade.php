@@ -46,7 +46,7 @@
     <!-- Template Base Styles End -->
 
     <link rel="stylesheet" href="{{asset('/')}}css/main.css" />
-    <script src="{{asset('/')}}js/base/loader.js"></script>
+    <!-- <script src="{{asset('/')}}js/base/loader.js"></script> -->
 
     <style>
         .fixed-background {
@@ -64,7 +64,8 @@
 </head>
 
 <body class="h-100">
-    <div id="root" class="h-100">
+    <!-- <div id="root" class="h-100"> -->
+    <div class="h-100">
         <!-- Background Start -->
         <div class="fixed-background"></div>
         <!-- Background End -->
@@ -94,7 +95,7 @@
                 <!-- Left Side End -->
 
                 <!-- Right Side Start -->
-                <div class="col-12 col-lg-auto h-100 pb-4 px-4 pt-0 p-lg-0">
+                <div class="col-12 col-lg-auto h-100 pb-4 px-4 pt-0 p-lg-0" style="background-color:white">
                     <div class="sw-lg-70 min-h-100 bg-foreground d-flex justify-content-center align-items-center shadow-deep py-5 full-page-content-right-border">
                         <div class="sw-lg-50 px-5">
                             <div class="sh-11">

@@ -316,15 +316,40 @@ class DashboardController extends Controller
         else if ($fakultas == "05")
             $fakultasId = 6;
         $bagian = Step::with(['pertanyaan'])->get();
-        $jawaban = UserSesi::with(['user.mahasiswa.dataDiri', 'user.mahasiswa.prodi'])
+        $sesi = UserSesi::with(['jawaban', 'user.mahasiswa.dataDiri', 'user.mahasiswa.prodi'])
             ->whereHas('user.mahasiswa.prodi', function ($prodi) use ($fakultasId) {
                 $prodi->where('organisasi_parent_id', $fakultasId);
             })
             ->where('sesi_periode', $periode)->paginate(50);
-        // return $jawaban;
+        // $data = [];
+        // foreach ($sesi as $row) {
+        //     foreach ($row->jawaban as $item) {
+        //         $data[$item->pertanyaan_id][] = $item->jawaban;
+        //     }
+        //     unset($row->jawaban);
+        //     $row->data_jawaban = $data;
+        //     $data = [];
+        // }
 
-        $data = [];
-        foreach ($jawaban as $sesinya) {
+        // $results = [];
+
+        // foreach ($bagian as $row) {
+        //     foreach ($row->pertanyaan as $item) {
+        //         $id = $item['id'];
+        //         if (isset($array2[$id])) {
+        //             $item['jawaban'] = $array2[$id];
+        //             $results[] = $item;
+        //         }
+        //     }
+        // }
+
+        // // Output the results
+        // dd($results);
+        // return $bagian;
+        // return $sesi;
+
+        // $data = [];
+        foreach ($sesi as $sesinya) {
             foreach ($bagian as $part) {
                 foreach ($part->pertanyaan as $tanya) {
                     $jawab = Jawaban::where(['pertanyaan_id' => $tanya->id, 'sesi_id' => $sesinya->id])->select('jawaban')->get();
@@ -350,7 +375,7 @@ class DashboardController extends Controller
             $data = [];
         }
         // return $jawaban;
-        return view('admin.cetak', compact(['bagian', 'jawaban']));
+        return view('admin.cetak', compact(['bagian', 'sesi']));
 
         // return $bagian;
     }
