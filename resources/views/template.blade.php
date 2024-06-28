@@ -14,7 +14,7 @@
                 <div class="logo position-relative">
                     <a href="index.html">
                         <!-- Logo can be added directly -->
-                        <img src="{{asset('/')}}logo-silanni-22.png" alt="logo">
+                        <img src="{{asset('/')}}logo-silanni-22.png" width="100px" alt="logo">
                         <!-- <br><span style="font-size:20px;font-weight: 600;color:white">SI LANNI</span> -->
 
                         <!-- Or added via css to provide different ones for different color themes -->
