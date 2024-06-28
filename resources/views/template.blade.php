@@ -28,7 +28,7 @@
                 <!-- User Menu Start -->
                 <div class="user-container d-flex">
                     <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img class="profile" alt="profile" src="{{asset('/')}}icon.jpeg" />
+                        <img class="profile" alt="profile" width="100px" src="{{asset('/')}}icon.jpeg" />
                         @if(!empty(Auth::user()))
 
                         <div class="name">Administrator</div>
