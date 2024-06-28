@@ -15,7 +15,7 @@
                     <!-- <a href="Dashboards.Default.html"> -->
                     <!-- Logo can be added directly -->
                     <!-- <img src="img/logo/logo-white.svg" alt="logo" /> -->
-                    <img src="{{asset('/')}}logo-silanni-22.png" alt="logo">
+                    <img src="{{asset('/')}}logo-silanni-22.png" width="100px" alt="logo">
 
                     <!-- <img src="http://127.0.0.1:8000/logo-iain.png" alt="logo" style="width:40%">
                         <span style="font-size:14px;font-weight: 600;color:white">SI LANNI</span> -->
@@ -30,7 +30,7 @@
                 <div class="user-container d-flex">
                     <a href="#" class="d-flex user position-relative" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <!-- <img class="profile" alt="profile" src="{{asset('/')}}img/profile/profile-11.jpg" /> -->
-                        <img class="profile" alt="profile" src="{{asset('/')}}icon.jpeg" />
+                        <img class="profile" alt="profile" width="100px" src="{{asset('/')}}icon.jpeg" />
 
                         <!-- <div class="nama"></div> -->
                     </a>
