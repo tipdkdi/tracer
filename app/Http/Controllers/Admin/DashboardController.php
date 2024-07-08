@@ -320,7 +320,7 @@ class DashboardController extends Controller
             ->whereHas('user.mahasiswa.prodi', function ($prodi) use ($fakultasId) {
                 $prodi->where('organisasi_parent_id', $fakultasId);
             })
-            ->where('sesi_periode', $periode)->paginate(50);
+            ->where('sesi_periode', $periode)->paginate(10);
         // $data = [];
         // foreach ($sesi as $row) {
         //     foreach ($row->jawaban as $item) {
