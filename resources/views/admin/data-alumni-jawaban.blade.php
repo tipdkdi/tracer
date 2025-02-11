@@ -63,8 +63,7 @@
         let dataSend = new FormData()
 
         dataSend.append('iddata', JSON.stringify("{{$user->name}}"))
-        // response = await fetch('https://sia.iainkendari.ac.id/alumni/tracer/data-alumni', {
-        response = await fetch('https://sia2.iainkendari.ac.id/alumni/tracer/data-alumni', {
+        response = await fetch('https://sia.iainkendari.ac.id/alumni/tracer/data-alumni', {
             method: "POST",
             body: dataSend
         })
