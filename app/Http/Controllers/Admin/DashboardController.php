@@ -356,6 +356,7 @@ class DashboardController extends Controller
                 $prodi->where('organisasi_parent_id', $fakultasId);
             })
             ->where('sesi_periode', $periode)
+            ->whereHas('jawaban')
             ->get();
 
         return response()->json($sesi);

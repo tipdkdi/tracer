@@ -56,7 +56,7 @@ Route::get('/import', [SurveiorController::class, 'importData'])->name('get.user
 Route::post('/import', [SurveiorController::class, 'storeImport'])->name('import.store');
 
 
-Route::get('/get-sesi', [DashboardController::class, 'getSesi'])->name('get.alumni.sesi');
+Route::get('/get-sesi', [DashboardController::class, 'getSesi'])->name('get.sesi');
 Route::get('/get-jawaban', [DashboardController::class, 'getJawaban'])->name('get.alumni.sesi');
 Route::get('/get-pertanyaan', [DashboardController::class, 'getPertanyaanCetak']);
 
