@@ -55,6 +55,11 @@ Route::get('/bagian/{id}/copy-pertanyaan/{idCopy}', [FormController::class, 'cop
 Route::get('/import', [SurveiorController::class, 'importData'])->name('get.user.mahasiswa');
 Route::post('/import', [SurveiorController::class, 'storeImport'])->name('import.store');
 
+
+Route::get('/get-sesi', [DashboardController::class, 'getSesi'])->name('get.alumni.sesi');
+Route::get('/get-jawaban', [DashboardController::class, 'getJawaban'])->name('get.alumni.sesi');
+Route::get('/get-pertanyaan', [DashboardController::class, 'getPertanyaanCetak']);
+
 // Route::get('/user/periode/{periode}', [DashboardController::class, 'getUserPeriode'])->name('get.user.periode');
 
 // Route::group(['middleware' => ['api']], function () {

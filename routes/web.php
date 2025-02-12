@@ -31,7 +31,8 @@ Route::get('data/statistik/bagian', [DashboardController::class, 'statistik_bagi
 Route::get('data/statistik/data-alumni', [DashboardController::class, 'statistik_data_alumni'])->name('data.statistik.data.alumni');
 Route::get('data/data-alumni', [DashboardController::class, 'dataAlumni'])->name('data.alumni');
 Route::get('data/data-alumni/{userId}/data-jawaban', [DashboardController::class, 'detailJawaban'])->name('data.get.detail.jawaban');
-Route::get('data/cetak/periode/{periode}/fakultas/{fakultas}', [DashboardController::class, 'cetak'])->name('data.cetak');
+Route::get('data/cetak/periode/{periode}/fakultas/{fakultas}', [DashboardController::class, 'cetak2'])->name('data.cetak');
+// Route::get('data/cetak2/periode/{periode}/fakultas/{fakultas}', [DashboardController::class, 'cetak2'])->name('data.cetak2');
 // Route::get('data/data-alumni/{userId}/data-jawaban', [DashboardController::class, 'detailJawaban'])->name('data.get.detail.jawaban');
 
 

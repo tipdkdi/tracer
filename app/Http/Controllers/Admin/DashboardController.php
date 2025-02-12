@@ -287,25 +287,6 @@ class DashboardController extends Controller
 
     public function cetak($periode, $fakultas)
     {
-        // $jawaban = UserSesi::with(['user.mahasiswa.dataDiri', 'user.mahasiswa.prodi'])->where('sesi_periode', $periode)->get();
-        // $data = [];
-        // foreach ($jawaban as $sesinya) {
-        //     $jawab = Jawaban::where(['pertanyaan_id' => 261, 'sesi_id' => $sesinya->id])->select('jawaban')->get();
-        //     if (!$jawab->isEmpty()) {
-        //         $kerjaLokasi = $jawab[0]->jawaban;
-        //         $lokasi = explode(',', $kerjaLokasi);
-        //         if (count($lokasi) == 2) {
-        //             $urlProvinsi = "https://emsifa.github.io/api-wilayah-indonesia/api/province/" . $lokasi[1] . ".json";
-        //             $urlKabupaten = "https://emsifa.github.io/api-wilayah-indonesia/api/regency/" . $lokasi[0] . ".json";
-        //             $provinsi = json_decode(file_get_contents($urlProvinsi));
-        //             $kabupaten = json_decode(file_get_contents($urlKabupaten));
-        //             $data[] = $provinsi->name . " - " . $kabupaten->name;
-        //             Jawaban::where(['pertanyaan_id' => 261, 'sesi_id' => $sesinya->id])->update(['jawaban' => $provinsi->name . " - " . $kabupaten->name]);
-        //         }
-        //     }
-        // }
-        // return $data;
-        // <option value="01">FATIK - Fakultas Tarbiyah dan Ilmu Keguruan</option><option value="02">FAKSYA - Fakultas Syariah</option><option value="03">FUAD - Fakultas Ushuluddin, Adab dan Dakwah</option><option value="04">PASCA - Fakultas Pascasarjana</option><option value="05">FEBI - Fakultas Ekonomi dan Bisnis Islam</option></select>
         $fakultasId = 2;
         if ($fakultas == "02")
             $fakultasId = 3;
@@ -320,35 +301,8 @@ class DashboardController extends Controller
             ->whereHas('user.mahasiswa.prodi', function ($prodi) use ($fakultasId) {
                 $prodi->where('organisasi_parent_id', $fakultasId);
             })
-            ->where('sesi_periode', $periode)->paginate(10);
-        // $data = [];
-        // foreach ($sesi as $row) {
-        //     foreach ($row->jawaban as $item) {
-        //         $data[$item->pertanyaan_id][] = $item->jawaban;
-        //     }
-        //     unset($row->jawaban);
-        //     $row->data_jawaban = $data;
-        //     $data = [];
-        // }
+            ->where('sesi_periode', $periode)->paginate(5);
 
-        // $results = [];
-
-        // foreach ($bagian as $row) {
-        //     foreach ($row->pertanyaan as $item) {
-        //         $id = $item['id'];
-        //         if (isset($array2[$id])) {
-        //             $item['jawaban'] = $array2[$id];
-        //             $results[] = $item;
-        //         }
-        //     }
-        // }
-
-        // // Output the results
-        // dd($results);
-        // return $bagian;
-        // return $sesi;
-
-        // $data = [];
         foreach ($sesi as $sesinya) {
             foreach ($bagian as $part) {
                 foreach ($part->pertanyaan as $tanya) {
@@ -374,9 +328,60 @@ class DashboardController extends Controller
             $sesinya->jawaban = $data;
             $data = [];
         }
-        // return $jawaban;
+        // return $sesi;
         return view('admin.cetak', compact(['bagian', 'sesi']));
 
         // return $bagian;
+    }
+    public function cetak2($periode, $fakultas)
+    {
+        $bagian = Step::with(['pertanyaan'])->get();
+        return view('admin.cetak2', compact(['bagian']));
+    }
+
+    public function getSesi(Request $request)
+    {
+        $periode = $request->periode;
+        $fakultas = $request->fakultas;
+        $fakultasId = match ($fakultas) {
+            "02" => 3,
+            "03" => 4,
+            "04" => 5,
+            "05" => 6,
+            default => 2,
+        };
+
+        $sesi = UserSesi::with(['user.mahasiswa.dataDiri', 'user.mahasiswa.prodi'])
+            ->whereHas('user.mahasiswa.prodi', function ($prodi) use ($fakultasId) {
+                $prodi->where('organisasi_parent_id', $fakultasId);
+            })
+            ->where('sesi_periode', $periode)
+            ->get();
+
+        return response()->json($sesi);
+    }
+
+
+    public function getJawaban(Request $request)
+    {
+        $jawaban = Jawaban::where('sesi_id', $request->sesi_id)
+            ->select('pertanyaan_id', 'jawaban')
+            ->get()
+            ->groupBy('pertanyaan_id');
+
+        return response()->json($jawaban);
+    }
+
+    public function getPertanyaanCetak()
+    {
+        $stepIds = Step::pluck('id');
+
+        $pertanyaan = Pertanyaan::whereIn('step_id', $stepIds)
+            ->select('id', 'step_id', 'pertanyaan', 'pertanyaan_urutan')
+            ->orderBy('step_id')
+            ->orderBy('pertanyaan_urutan')
+            ->get();
+
+        return response()->json($pertanyaan);
     }
 }
