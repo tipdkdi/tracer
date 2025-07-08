@@ -20,6 +20,7 @@
                 <option value="2022">2022</option>
                 <option value="2023">2023</option>
                 <option value="2024">2024</option>
+                <option value="2025">2025</option>
             </select>
             <h3 class="card-title my-2">Statistik Kuisioner</h3>
             <select class="form-select" id="bagian">
