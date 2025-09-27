@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\FormController;
 use App\Http\Controllers\User\UserController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\AlumniSurveiController;
 use App\Http\Controllers\SurveiorController;
 
 /*
@@ -59,6 +60,9 @@ Route::post('/import', [SurveiorController::class, 'storeImport'])->name('import
 Route::get('/get-sesi', [DashboardController::class, 'getSesi'])->name('get.sesi');
 Route::get('/get-jawaban', [DashboardController::class, 'getJawaban'])->name('get.alumni.sesi');
 Route::get('/get-pertanyaan', [DashboardController::class, 'getPertanyaanCetak']);
+
+Route::get('/alumni', [AlumniSurveiController::class, 'getByKabupaten']);
+Route::get('/status/{nim}/{tahun}', [AlumniSurveiController::class, 'getStatus']);
 
 // Route::get('/user/periode/{periode}', [DashboardController::class, 'getUserPeriode'])->name('get.user.periode');
 

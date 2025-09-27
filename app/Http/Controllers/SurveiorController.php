@@ -32,7 +32,7 @@ class SurveiorController extends Controller
             ->whereHas('user.mahasiswa.dataDiri', function ($dataDiri) use ($kabupaten) {
                 $dataDiri->where('kabupaten', $kabupaten);
             })
-            ->where('sesi_periode', '2024')->get();
+            ->where('sesi_periode', '2025')->get();
         return $data;
     }
     public function importDataView()
