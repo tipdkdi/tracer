@@ -11,7 +11,7 @@
 <body>
     <div class="container mt-5">
         <div class="card-body">
-            <h3 class="card-title mb-4">Data Tracer Periode Tahun 2024</h3>
+            <h3 class="card-title mb-4">Data Tracer Periode Tahun 2025</h3>
             <h4>Total data keseluruhan saat ini : {{$total}}</h4>
         </div>
         <div class="col-3 d-flex mb-2 mt-4">

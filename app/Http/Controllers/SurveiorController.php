@@ -17,7 +17,7 @@ class SurveiorController extends Controller
     public function index()
     {
         $data['title'] = "DATA TIM SURVEI";
-        $data['total'] = UserSesi::where('sesi_periode', '2024')->count();
+        $data['total'] = UserSesi::where('sesi_periode', '2025')->count();
         return view('surveior.dashboard', $data);
     }
 
