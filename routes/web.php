@@ -22,11 +22,11 @@ Route::get('/', function () {
     return redirect()->route('user.login');
     // return "SEDANG MAINTENANCE";
 });
-Route::get('/alumni-survei', function () {
+Route::get('/tim-survei/dashboard', function () {
     return view('pantau');
-});
+})->name('surveior.dashboard');
 //TIM SURVEI
-Route::get('/tim-survei/dashboard', [SurveiorController::class, 'index'])->name('surveior.dashboard');
+Route::get('/alumni-survei', [SurveiorController::class, 'index']);
 Route::get('/import', [SurveiorController::class, 'importDataView']);
 
 Route::get('data/dashboard', [DashboardController::class, 'index'])->name('data.dashboard');
