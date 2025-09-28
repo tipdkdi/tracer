@@ -41,11 +41,13 @@
                     <td>@{{ a.nim }}</td>
                     <td>@{{ a.nama }}</td>
                     <td>@{{ a.prodi }}</td>
-                    <td>@{{ a.kabupaten_mhs }}</td>
-                    <td>@{{ a.hp }}</td>
+                    <td>@{{ a.kabupaten }}</td>
+                    <td>@{{ a.no_hp }}</td>
                     <td>
+                        <!-- Status badge -->
                         <span v-if="a.status === 'Selesai'" class="badge bg-success">Selesai</span>
                         <span v-else-if="a.status === 'Sedang Mengisi'" class="badge bg-warning">Sedang Mengisi</span>
+                        <span v-else-if="a.status === null" class="badge bg-light text-muted">Loading...</span>
                         <span v-else class="badge bg-secondary">Belum Login</span>
                     </td>
                 </tr>
@@ -94,21 +96,22 @@
                     }
 
                     try {
-                        // alert('gg')
                         // Ambil alumni per kabupaten
                         let res = await axios.get(`/api/alumni?kabupaten=${this.selectedKabupaten}`);
-                        this.alumni = res.data;
-                        console.log(this.alumni);
+                        // Set status awal null supaya tampil "Loading..."
+                        this.alumni = res.data.map(a => ({
+                            ...a,
+                            status: null
+                        }));
 
-                        // Loop alumni dan cek status
-                        for (let i = 0; i < this.alumni.length; i++) {
-                            let a = this.alumni[i];
-                            console.log(a);
+                        // Ambil status survei tiap alumni (paralel)
+                        await Promise.all(
+                            this.alumni.map(async (a, i) => {
+                                let statusRes = await axios.get(`/api/status/${a.nim}/2025`);
+                                this.alumni[i].status = statusRes.data.status;
+                            })
+                        );
 
-                            let statusRes = await axios.get(`/api/status/${a.nim}/2025`);
-                            console.log(statusRes);
-                            this.alumni[i].status = statusRes.data.status;
-                        }
                     } catch (e) {
                         console.error(e);
                     }
