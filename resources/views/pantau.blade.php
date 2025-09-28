@@ -12,7 +12,7 @@
 
 <body>
     <div id="app" class="container py-4">
-        <h3 class="mb-4">Pemantauan Survei Alumni</h3>
+        <h3 class="mb-4">Pemantauan Survei Alumni Tahun 2025</h3>
 
         <!-- Dropdown Kabupaten -->
         <div class="mb-3">
@@ -62,9 +62,6 @@
 
                         </td>
                         <td>@{{ a.kabupaten }} / @{{ a.kecamatan }}</td>
-                        <td>
-                            <!-- Status badge -->
-                        </td>
                     </tr>
                 </tbody>
             </table>
