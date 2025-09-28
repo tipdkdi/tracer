@@ -24,9 +24,9 @@
         </div>
         <!-- Rekap Status -->
         <div v-if="alumni.length" class="mb-3 mt-3">
-            <span class="badge bg-success me-2">Selesai: @{{ totalSelesai }}</span>
-            <span class="badge bg-warning text-dark me-2">Sedang Mengisi: @{{ totalMengisi }}</span>
-            <span class="badge bg-secondary">Belum Login: @{{ totalBelum }}</span>
+            <h2><span class="badge bg-success me-2">Selesai: @{{ totalSelesai }}</span></h2>
+            <h2><span class="badge bg-warning text-dark me-2">Sedang Mengisi: @{{ totalMengisi }}</span></h2>
+            <h2><span class="badge bg-secondary">Belum Login: @{{ totalBelum }}</span></h2>
         </div>
 
         <div class="table-responsive">
@@ -40,8 +40,6 @@
                         <th>HP</th>
                         <th>NIM/NAMA/PRODI</th>
                         <th>KABUPATEN/KEC</th>
-
-                        <th>STATUS SURVEI</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -55,16 +53,16 @@
                             </a>
                         </td>
                         <!-- <td>@{{ a.tahun_lulus }}</td> -->
-                        <td>@{{ a.nim }} / @{{ a.nama }} / @{{ a.prodi }}</td>
-                        <td>@{{ a.kabupaten }} / @{{ a.kecamatan }}</td>
-
-
-                        <td>
-                            <!-- Status badge -->
+                        <td>@{{ a.nim }} / @{{ a.nama }} / @{{ a.prodi }} <br>
                             <span v-if="a.status === 'Selesai'" class="badge bg-info">Selesai</span>
                             <span v-else-if="a.status === 'Sedang Mengisi'" class="badge bg-warning">Sedang Mengisi</span>
                             <span v-else-if="a.status === null" class="badge bg-light text-muted">Loading...</span>
                             <span v-else class="badge bg-secondary">Belum Mulai</span>
+
+                        </td>
+                        <td>@{{ a.kabupaten }} / @{{ a.kecamatan }}</td>
+                        <td>
+                            <!-- Status badge -->
                         </td>
                     </tr>
                 </tbody>
