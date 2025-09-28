@@ -42,7 +42,15 @@
                     <td>@{{ a.nama }}</td>
                     <td>@{{ a.prodi }}</td>
                     <td>@{{ a.kabupaten }}</td>
-                    <td>@{{ a.no_hp }}</td>
+
+                    <td>
+                        <a :href="`https://wa.me/62${a.no_hp.replace(/^0/, '')}?text=${encodeURIComponent(pesanWA(a))}`"
+                            target="_blank"
+                            class="btn btn-success btn-sm">
+                            Chat WA (@{{ a.no_hp }})
+                        </a>
+                    </td>
+
                     <td>
                         <!-- Status badge -->
                         <span v-if="a.status === 'Selesai'" class="badge bg-success">Selesai</span>
@@ -115,6 +123,31 @@
                     } catch (e) {
                         console.error(e);
                     }
+                },
+                pesanWA(a) {
+                    return `_Bismillah_\n\n` +
+                        `Tracer Study merupakan alternatif metode yang digunakan oleh Perguruan Tinggi di Indonesia untuk menerima umpan balik dari para alumninya. Umpan balik yang diperoleh dari alumni tersebut digunakan oleh program studi di Perguruan Tinggi sebagai evaluasi untuk pengembangan kualitas dan sistem Pendidikan yang dilaksanakan di perguruan tinggi. Umpan balik ini dapat bermanfaat pula bagi program studi di Perguruan Tinggi untuk memetakan lapangan kerja dan usaha agar sesuai dengan tuntutan dunia kerja.\n\n` +
+
+                        `Sehubungan dengan *pentingnya* hal tersebut, kami mohon kepada alumni atas nama *${a.nama} (NIM ${a.nim}) Prodi ${a.prodi}* untuk meluangkan waktu mengisi tracer study periode tahun 2025 di *salah satu website resmi IAIN Kendari* https://tracerstudy.iainkendari.ac.id/ dengan ketentuan :\n\n` +
+
+                        `Silahkan Login/Masuk dengan menggunakan:\n` +
+                        `NIM Anda sewaktu kuliah (${a.nim})\n` +
+                        `Dan\n` +
+                        `Password : bulan - tanggal - tahun Lahir Anda\n\n` +
+
+                        `Setelah login, pada halaman depan silahkan *pilih tahun pengisian: 2025*\n` +
+                        `Kemudian lanjut mengisi data diri Anda, dimulai dengan mengisi:\n` +
+                        `1. Tahun Kelulusan\n` +
+                        `2. Bulan Kelulusan/Yudisium\n` +
+                        `3. Dst.\n\n` +
+
+                        `Tim Tracer IAIN Kendari juga turun langsung ke beberapa kabupaten/kota untuk melakukan Survei, mohon bantuan dan kerjasamanya demi kelancaran pendataan ini.\n\n` +
+
+                        `JIka mengalami kendala dapat menghubungi kami.\n\n` +
+
+                        `Demikian permohonan ini disampaikan. Atas perhatian dan partisipasinya para alumni dalam mengisi kuesioner Tracer Study, diucapkan terima kasih banyak.\n\n` +
+
+                        `Salam hangat,\n*Tim Tracer Study IAIN Kendari*`;
                 }
             }
         }).mount("#app");
