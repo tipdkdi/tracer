@@ -24,22 +24,27 @@ class AlumniSurveiController extends Controller
     {
         $status = "Belum Login";
 
-        $mhs = Mahasiswa::with(['user.userSesi' => function ($q) use ($tahun) {
-            $q->where('sesi_periode', $tahun);
-        }])
-            ->where('nim', $nim)
+        $mhs = Mahasiswa::where('nim', $nim)
+            ->whereHas('user.userSesi', function ($q) use ($tahun) {
+                $q->where('sesi_periode', $tahun);
+            })
+            ->with(['user.userSesi' => function ($q) use ($tahun) {
+                $q->where('sesi_periode', $tahun);
+            }])
             ->first();
 
+
         // return $mhs;
-        if ($mhs && $mhs->user && $mhs->user->userSesi->isNotEmpty()) {
-            $sesi = $mhs->user->userSesi->first(); // atau foreach kalau mau semua
-            if ($sesi->sesi_status == '0') {
-                $status = "Sedang Mengisi";
-            } elseif ($sesi->sesi_status == '1') {
-                $status = "Selesai";
+        if ($mhs && $mhs->user && $mhs->user->userSesi) {
+            $sesi = $mhs->user->userSesi;
+            if ($sesi->sesi_periode == $tahun) {
+                if ($sesi->sesi_status == '0') {
+                    $status = "Sedang Mengisi";
+                } elseif ($sesi->sesi_status == '1') {
+                    $status = "Selesai";
+                }
             }
         }
-
 
         return response()->json(['status' => $status, 'ms' => $mhs]);
     }
