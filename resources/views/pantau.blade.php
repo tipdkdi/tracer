@@ -22,43 +22,55 @@
                 <option v-for="kab in daftarKabupaten" :key="kab" :value="kab">@{{ kab }}</option>
             </select>
         </div>
+        <!-- Rekap Status -->
+        <div v-if="alumni.length" class="mb-3 mt-3">
+            <span class="badge bg-success me-2">Selesai: @{{ totalSelesai }}</span>
+            <span class="badge bg-warning text-dark me-2">Sedang Mengisi: @{{ totalMengisi }}</span>
+            <span class="badge bg-secondary">Belum Login: @{{ totalBelum }}</span>
+        </div>
 
-        <!-- Tabel Data -->
-        <table v-if="alumni.length" class="table table-bordered">
-            <thead class="table-dark">
-                <tr>
-                    <th>No</th>
-                    <!-- <th>TAHUN LULUS</th> -->
-                    <th>NIM/NAMA/PRODI</th>
-                    <th>KABUPATEN/KEC</th>
-                    <th>HP</th>
-                    <th>STATUS SURVEI</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(a,index) in alumni" :key="a.id">
-                    <td>@{{index + 1}}</td>
-                    <!-- <td>@{{ a.tahun_lulus }}</td> -->
-                    <td>@{{ a.nim }} / @{{ a.nama }} / @{{ a.prodi }}</td>
-                    <td>@{{ a.kabupaten }} / @{{ a.kecamatan }}</td>
-                    <td>
-                        <a :href="`https://wa.me/62${a.no_hp.replace(/^0/, '')}?text=${encodeURIComponent(pesanWA(a))}`"
-                            target="_blank"
-                            class="btn btn-success btn-sm">
-                            Chat WA (@{{ a.no_hp }})
-                        </a>
-                    </td>
+        <div class="table-responsive">
 
-                    <td>
-                        <!-- Status badge -->
-                        <span v-if="a.status === 'Selesai'" class="badge bg-info">Selesai</span>
-                        <span v-else-if="a.status === 'Sedang Mengisi'" class="badge bg-warning">Sedang Mengisi</span>
-                        <span v-else-if="a.status === null" class="badge bg-light text-muted">Loading...</span>
-                        <span v-else class="badge bg-secondary">Belum Mulai</span>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+            <!-- Tabel Data -->
+            <table v-if="alumni.length" class="table table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>No</th>
+                        <!-- <th>TAHUN LULUS</th> -->
+                        <th>HP</th>
+                        <th>NIM/NAMA/PRODI</th>
+                        <th>KABUPATEN/KEC</th>
+
+                        <th>STATUS SURVEI</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr v-for="(a,index) in alumni" :key="a.id">
+                        <td>@{{index + 1}}</td>
+                        <td>
+                            <a :href="`https://wa.me/62${a.no_hp.replace(/^0/, '')}?text=${encodeURIComponent(pesanWA(a))}`"
+                                target="_blank"
+                                class="btn btn-success btn-sm">
+                                Chat WA (@{{ a.no_hp }})
+                            </a>
+                        </td>
+                        <!-- <td>@{{ a.tahun_lulus }}</td> -->
+                        <td>@{{ a.nim }} / @{{ a.nama }} / @{{ a.prodi }}</td>
+                        <td>@{{ a.kabupaten }} / @{{ a.kecamatan }}</td>
+
+
+                        <td>
+                            <!-- Status badge -->
+                            <span v-if="a.status === 'Selesai'" class="badge bg-info">Selesai</span>
+                            <span v-else-if="a.status === 'Sedang Mengisi'" class="badge bg-warning">Sedang Mengisi</span>
+                            <span v-else-if="a.status === null" class="badge bg-light text-muted">Loading...</span>
+                            <span v-else class="badge bg-secondary">Belum Mulai</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
     </div>
 
     <script>
@@ -91,7 +103,10 @@
                         "KOTA KENDARI",
                         "KOTA BAUBAU"
                     ],
-                    alumni: []
+                    alumni: [],
+                    totalSelesai: 0,
+                    totalMengisi: 0,
+                    totalBelum: 0
                 }
             },
             methods: {
@@ -117,11 +132,18 @@
                                 this.alumni[i].status = statusRes.data.status;
                             })
                         );
-
+                        // Hitung total status
+                        this.hitungTotal();
                     } catch (e) {
                         console.error(e);
                     }
                 },
+                hitungTotal() {
+                    this.totalSelesai = this.alumni.filter(a => a.status === "Selesai").length;
+                    this.totalMengisi = this.alumni.filter(a => a.status === "Sedang Mengisi").length;
+                    this.totalBelum = this.alumni.filter(a => a.status === "Belum Login").length;
+                },
+
                 pesanWA(a) {
                     return `_Bismillah_\n\n` +
                         `Tracer Study merupakan alternatif metode yang digunakan oleh Perguruan Tinggi di Indonesia untuk menerima umpan balik dari para alumninya. Umpan balik yang diperoleh dari alumni tersebut digunakan oleh program studi di Perguruan Tinggi sebagai evaluasi untuk pengembangan kualitas dan sistem Pendidikan yang dilaksanakan di perguruan tinggi. Umpan balik ini dapat bermanfaat pula bagi program studi di Perguruan Tinggi untuk memetakan lapangan kerja dan usaha agar sesuai dengan tuntutan dunia kerja.\n\n` +
