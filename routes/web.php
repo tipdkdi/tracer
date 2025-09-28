@@ -22,6 +22,9 @@ Route::get('/', function () {
     return redirect()->route('user.login');
     // return "SEDANG MAINTENANCE";
 });
+Route::get('/alumni-survei', function () {
+    return view('pantau');
+});
 //TIM SURVEI
 Route::get('/tim-survei/dashboard', [SurveiorController::class, 'index'])->name('surveior.dashboard');
 Route::get('/import', [SurveiorController::class, 'importDataView']);

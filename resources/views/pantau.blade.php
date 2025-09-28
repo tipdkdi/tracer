@@ -18,7 +18,7 @@
             <label class="form-label">Pilih Kabupaten/Kota</label>
             <select v-model="selectedKabupaten" @change="loadAlumni" class="form-select">
                 <option value="">-- Pilih Kabupaten/Kota --</option>
-                <option v-for="kab in daftarKabupaten" :key="kab" :value="kab">{{ kab }}</option>
+                <option v-for="kab in daftarKabupaten" :key="kab" :value="kab">@{{ kab }}</option>
             </select>
         </div>
 
@@ -37,12 +37,12 @@
             </thead>
             <tbody>
                 <tr v-for="a in alumni" :key="a.id">
-                    <td>{{ a.tahun_lulus }}</td>
-                    <td>{{ a.nim }}</td>
-                    <td>{{ a.nama }}</td>
-                    <td>{{ a.prodi }}</td>
-                    <td>{{ a.kabupaten_mhs }}</td>
-                    <td>{{ a.hp }}</td>
+                    <td>@{{ a.tahun_lulus }}</td>
+                    <td>@{{ a.nim }}</td>
+                    <td>@{{ a.nama }}</td>
+                    <td>@{{ a.prodi }}</td>
+                    <td>@{{ a.kabupaten_mhs }}</td>
+                    <td>@{{ a.hp }}</td>
                     <td>
                         <span v-if="a.status === 'Selesai'" class="badge bg-success">Selesai</span>
                         <span v-else-if="a.status === 'Sedang Mengisi'" class="badge bg-warning">Sedang Mengisi</span>
@@ -94,9 +94,11 @@
                     }
 
                     try {
+                        // alert('gg')
                         // Ambil alumni per kabupaten
                         let res = await axios.get(`/api/alumni?kabupaten=${this.selectedKabupaten}`);
                         this.alumni = res.data;
+                        console.log(this.alumni);
 
                         // Loop alumni dan cek status
                         for (let i = 0; i < this.alumni.length; i++) {
