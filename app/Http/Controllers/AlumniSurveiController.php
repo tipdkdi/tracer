@@ -27,7 +27,7 @@ class AlumniSurveiController extends Controller
         $mhs = Mahasiswa::with('user.userSesi')
             ->where('nim', $nim)
             ->first();
-
+        // return $mhs;
         if ($mhs && $mhs->user && $mhs->user->userSesi) {
             $sesi = $mhs->user->userSesi;
             if ($sesi->sesi_periode == $tahun) {
@@ -39,6 +39,6 @@ class AlumniSurveiController extends Controller
             }
         }
 
-        return response()->json(['status' => $status]);
+        return response()->json(['status' => $status, 'ms' => $mhs]);
     }
 }
