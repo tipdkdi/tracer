@@ -98,7 +98,7 @@
                         // Ambil alumni per kabupaten
                         let res = await axios.get(`/api/alumni?kabupaten=${this.selectedKabupaten}`);
                         this.alumni = res.data;
-                        console.log(this.alumni);
+                        // console.log(this.alumni);
 
                         // Loop alumni dan cek status
                         for (let i = 0; i < this.alumni.length; i++) {
@@ -106,6 +106,7 @@
                             // console.log(a);
 
                             let statusRes = await axios.get(`/api/status/${a.nim}/2025`);
+                            console.log(statusRes);
                             this.alumni[i].status = statusRes.data.status;
                         }
                     } catch (e) {
