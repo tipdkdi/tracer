@@ -24,9 +24,10 @@
         </div>
         <!-- Rekap Status -->
         <div v-if="alumni.length" class="mb-3 mt-3">
-            <h2><span class="badge bg-success me-2">Selesai: @{{ totalSelesai }}</span></h2>
-            <h2><span class="badge bg-warning text-dark me-2">Sedang Mengisi: @{{ totalMengisi }}</span></h2>
-            <h2><span class="badge bg-secondary">Belum Login: @{{ totalBelum }}</span></h2>
+            <h3><span class="badge bg-success me-2">Selesai: @{{ totalSelesai }}</span>
+                <span class="badge bg-warning text-dark me-2">Sedang Mengisi: @{{ totalMengisi }}</span>
+                <span class="badge bg-secondary">Belum Login: @{{ totalBelum }}</span>
+            </h3>
         </div>
 
         <div class="table-responsive">
