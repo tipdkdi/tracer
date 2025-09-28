@@ -47,4 +47,8 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Mahasiswa',);
     }
+    public function userSesi()
+    {
+        return $this->hasOne('App\Models\UserSesi',);
+    }
 }
