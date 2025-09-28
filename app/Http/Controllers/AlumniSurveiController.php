@@ -25,6 +25,7 @@ class AlumniSurveiController extends Controller
         $status = "Belum Login";
         $periode = "-";
         $tanggalIsi = "";
+        $mhs2 = Mahasiswa::with('dataDiri')->where('nim', $nim)->latest()->first();
 
         $mhs = Mahasiswa::with('dataDiri')->where('nim', $nim)
             ->whereHas('user.userSesi', function ($q) use ($tahun) {
@@ -50,6 +51,6 @@ class AlumniSurveiController extends Controller
             }
         }
 
-        return response()->json(['status' => $status, 'mhs' => $mhs, 'periode' => $periode, 'tanggal_isi' => $tanggalIsi]);
+        return response()->json(['status' => $status, 'mhs' => $mhs2, 'periode' => $periode, 'tanggal_isi' => $tanggalIsi]);
     }
 }
