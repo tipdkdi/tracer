@@ -103,7 +103,7 @@
                         // Loop alumni dan cek status
                         for (let i = 0; i < this.alumni.length; i++) {
                             let a = this.alumni[i];
-                            let statusRes = await axios.get(`/api/status/${a.nim}/${a.tahun_lulus}`);
+                            let statusRes = await axios.get(`/api/status/${a.nim}/2025`);
                             this.alumni[i].status = statusRes.data.status;
                         }
                     } catch (e) {
