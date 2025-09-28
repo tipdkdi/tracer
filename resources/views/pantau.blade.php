@@ -27,23 +27,20 @@
         <table v-if="alumni.length" class="table table-bordered">
             <thead class="table-dark">
                 <tr>
-                    <th>TAHUN LULUS</th>
-                    <th>NIM</th>
-                    <th>NAMA</th>
-                    <th>PRODI</th>
-                    <th>KABUPATEN</th>
+                    <th>No</th>
+                    <!-- <th>TAHUN LULUS</th> -->
+                    <th>NIM/NAMA/PRODI</th>
+                    <th>KABUPATEN/KEC</th>
                     <th>HP</th>
                     <th>STATUS SURVEI</th>
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="a in alumni" :key="a.id">
-                    <td>@{{ a.tahun_lulus }}</td>
-                    <td>@{{ a.nim }}</td>
-                    <td>@{{ a.nama }}</td>
-                    <td>@{{ a.prodi }}</td>
-                    <td>@{{ a.kabupaten }}</td>
-
+                <tr v-for="(a,index) in alumni" :key="a.id">
+                    <td>@{{index + 1}}</td>
+                    <!-- <td>@{{ a.tahun_lulus }}</td> -->
+                    <td>@{{ a.nim }} / @{{ a.nama }} / @{{ a.prodi }}</td>
+                    <td>@{{ a.kabupaten }} / @{{ a.kecamatan }}</td>
                     <td>
                         <a :href="`https://wa.me/62${a.no_hp.replace(/^0/, '')}?text=${encodeURIComponent(pesanWA(a))}`"
                             target="_blank"
@@ -54,7 +51,7 @@
 
                     <td>
                         <!-- Status badge -->
-                        <span v-if="a.status === 'Selesai'" class="badge bg-success">Selesai</span>
+                        <span v-if="a.status === 'Selesai'" class="badge bg-info">Selesai</span>
                         <span v-else-if="a.status === 'Sedang Mengisi'" class="badge bg-warning">Sedang Mengisi</span>
                         <span v-else-if="a.status === null" class="badge bg-light text-muted">Loading...</span>
                         <span v-else class="badge bg-secondary">Belum Mulai</span>
