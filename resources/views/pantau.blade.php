@@ -59,9 +59,9 @@
                             <span v-else-if="a.status === 'Sedang Mengisi'" class="badge bg-warning">Sedang Mengisi</span>
                             <span v-else-if="a.status === null" class="badge bg-light text-muted">Loading...</span>
                             <span v-else class="badge bg-secondary">Belum Mulai</span>
-
+                            <p>Periode isian : @{{ a.periode }}</p>
                         </td>
-                        <td>@{{ a.kabupaten }} / @{{ a.kecamatan }}</td>
+                        <td>@{{ a.kabupaten }} / @{{ a.kecamatan }} / @{{a.desa_kel}}</td>
                     </tr>
                 </tbody>
             </table>
@@ -126,6 +126,7 @@
                             this.alumni.map(async (a, i) => {
                                 let statusRes = await axios.get(`/api/status/${a.nim}/2025`);
                                 this.alumni[i].status = statusRes.data.status;
+                                this.alumni[i].periode = statusRes.data.periode;
                             })
                         );
                         // Hitung total status

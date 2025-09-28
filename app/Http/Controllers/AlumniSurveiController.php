@@ -23,6 +23,7 @@ class AlumniSurveiController extends Controller
     public function getStatus($nim, $tahun)
     {
         $status = "Belum Login";
+        $periode = "2025";
 
         $mhs = Mahasiswa::where('nim', $nim)
             ->whereHas('user.userSesi', function ($q) use ($tahun) {
@@ -37,6 +38,7 @@ class AlumniSurveiController extends Controller
         // return $mhs;
         if ($mhs && $mhs->user && $mhs->user->userSesi) {
             $sesi = $mhs->user->userSesi;
+            $periode = $sesi->sesi_periode;
             if ($sesi->sesi_periode == $tahun) {
                 if ($sesi->sesi_status == '0') {
                     $status = "Sedang Mengisi";
@@ -46,6 +48,6 @@ class AlumniSurveiController extends Controller
             }
         }
 
-        return response()->json(['status' => $status, 'ms' => $mhs]);
+        return response()->json(['status' => $status, 'ms' => $mhs, 'periode' => $periode]);
     }
 }
