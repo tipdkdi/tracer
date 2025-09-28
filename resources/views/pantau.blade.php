@@ -52,6 +52,8 @@
                                 class="btn btn-success btn-sm">
                                 Chat WA (@{{ a.no_hp }})
                             </a>
+                            <br>
+                            Tanggal Lahir : @{{a.lahir_tanggal}}
                         </td>
                         <!-- <td>@{{ a.tahun_lulus }}</td> -->
                         <td>@{{ a.nim }} / @{{ a.nama }} / @{{ a.prodi }} <br>
@@ -129,6 +131,7 @@
                                 this.alumni[i].status = statusRes.data.status;
                                 this.alumni[i].periode = statusRes.data.periode;
                                 this.alumni[i].tanggal_isi = statusRes.data.tanggal_isi;
+                                this.alumni[i].lahir_tanggal = statusRes.data.mhs.data_diri.lahir_tanggal;
                             })
                         );
                         // Hitung total status

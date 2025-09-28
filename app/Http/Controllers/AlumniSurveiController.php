@@ -26,7 +26,7 @@ class AlumniSurveiController extends Controller
         $periode = "-";
         $tanggalIsi = "";
 
-        $mhs = Mahasiswa::where('nim', $nim)
+        $mhs = Mahasiswa::with('dataDiri')->where('nim', $nim)
             ->whereHas('user.userSesi', function ($q) use ($tahun) {
                 $q->where('sesi_periode', $tahun);
             })
@@ -50,6 +50,6 @@ class AlumniSurveiController extends Controller
             }
         }
 
-        return response()->json(['status' => $status, 'ms' => $mhs, 'periode' => $periode, 'tanggal_isi' => $tanggalIsi]);
+        return response()->json(['status' => $status, 'mhs' => $mhs, 'periode' => $periode, 'tanggal_isi' => $tanggalIsi]);
     }
 }
