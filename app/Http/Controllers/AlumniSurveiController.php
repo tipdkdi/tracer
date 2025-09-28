@@ -23,7 +23,7 @@ class AlumniSurveiController extends Controller
     public function getStatus($nim, $tahun)
     {
         $status = "Belum Login";
-        $periode = "2025";
+        $periode = "-";
         $tanggalIsi = "";
 
         $mhs = Mahasiswa::where('nim', $nim)
