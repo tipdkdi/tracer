@@ -128,6 +128,8 @@
                         await Promise.all(
                             this.alumni.map(async (a, i) => {
                                 let statusRes = await axios.get(`/api/status/${a.nim}/2025`);
+                                console.log(statusRes);
+
                                 this.alumni[i].status = statusRes.data.status;
                                 this.alumni[i].periode = statusRes.data.periode;
                                 this.alumni[i].tanggal_isi = statusRes.data.tanggal_isi;
