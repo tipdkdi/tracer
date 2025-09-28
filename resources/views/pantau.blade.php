@@ -48,7 +48,7 @@
                         <span v-if="a.status === 'Selesai'" class="badge bg-success">Selesai</span>
                         <span v-else-if="a.status === 'Sedang Mengisi'" class="badge bg-warning">Sedang Mengisi</span>
                         <span v-else-if="a.status === null" class="badge bg-light text-muted">Loading...</span>
-                        <span v-else class="badge bg-secondary">Belum Login</span>
+                        <span v-else class="badge bg-secondary">Belum Mulai</span>
                     </td>
                 </tr>
             </tbody>
