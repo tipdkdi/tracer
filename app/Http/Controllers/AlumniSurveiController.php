@@ -31,9 +31,9 @@ class AlumniSurveiController extends Controller
         if ($mhs && $mhs->user && $mhs->user->userSesi) {
             $sesi = $mhs->user->userSesi;
             if ($sesi->sesi_periode == $tahun) {
-                if ($sesi->sesi_status == 0) {
+                if ($sesi->sesi_status == '0') {
                     $status = "Sedang Mengisi";
-                } elseif ($sesi->sesi_status == 1) {
+                } elseif ($sesi->sesi_status == '1') {
                     $status = "Selesai";
                 }
             }
