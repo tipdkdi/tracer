@@ -49,7 +49,9 @@ class AlumniSurveiController extends Controller
             }
         }
 
-        $mhs2 = Mahasiswa::with('user.userSesi')->where('nim', $nim)->latest()->first();
+        $mhs2 = Mahasiswa::with(['user.userSesi' => function ($q) {
+            $q->orderBy('sesi_periode', 'desc')->latest()->limit(1);
+        }])->where('nim', $nim)->latest()->first();
         $periode = $mhs2?->user?->userSesi?->sesi_periode ?? '-';
         $tanggalIsi = $mhs2?->user?->userSesi?->sesi_tanggal ?? null;
 
