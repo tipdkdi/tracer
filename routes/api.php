@@ -63,6 +63,7 @@ Route::get('/get-pertanyaan', [DashboardController::class, 'getPertanyaanCetak']
 
 Route::get('/alumni', [AlumniSurveiController::class, 'getByKabupaten']);
 Route::get('/status/{nim}/{tahun}', [AlumniSurveiController::class, 'getStatus']);
+Route::get('/laporan-alumni', [AlumniSurveiController::class, 'getData']);
 
 // Route::get('/user/periode/{periode}', [DashboardController::class, 'getUserPeriode'])->name('get.user.periode');
 

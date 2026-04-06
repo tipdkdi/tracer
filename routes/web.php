@@ -25,6 +25,9 @@ Route::get('/', function () {
 Route::get('/tim-survei/dashboard', function () {
     return view('pantau');
 })->name('surveior.dashboard');
+Route::get('/tim-survei/rekap', function () {
+    return view('rekap-survei');
+})->name('surveior.rekap');
 //TIM SURVEI
 Route::get('/alumni-survei', [SurveiorController::class, 'index']);
 Route::get('/import', [SurveiorController::class, 'importDataView']);

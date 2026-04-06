@@ -57,4 +57,49 @@ class AlumniSurveiController extends Controller
 
         return response()->json(['status' => $status, 'mhs' => $mhs2, 'periode' => $periode, 'tanggal_isi' => $tanggalIsi]);
     }
+
+    public function getData()
+    {
+        $alumni = AlumniSurvei::select('nim', 'nama', 'prodi', 'kabupaten')
+            ->get();
+
+        $hasil = [];
+
+        foreach ($alumni as $a) {
+
+            // Ambil data sesi berdasarkan NIM
+            $mhs = \App\Models\Mahasiswa::where('nim', $a->nim)
+                ->whereHas('user.userSesi')
+                ->with(['user.userSesi' => function ($q) {
+                    $q->orderBy('sesi_periode', 'desc')->limit(1);
+                }])
+                ->first();
+
+            // Skip kalau tidak pernah login
+            if (!$mhs || !$mhs->user || !$mhs->user->userSesi) {
+                continue;
+            }
+
+            $sesi = $mhs->user->userSesi;
+
+            // Tentukan status
+            $status = $sesi->sesi_status == '1' ? 'Selesai' : 'Sedang Mengisi';
+
+            $hasil[] = [
+                'nim'         => $a->nim,
+                'nama'        => $a->nama,
+                'prodi'       => $a->prodi,
+                'kabupaten'   => $a->kabupaten,
+                'status'      => $status,
+                'tanggal_isi' => $sesi->sesi_tanggal
+            ];
+        }
+
+        // Urutkan berdasarkan kabupaten
+        $hasil = collect($hasil)
+            ->sortBy('kabupaten')
+            ->values();
+
+        return response()->json($hasil);
+    }
 }
