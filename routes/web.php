@@ -18,10 +18,13 @@ use App\Http\Controllers\SurveiorController;
 |
 */
 
-Route::get('/', function () {
+Route::get('/login2', function () {
     return redirect()->route('user.login');
     // return "SEDANG MAINTENANCE";
 });
+Route::get('/', function () {
+    return view('tracer-2026');
+})->name('surveior.dashboard');
 Route::get('/tim-survei/dashboard', function () {
     return view('pantau');
 })->name('surveior.dashboard');

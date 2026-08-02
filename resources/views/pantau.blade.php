@@ -12,7 +12,7 @@
 
 <body>
     <div id="app" class="container py-4">
-        <h3 class="mb-4">Pemantauan Survei Alumni Tahun 2025</h3>
+        <h3 class="mb-4">Pemantauan Survei Alumni Tahun 2026</h3>
 
         <!-- Dropdown Kabupaten -->
         <div class="mb-3">
@@ -127,7 +127,7 @@
                         // Ambil status survei tiap alumni (paralel)
                         await Promise.all(
                             this.alumni.map(async (a, i) => {
-                                let statusRes = await axios.get(`/api/status/${a.nim}/2025`);
+                                let statusRes = await axios.get(`/api/status/${a.nim}/2026`);
                                 console.log(statusRes);
 
                                 this.alumni[i].status = statusRes.data.status;
