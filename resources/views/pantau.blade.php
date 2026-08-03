@@ -61,8 +61,8 @@
                             <span v-else-if="a.status === 'Sedang Mengisi'" class="badge bg-warning">Sedang Mengisi</span>
                             <span v-else-if="a.status === null" class="badge bg-light text-muted">Loading...</span>
                             <span v-else class="badge bg-secondary">Belum Mulai</span>
-                            <p>Periode isian : @{{ a.periode }}</p>
-                            <p>Tanggal isian : @{{ a.tanggal_isi }}</p>
+                            <!-- <p>Periode isian : @{{ a.periode }}</p> -->
+                            <p>Tanggal mengisi : @{{ a.tanggal_isi }}</p>
                         </td>
                         <td>@{{ a.kabupaten }} / @{{ a.kecamatan }} / @{{a.desa_kel}}</td>
                     </tr>
@@ -127,7 +127,7 @@
                         // Ambil status survei tiap alumni (paralel)
                         await Promise.all(
                             this.alumni.map(async (a, i) => {
-                                let statusRes = await axios.get(`/api/status/${a.nim}/2026`);
+                                let statusRes = await axios.get(`/api/status/${a.nim}/2025`);
                                 console.log(statusRes);
 
                                 this.alumni[i].status = statusRes.data.status;
@@ -152,7 +152,21 @@
                     return `_Bismillah_\n\n` +
                         `Tracer Study merupakan alternatif metode yang digunakan oleh Perguruan Tinggi di Indonesia untuk menerima umpan balik dari para alumninya. Umpan balik yang diperoleh dari alumni tersebut digunakan oleh program studi di Perguruan Tinggi sebagai evaluasi untuk pengembangan kualitas dan sistem Pendidikan yang dilaksanakan di perguruan tinggi. Umpan balik ini dapat bermanfaat pula bagi program studi di Perguruan Tinggi untuk memetakan lapangan kerja dan usaha agar sesuai dengan tuntutan dunia kerja.\n\n` +
 
-                        `Sehubungan dengan *pentingnya* hal tersebut, kami mohon kepada alumni atas nama *${a.nama} (NIM ${a.nim}) Prodi ${a.prodi}* untuk meluangkan waktu mengisi tracer study periode tahun 2025 di *salah satu website resmi IAIN Kendari* https://tracerstudy.iainkendari.ac.id/ dengan ketentuan :\n\n` +
+                        `Sehubungan dengan *pentingnya* hal tersebut, kami mohon kepada alumni atas nama *${a.nama} (NIM ${a.nim}) Prodi ${a.prodi}* untuk meluangkan waktu mengisi tracer study periode tahun 2026 di *salah satu website resmi UIN Kendari* https://tracerstudy.iainkendari.ac.id/ \n\n` +
+
+                        `Tim Tracer UIN Kendari juga turun langsung ke beberapa kabupaten/kota untuk melakukan Survei, mohon bantuan dan kerjasamanya demi kelancaran pendataan ini.\n\n` +
+
+                        `JIka mengalami kendala dapat menghubungi kami.\n\n` +
+
+                        `Demikian permohonan ini disampaikan. Atas perhatian dan partisipasinya para alumni dalam mengisi kuesioner Tracer Study, diucapkan terima kasih banyak.\n\n` +
+
+                        `Salam hangat,\n*Tim Tracer Study UIN Kendari*`;
+                },
+                pesanWALama(a) {
+                    return `_Bismillah_\n\n` +
+                        `Tracer Study merupakan alternatif metode yang digunakan oleh Perguruan Tinggi di Indonesia untuk menerima umpan balik dari para alumninya. Umpan balik yang diperoleh dari alumni tersebut digunakan oleh program studi di Perguruan Tinggi sebagai evaluasi untuk pengembangan kualitas dan sistem Pendidikan yang dilaksanakan di perguruan tinggi. Umpan balik ini dapat bermanfaat pula bagi program studi di Perguruan Tinggi untuk memetakan lapangan kerja dan usaha agar sesuai dengan tuntutan dunia kerja.\n\n` +
+
+                        `Sehubungan dengan *pentingnya* hal tersebut, kami mohon kepada alumni atas nama *${a.nama} (NIM ${a.nim}) Prodi ${a.prodi}* untuk meluangkan waktu mengisi tracer study periode tahun 2025 di *salah satu website resmi UIN Kendari* https://tracerstudy.UINkendari.ac.id/ dengan ketentuan :\n\n` +
 
                         `Silahkan Login/Masuk dengan menggunakan:\n` +
                         `NIM Anda sewaktu kuliah (${a.nim})\n` +
@@ -165,13 +179,13 @@
                         `2. Bulan Kelulusan/Yudisium\n` +
                         `3. Dst.\n\n` +
 
-                        `Tim Tracer IAIN Kendari juga turun langsung ke beberapa kabupaten/kota untuk melakukan Survei, mohon bantuan dan kerjasamanya demi kelancaran pendataan ini.\n\n` +
+                        `Tim Tracer UIN Kendari juga turun langsung ke beberapa kabupaten/kota untuk melakukan Survei, mohon bantuan dan kerjasamanya demi kelancaran pendataan ini.\n\n` +
 
                         `JIka mengalami kendala dapat menghubungi kami.\n\n` +
 
                         `Demikian permohonan ini disampaikan. Atas perhatian dan partisipasinya para alumni dalam mengisi kuesioner Tracer Study, diucapkan terima kasih banyak.\n\n` +
 
-                        `Salam hangat,\n*Tim Tracer Study IAIN Kendari*`;
+                        `Salam hangat,\n*Tim Tracer Study UIN Kendari*`;
                 }
             }
         }).mount("#app");
