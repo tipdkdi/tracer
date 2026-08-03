@@ -5,23 +5,35 @@ namespace App\Http\Controllers;
 use App\Models\AlumniSurvei;
 use App\Models\Mahasiswa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class AlumniSurveiController extends Controller
 {
     public function getByKabupaten(Request $request)
     {
-        $kabupaten = $request->query('kabupaten');
+        try {
+            $kabupaten = $request->query('kabupaten');
 
-        $query = AlumniSurvei::query();
+            $query = AlumniSurvei::query();
 
-        if ($kabupaten) {
-            $query->where('kabupaten', $kabupaten);
+            if ($kabupaten) {
+                $query->where('kabupaten', $kabupaten);
+            }
+
+            $query->whereIn('tahun_lulus', ['2023', '2024']);
+
+            return response()->json($query->get());
+        } catch (\Throwable $e) {
+
+            Log::error($e);
+
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+                'line' => $e->getLine(),
+                'file' => basename($e->getFile()),
+            ], 500);
         }
-
-        $query->where('tahun_lulus', '2023');
-        $query->where('tahun_lulus', '2024');
-
-        return response()->json($query->get());
     }
 
     public function getStatus($nim, $tahun)
