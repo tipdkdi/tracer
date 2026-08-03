@@ -18,7 +18,8 @@ class AlumniSurveiController extends Controller
             $query->where('kabupaten', $kabupaten);
         }
 
-        $query->whereIn('tahun_lulus', ['2023', '2024']);
+        $query->where('tahun_lulus', '2023');
+        $query->where('tahun_lulus', '2024');
 
         return response()->json($query->get());
     }
