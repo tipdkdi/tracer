@@ -127,7 +127,7 @@
                         // Ambil status survei tiap alumni (paralel)
                         await Promise.all(
                             this.alumni.map(async (a, i) => {
-                                let statusRes = await axios.get(`/api/status/${a.nim}/2025`);
+                                let statusRes = await axios.get(`/api/status/${a.nim}/2026`);
                                 console.log(statusRes);
 
                                 this.alumni[i].status = statusRes.data.status;
