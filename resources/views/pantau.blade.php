@@ -62,7 +62,7 @@
                             <span v-else-if="a.status === null" class="badge bg-light text-muted">Loading...</span>
                             <span v-else class="badge bg-secondary">Belum Mulai</span>
                             <!-- <p>Periode isian : @{{ a.periode }}</p> -->
-                            <p>Tanggal mengisi : @{{ a.tanggal_isi }}</p>
+                            <!-- <p>Tanggal mengisi : @{{ a.tanggal_isi }}</p> -->
                         </td>
                         <td>@{{ a.kabupaten }} / @{{ a.kecamatan }} / @{{a.desa_kel}}</td>
                     </tr>

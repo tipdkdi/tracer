@@ -25,6 +25,9 @@ Route::get('/login2', function () {
 Route::get('/', function () {
     return view('tracer-2026');
 })->name('surveior.dashboard');
+Route::get('/alternatif', function () {
+    return view('survei2');
+})->name('surveior.new');
 Route::get('/tim-survei/dashboard', function () {
     return view('pantau');
 })->name('surveior.dashboard');
